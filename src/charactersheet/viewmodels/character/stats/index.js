@@ -301,7 +301,10 @@ export function StatsViewModel() {
     // Determine if death saves should be visible
     self.deathSavesVisible = ko.computed(function() {
         self._dummy();
-        return self.health().hitpoints() === 0;
+        var allSaved = self.deathSaveSuccessList().every(function(save, idx, _) {
+            return save.deathSaveSuccess();
+        });
+        return self.health().hitpoints() === 0 && !allSaved;
     });
 
     // Modal methods
@@ -393,6 +396,12 @@ export function StatsViewModel() {
             self.deathSaveSuccessVisible(true);
         }
 
+    };
+
+    self.stabilize = () => {
+        self.deathSaveSuccessList().forEach(function(save, idx, _) {
+            save.deathSaveSuccess(true);
+        });
     };
 
     self._alertPlayerIsStable = function() {

@@ -38,15 +38,15 @@ ko.bindingHandlers.circleProgress = {
         const params = valueAccessor();
         let { data: { value, maxValue, text }, config } = params;
 
-        value = ko.utils.unwrapObservable(value);
-        maxValue = ko.utils.unwrapObservable(maxValue);
+        value = parseInt(ko.utils.unwrapObservable(value));
+        maxValue = parseInt(ko.utils.unwrapObservable(maxValue));
         text = ko.utils.unwrapObservable(text);
 
         const opts = {
           ...ko.bindingHandlers.circleProgress.defaultOptions(),
           ...config,
         }
-        const percentage = parseInt(value)/parseInt(maxValue);
+        const percentage = maxValue && value ? parseInt(value)/parseInt(maxValue) : 1;
 
         $(element).data('progressBar').animate(percentage, opts);
         if (text) {

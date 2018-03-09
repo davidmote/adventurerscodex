@@ -449,7 +449,7 @@ textarea.dark-area {
 
 .hit-dice-list {
   height:100%;
-  padding:15px;
+  padding:5px;
   line-height:0.7em;
 }
 
@@ -977,4 +977,76 @@ div.toggle-arrow-container {
 
 .hpChart {
   font-size: 1.3em;
+}
+
+.thumbnail {
+  display: inline-block;
+  padding: 0px;
+}
+
+.thumbnail .hit-dice-list {
+  border: 0px;
+}
+
+.thumbnail .caption {
+  padding: 5px;
+  background-color: #ecf0f1;
+  border: 1px solid #dce4ec;
+  border-radius: 4px;
+}
+
+.thumbnail .caption h4 {
+  margin-top: 2.5px;
+  margin-bottom: 2.5px;
+}
+
+.death-save-panel {
+    min-height: 40px;
+    padding: 15px;
+}
+
+/* entire container, keeps perspective */
+.flip-container {
+	perspective: 1000px;
+}
+/* flip the pane when hovered */
+.flip-container.flipped .flipper {
+	transform: rotateY(180deg);
+}
+
+.flip-container, .front, .back {
+	width: 160px;
+	height: 480px;
+}
+
+/* flip speed goes here */
+.flipper {
+	transition: 0.6s;
+	transform-style: preserve-3d;
+
+	position: relative;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+	backface-visibility: hidden;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+	z-index: 2;
+	/* for firefox 31 */
+	transform: rotateY(0deg);
+}
+
+.flipped .back {
+  z-index: 3;
+}
+/* back, initially hidden pane */
+.back {
+	transform: rotateY(180deg);
 }
