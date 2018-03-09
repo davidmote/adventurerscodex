@@ -87,13 +87,9 @@
   <div role="tabpanel" class="tab-pane" id="stats" data-bind="css: statsTabStatus">
 
     <div class="row">
-      <div class="col-sm-5 col-md-4 col-lg-3" >
-        <div class="h4">
-          Health <br />
-            <small class="h5">Click on the health wheel to change max hit points or temporary hit points.</small>
-        </div>
+      <div class="col-sm-6 col-md-6 col-lg-6" >
       </div>
-      <div class="col-sm-7 col-md-8 col-lg-9">
+      <div class="col-sm-6 col-md-6 col-lg-6">
         <div class="h4">
           Ability Scores, Savings Throw, and Other Stats<br />
           <small>Click on your Ability Scores to add or edit them. Savings
@@ -104,9 +100,11 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-5 col-md-4 col-lg-3" style="min-width:200px">
+      <div class="col-sm-6 col-md-6 col-lg-6">
         <stats></stats>
       </div>
+    </div>
+    <div class="row">
       <div class="col-sm-7 col-md-8 col-lg-9">
         <ability-scores></ability-scores>
         <div class="row">
@@ -115,31 +113,10 @@
           </div>
           <div class="col-xs-6">
             <savings-throws></savings-throws>
-
           </div>
         </div>
-
       </div>
     </div>
-<!--
-    <div class="row">
-      <div style="float: right" class="col-sm-offset-4 col-md-offset-3 col-lg-offset-2 col-sm-8 col-md-9 col-lg-10">
-        <savings-throws></savings-throws>
-      </div>
-    </div> -->
-    <!-- <div class="row">
-      <div class="col-sm-4 col-lg-3 hidden-xs">
-        <img alt="A heart icon" data-bind="attr: { src: icons.healthSection }"/>
-      </div>
-      <div class="col-sm-8 col-lg-9 col-padded">
-        <div class="h4">
-          Hit Points and Hit Dice<br />
-          <small>Click on your max Hit Points to increase them when you level
-            up. Click on a die icon to track expended hit dice.</small>
-        </div>
-      </div>
-    </div> -->
-
   </div>
 <!-- End Stats Tab -->
 

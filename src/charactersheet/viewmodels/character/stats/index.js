@@ -28,6 +28,7 @@ export function StatsViewModel() {
     self.editHealthItem = ko.observable();
     self.editHitDiceItem = ko.observable();
     self.modalOpen = ko.observable(false);
+    self.editMode = ko.observable(false);
     self._dummy = ko.observable();
 
     self.getHealthColor = () => {
@@ -213,12 +214,25 @@ export function StatsViewModel() {
         self.hitDiceList([]);
     };
 
+
+    self.editModeIcon = ko.pureComputed(() => (
+         this.editMode() ? 'glyphicon-floppy-save' : 'glyphicon-pencil'
+    ));
+
+    self.editHealthItem(new Health());
+    self.editHitDiceItem(new HitDiceType());
     self.editHealth = function() {
-        self.editHealthItem(new Health());
-        self.editHitDiceItem(new HitDiceType());
-        self.editHealthItem().importValues(self.health().exportValues());
-        self.editHitDiceItem().importValues(self.hitDiceType().exportValues());
-        self.modalOpen(true);
+        if (self.editMode()) {
+            self.health().importValues(self.editHealthItem().exportValues());
+            self.hitDiceType().importValues(self.editHitDiceItem().exportValues());
+            self.hitDiceTypeDataHasChanged();
+            self.healthDataHasChange();
+            self.editMode(false);
+        } else {
+            self.editHealthItem().importValues(self.health().exportValues());
+            self.editHitDiceItem().importValues(self.hitDiceType().exportValues());
+            self.editMode(true);
+        }
     };
 
     self.calculateHitDice = function() {
