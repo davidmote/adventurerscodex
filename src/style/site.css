@@ -982,10 +982,11 @@ div.toggle-arrow-container {
 .thumbnail {
   display: inline-block;
   padding: 0px;
+  border: 0px;
 }
 
 .thumbnail .hit-dice-list {
-  border: 0px;
+  /* border: 0px; */
 }
 
 .thumbnail .caption {
@@ -1015,7 +1016,7 @@ div.toggle-arrow-container {
 }
 
 .flip-container, .front, .back {
-	width: 160px;
+	width: 200px;
 	height: 480px;
 }
 
@@ -1049,4 +1050,16 @@ div.toggle-arrow-container {
 /* back, initially hidden pane */
 .back {
 	transform: rotateY(180deg);
+}
+
+.healtContainer {
+  width: 150px;
+  display: block;
+  position: relative;
+  margin: auto;
+  margin-top: 10px;
+}
+
+.bio .panel-body {
+  border: 0px;
 }

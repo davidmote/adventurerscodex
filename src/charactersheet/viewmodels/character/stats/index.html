@@ -1,13 +1,11 @@
-<div class="panel panel-default bio">
-  <div class="col-sm-4 col-lg-3 hidden-xs text-center" >
     <div class="flip-container" data-bind="css: {flipped: deathSavesVisible()}"  ontouchstart="this.classList.toggle('hover');">
       <div class="flipper">
         <div class="front">
           <div class="thumbnail">
-          <div class="caption panel-heading">
+          <!-- <div class="caption panel-heading">
             <h4>Hit Points</h4>
-          </div>
-          <div style="width: 150px; display: block; position: relative">
+          </div> -->
+          <div class="healtContainer">
             <div class="clickable" data-toggle="modal" data-bind="click: editHealth" >
               <div style="padding: 10px; position: absolute; top:0px" data-bind="circleProgress: hpChart()"> </div>
               <!-- ko if: health().tempHitpointsRemaining() -->
@@ -18,6 +16,7 @@
                           max: health().totalHitpoints">
               </plus-minus>
             </div>
+            <h4><center><small> Click on a die icon to track expended hit dice. </small></center></h4>
             <div class="caption" style="margin-top:7px">
               <h4>Hit Die</h4>
             </div>
@@ -54,8 +53,6 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
 <!--End Panel-->
 <!--HP Modal-->
 <!-- ko if: modalOpen -->
