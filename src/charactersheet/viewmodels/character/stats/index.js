@@ -1,3 +1,4 @@
+import 'bin/knockout-circular-progress';
 import {
     DeathSave,
     Health,
@@ -9,6 +10,7 @@ import { ArmorClassService } from 'charactersheet/services';
 import { CharacterManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import icon from 'images/nested-hearts.svg';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -28,6 +30,53 @@ export function StatsViewModel() {
     self.modalOpen = ko.observable(false);
     self._dummy = ko.observable();
 
+    self.getHealthColor = () => {
+        if (self.health().isDangerous()) {
+            return '#e74c3c';
+        } else if (self.health().isWarning()) {
+            return '#f39c12';
+        }
+        return '#18bc9c';
+    };
+    self.tempHpColor = '#71D4E8';
+
+    self.hpText = ko.computed(()=> {
+        let tempHp = '';
+        if (self.health().tempHitpointsRemaining()) {
+            tempHp = `<span style="color: #71D4E8">+${self.health().tempHitpointsRemaining()}</span>`;
+        }
+        return `${self.health().regularHitpointsRemaining()} ${tempHp}<br />of&nbsp;${self.health().maxHitpoints()}&nbsp;HP`;
+    });
+
+    self.hpChart = ko.computed(()=>({
+        data: {
+            text: {value: self.hpText()},
+            value: self.health().regularHitpointsRemaining(),
+            maxValue: self.health().maxHitpoints()
+        },
+        config: {
+            strokeWidth: 12,
+            from: { color: self.getHealthColor() },
+            to: { color: self.getHealthColor() },
+            text: {
+                className: 'lead hpChart'
+            }
+        }
+    }));
+
+    self.tempHpChart =  ko.computed(()=>({
+        data: {
+            text: null,
+            value: self.health().tempHitpointsRemaining(),
+            maxValue: self.health().maxHitpoints()
+        },
+        config: {
+            trailColor: '#FFF',
+            strokeWidth: 6,
+            from: { color: self.tempHpColor },
+            to: { color: self.tempHpColor }
+        }
+    }));
 
     self.damageHandler = ko.computed({
         read: function() {

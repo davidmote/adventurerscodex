@@ -1,4 +1,10 @@
 <div class="panel panel-default bio">
+  <div class="col-sm-4 col-lg-3 hidden-xs text-center" >
+      <div style="width: 150px; display: block; position: relative">
+        <div style="padding: 10px; position: absolute; top:0px" data-bind="circleProgress: hpChart()"> </div>
+        <div style="position: absolute; top:0px" data-bind="circleProgress: tempHpChart()"> </div>
+     </div>
+  </div>
   <div class="panel-body tight-inner">
 	<!--Health items -->
     <div class="row row-padded">
