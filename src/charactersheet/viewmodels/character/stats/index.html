@@ -7,9 +7,9 @@
     Health <br />
     <small class="h5">Click on the health wheel to change max hit points or temporary hit points.</small>
   </div>
-  <div class="health-edit-flip-container" data-bind="css: {healthEditFlipped: editMode}">
-    <div class="health-edit-flipper">
-      <div class="health-edit-front">
+  <div class="flip-container" data-bind="css: {flipped: editMode}">
+    <div class="flipper">
+      <div class="front">
         <div class="health-flip-container" data-bind="css: {healthFlipped: deathSavesVisible()}">
           <div class="health-flipper">
             <div class="health-front">
@@ -46,7 +46,14 @@
             <div class="health-back">
               <div class="row">
                 <div class="col-xs-12">
-                  <h4><center> You are unconscious! </center></h4>
+                  <h4><center>
+                    <!-- ko if: rip()-->
+                    <span class="text-danger">You are dead <span class="deathSaveFailureIcon"/></span>
+                    <!-- /ko -->
+                    <!-- ko if: !rip() -->
+                    You are unconscious!
+                    <!-- /ko -->
+                  </center></h4>
                 </div>
                 <div class="col-xs-6">
                     <h4 style="text-align: center">Death Save Successes</h4>
@@ -63,14 +70,21 @@
                   </div>
                 </div>
                 <div class="col-xs-12" style="margin-top: 20px">
-                  <button type="button" class="btn btn-info btn-block" data-bind="click: stabilize">Stabilize</button>
+                  <button type="button" class="btn btn-block" data-bind="{click: stabilize, css: rip() ? 'btn-danger' : 'btn-info'}">
+                    <!-- ko if: rip() -->
+                    Revive
+                    <!-- /ko -->
+                    <!-- ko if: !rip() -->
+                    Stabilize
+                    <!-- /ko -->
+                    </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="health-edit-back">
+      <div class="back">
         <form class="form-horizontal" data-bind="submit: editHealth">
         <div class="form-group">
           <label for="name" class="col-sm-4 control-label">Max HP</label>

@@ -321,6 +321,12 @@ export function StatsViewModel() {
         return self.health().hitpoints() === 0 && !allSaved;
     });
 
+    self.rip = ko.computed(() => {
+        return self.deathSaveFailureList().every(function(save, idx, _) {
+            return save.deathSaveFailure();
+        });
+    });
+
     // Modal methods
     self.modifierHasFocus = ko.observable(false);
 

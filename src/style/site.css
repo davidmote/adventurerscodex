@@ -992,19 +992,19 @@ div.toggle-arrow-container {
 
 /* flip the pane when hovered */
 .health-flip-container.healthFlipped .health-flipper,
-.health-edit-flip-container.healthEditFlipped .health-edit-flipper {
+.flip-container.flipped .flipper {
 	transform: rotateY(180deg);
 }
 
 .health-flip-container, .health-front, .health-back,
-.health-edit-flip-container, .health-edit-front, .health-edit-back {
+.flip-container, .front, .back {
   width: 100%;
 	height: 300px;
   text-align: center;
 }
 
 /* flip speed goes here */
-.health-flipper, .health-edit-flipper {
+.health-flipper, .flipper {
 	transition: 0.6s;
 	transform-style: preserve-3d;
 	position: relative;
@@ -1012,7 +1012,7 @@ div.toggle-arrow-container {
 
 /* hide back of pane during swap */
 .health-front, .health-back,
-.health-edit-front, .health-edit-back  {
+.front, .back  {
 	backface-visibility: hidden;
 	position: absolute;
 	top: 0;
@@ -1020,19 +1020,19 @@ div.toggle-arrow-container {
 }
 
 /* front pane, placed above back */
-.health-front, .health-edit-front {
+.health-front, .front {
 	z-index: 2;
 	/* for firefox 31 */
 	transform: rotateY(0deg);
 }
 
 .healthFlipped .health-back,
-.healthEditFlipped .health-edit-back {
+.flipped .back {
   z-index: 3;
 }
 /* back, initially hidden pane */
 .health-back,
-.health-edit-back {
+.back {
 	transform: rotateY(180deg);
 }
 
