@@ -991,13 +991,12 @@ div.toggle-arrow-container {
   -webkit-perspective: 0px;
   padding-top: 0px;
   -webkit-font-smoothing: subpixel-antialiased;
-
 }
 
 /* flip the pane when hovered */
 .inner-flip-container.innerFlipped .inner-flipper,
 .flip-container.flipped .flipper {
-  transform: rotateY(180deg);
+  transform: rotate3d(0, 1, 0, 180deg);
   -webkit-ransform: rotateY(180deg);
 }
 
@@ -1024,8 +1023,6 @@ div.toggle-arrow-container {
 	top: 0;
 	left: 0;
   -webkit-backface-visibility: hidden;
-  /* -webkit-transform: translate3d(0,0,0); */
-  -webkit-transform: translateZ(0);
   visibility:visible;
   -webkit-font-smoothing: subpixel-antialiased;
   -webkit-filter: blur(0);
@@ -1034,8 +1031,8 @@ div.toggle-arrow-container {
 /* front pane, placed above back */
 .inner-front, .front {
 	z-index: 2;
-  transform: rotateY(0deg);
-  -webkit-transform: rotateY(0deg);
+  transform:  rotate3d(0, 1, 0, 0deg);
+  -webkit-transform:  rotate3d(0, 1, 0, 0deg);
 }
 
 .innerFlipped .inner-back,
@@ -1045,8 +1042,8 @@ div.toggle-arrow-container {
 /* back, initially hidden pane */
 .inner-back,
 .back {
-  transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg);
+  transform:  rotate3d(0, 1, 0, 180deg);
+  -webkit-transform:  rotate3d(0, 1, 0, 180deg);
 }
 
 
