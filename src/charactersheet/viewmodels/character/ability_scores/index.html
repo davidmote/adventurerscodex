@@ -1,13 +1,11 @@
 <div id="score-panel" style="min-width: 211px">
-  <button style="position: absolute; right: 0px; top: 0px; z-index: 5" class="btn btn-link" data-bind="click: editScores">
-    <span class="glyphicon" data-bind="css: editModeIcon" aria-hidden="true"></span>
-  </button>
+  <edit-button params="toggleMode: editMode, clickAction: editScores">
+  </edit-button>
   <div class="flip-container" data-bind="css: {flipped: editMode}">
     <div class="flipper">
       <div class="front">
-        <div class="inner-flip-container" data-bind="css: {innerFlipped: showSaves()}">
-          <div class="inner-flipper">
-            <div class="inner-front">
+        <!-- ko if: !showSaves() -->
+          <div>
               <div class="h4" style="padding-left:15px; padding-right: 15px;">
                 Ability Scores<br />
                 <small>Click on your Ability Scores to add or edit them.</small>
@@ -68,7 +66,9 @@
                 </tbody>
               </table>
             </div>
-            <div class="inner-back">
+            <!-- /ko -->
+            <!-- ko if: showSaves() -->
+            <div>
               <div class="h4" style="padding-left:15px; padding-right: 15px;">
                 Saving Throws<br />
                 <small>Savings
@@ -131,13 +131,11 @@
                 </tbody>
               </table>
             </div>
-          </div>
-        </div>
+            <!-- /ko -->
       </div>
       <div class="back">
-        <div class="inner-flip-container" data-bind="css: {innerFlipped: showSaves()}">
-          <div class="inner-flipper">
-            <div class="inner-front">
+        <!-- ko if: !showSaves() -->
+            <div>
               <div class="h4" style="padding-left:15px; padding-right: 15px;">
                 Ability Scores<br />
                 <small>Click on your Ability Scores to add or edit them.</small>
@@ -206,7 +204,9 @@
                 </div>
               </form>
             </div>
-            <div class="inner-back">
+            <!-- /ko -->
+            <!-- ko if: showSaves() -->
+            <div>
               <div class="h4" style="padding-left:15px; padding-right: 15px;">
                 Saving Throws<br />
                 <small>Savings
@@ -298,10 +298,8 @@
                 </div>
               </form>
             </div>
-          </div>
-        </div>
+            <!-- /ko -->
       </div>
     </div>
   </div>
-</div>
 </div>

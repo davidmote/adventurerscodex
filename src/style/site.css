@@ -987,9 +987,11 @@ div.toggle-arrow-container {
 
 /* entire container, keeps perspective */
 .inner-flip-container, .flip-container {
-	perspective: 1000px;
-  -webkit-perspective: 1000px;
+	perspective: 0px;
+  -webkit-perspective: 0px;
   padding-top: 0px;
+  -webkit-font-smoothing: subpixel-antialiased;
+
 }
 
 /* flip the pane when hovered */
@@ -1022,14 +1024,16 @@ div.toggle-arrow-container {
 	top: 0;
 	left: 0;
   -webkit-backface-visibility: hidden;
-  -webkit-transform: translate3d(0,0,0);
+  /* -webkit-transform: translate3d(0,0,0); */
+  -webkit-transform: translateZ(0);
   visibility:visible;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-filter: blur(0);
 }
 
 /* front pane, placed above back */
 .inner-front, .front {
 	z-index: 2;
-	/* for firefox 31 */
   transform: rotateY(0deg);
   -webkit-transform: rotateY(0deg);
 }
@@ -1043,6 +1047,14 @@ div.toggle-arrow-container {
 .back {
   transform: rotateY(180deg);
   -webkit-transform: rotateY(180deg);
+}
+
+
+.edit-btn {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  z-index: 6;
 }
 
 #health-panel {
@@ -1116,6 +1128,7 @@ input[type=number] {
       padding: 0px 15px;
     }
 }
+
 
 #ac {
   background:url('../images/shield.svg') no-repeat;

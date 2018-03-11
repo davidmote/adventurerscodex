@@ -30,24 +30,16 @@ export function OtherStatsViewModel() {
     self.proficiencyPopover = ko.observable();
     self.armorClassPopover = ko.observable();
     self.editMode = ko.observable(false);
-
-
-    self.editModeIcon = ko.pureComputed(() => (
-         this.editMode() ? 'glyphicon-floppy-save' : 'glyphicon-pencil'
-    ));
-
-
+    self.modifierHasFocus = ko.observable(false);
 
     self.editStats = function() {
         if (self.editMode()) {
             self.editMode(false);
-
         } else {
             self.editMode(true);
-
+            self.modifierHasFocus(true);
         }
     };
-
 
     self.load = function() {
         var key = CharacterManager.activeCharacter().key();

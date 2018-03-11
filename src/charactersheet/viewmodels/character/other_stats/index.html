@@ -1,8 +1,7 @@
 <!--AC, Initiative, Speed-->
 <div id="other-stats-panel" style="height: 400px">
-  <button style="position: absolute; right: 0; top: 0" class="btn btn-link" data-bind="click: editStats">
-    <span class="glyphicon" data-bind="css: editModeIcon" aria-hidden="true"></span>
-  </button>
+  <edit-button params="toggleMode: editMode, clickAction: editStats">
+  </edit-button>
   <div class="h4" style="padding-left:15px; padding-right: 15px;">
     Stats <br />
     <small class="h5">Hover over the (i) icon to learn about these stats.</small>
@@ -96,7 +95,7 @@
                   Armor Class
                 </td>
                 <td>
-                  <input style="height: 30px;" type="number" class="form-control" id="otherStatsAcModifierInput" aria-describedby="basic-addon2" data-bind="value: otherStats().armorClassModifier">
+                  <input style="height: 30px;" type="number" class="form-control" id="otherStatsAcModifierInput" aria-describedby="basic-addon2" data-bind="value: otherStats().armorClassModifier,  hasFocus: modifierHasFocus">
                 </td>
               </tr>
 
@@ -150,7 +149,6 @@
                   <input style="height: 30px;" type="number" class="form-control" id="otherStatsInspirationInput" aria-describedby="basic-addon2" data-bind="value: otherStats().inspiration" min="0">
                 </td>
               </tr>
-
             </tbody>
           </table>
           <button type="submit" style="display: none" />

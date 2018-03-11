@@ -27,9 +27,9 @@ export function StatsViewModel() {
     self.deathSaveFailureVisible = ko.observable(true);
     self.editHealthItem = ko.observable();
     self.editHitDiceItem = ko.observable();
-    self.modalOpen = ko.observable(false);
     self.editMode = ko.observable(false);
     self._dummy = ko.observable();
+    self.modifierHasFocus = ko.observable(false);
 
     self.getHealthColor = () => {
         if (self.health().isDangerous()) {
@@ -214,11 +214,6 @@ export function StatsViewModel() {
         self.hitDiceList([]);
     };
 
-
-    self.editModeIcon = ko.pureComputed(() => (
-         this.editMode() ? 'glyphicon-floppy-save' : 'glyphicon-pencil'
-    ));
-
     self.editHealthItem(new Health());
     self.editHitDiceItem(new HitDiceType());
     self.editHealth = function() {
@@ -232,6 +227,7 @@ export function StatsViewModel() {
             self.editHealthItem().importValues(self.health().exportValues());
             self.editHitDiceItem().importValues(self.hitDiceType().exportValues());
             self.editMode(true);
+            self.modifierHasFocus(true);
         }
     };
 
@@ -326,23 +322,6 @@ export function StatsViewModel() {
             return save.deathSaveFailure();
         });
     });
-
-    // Modal methods
-    self.modifierHasFocus = ko.observable(false);
-
-    self.modalFinishedAnimating = function() {
-        self.modifierHasFocus(true);
-    };
-
-    self.modalFinishedClosing = function() {
-        if (self.modalOpen()) {
-            self.health().importValues(self.editHealthItem().exportValues());
-            self.hitDiceType().importValues(self.editHitDiceItem().exportValues());
-        }
-        self.modalOpen(false);
-        self.hitDiceTypeDataHasChanged();
-        self.healthDataHasChange();
-    };
 
     // Prepopulate methods
     self.setHitDiceType = function(label, value) {

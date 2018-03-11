@@ -1,3 +1,4 @@
+import { EditButtonComponentViewModel } from './edit-button';
 import { FullScreenImageComponentViewModel } from './full-screen-image';
 import { ImagePickerComponentViewModel } from './image-picker';
 import { MarkdownEditPreviewComponentViewModel } from './markdown-edit-preview';
