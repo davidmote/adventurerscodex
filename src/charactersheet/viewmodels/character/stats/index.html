@@ -1,6 +1,6 @@
 
-<div id="health-panel" class="">
-  <button style="float: right" class="btn btn-link" data-toggle="editMode" data-bind="click: editHealth">
+<div id="health-panel">
+  <button style="float: right; position: absolute; top: 0px; right: 0px;" class="btn btn-link" data-toggle="editMode" data-bind="click: editHealth">
     <span class="glyphicon" data-bind="css: editModeIcon" aria-hidden="true"></span>
   </button>
   <div class="h4" style="padding-left:15px; padding-right: 15px;">
@@ -10,9 +10,9 @@
   <div class="flip-container" data-bind="css: {flipped: editMode}">
     <div class="flipper">
       <div class="front">
-        <div class="health-flip-container" data-bind="css: {healthFlipped: deathSavesVisible()}">
-          <div class="health-flipper">
-            <div class="health-front">
+        <div class="inner-flip-container" data-bind="css: {innerFlipped: deathSavesVisible()}">
+          <div class="inner-flipper">
+            <div class="inner-front">
               <div class="row">
                 <div class="col-xs-6">
                 <h4 style="text-align: center">Hit Points</h4>
@@ -23,6 +23,7 @@
                 <div style="position: absolute; top:0px" data-bind="circleProgress: tempHpChart()"> </div>
                 <!-- /ko -->
                 </div>
+                <div style="display: block; padding: 5px"></div> 
                 <plus-minus params="value: damageHandler,
                     max: health().totalHitpoints">
                 </plus-minus>
@@ -43,7 +44,7 @@
                 </div>
               </div>
             </div>
-            <div class="health-back">
+            <div class="inner-back">
               <div class="row">
                 <div class="col-xs-12">
                   <h4><center>

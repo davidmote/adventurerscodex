@@ -1,64 +1,161 @@
 <!--AC, Initiative, Speed-->
- <div class="row">
-   <div class="col-md-6 col-padded">
-     <div class="input-group">
-       <span class="input-group-addon" id="basic-addon2">AC&nbsp;
-          <span class="fa fa-info-circle" id="otherStatsAcPopoverIconSpan" style="cursor:pointer;" data-bind="popover: { content: armorClassPopover }"></span>
-       </span>
-       <span class="input-group-addon" id="otherStatsAcSpan" data-bind="text: armorClass"></span>
-       <input type="number" class="form-control" id="otherStatsAcModifierInput" aria-describedby="basic-addon2" data-bind="value: otherStats().armorClassModifier">
-     </div>
-   </div>
-   <div class="col-md-6 col-padded">
-     <div class="input-group">
-       <span class="input-group-addon" id="basic-addon2">
-        Proficiency Bonus&nbsp;
-         <span class="fa fa-info-circle" id="otherStatsProficiencyPopoverIconSpan" style="cursor:pointer;" data-bind="popover: { content: proficiencyPopover }"></span>
-      </span>
-       <span class="input-group-addon" id="otherStatsProficiencySpan" data-bind="text: calculatedProficiencyLabel"></span>
-       <input type="number" class="form-control" id="otherStatsProficiencyBonusModifierInput" aria-describedby="basic-addon2" data-bind="value: otherStats().proficiency">
-     </div>
-   </div>
- </div>
- <div class="row">
-   <div class="col-md-6 col-padded">
-     <div class="input-group">
-       <span class="input-group-addon" id="basic-addon2">Initiative&nbsp;
-          <span class="fa fa-info-circle" id="otherStatsInitiativePopoverIconSpan" style="cursor:pointer;" data-bind="popover: { content: initiativePopover }"></span>
-       </span>
-       <span class="input-group-addon" id="otherStatsInitiativeSpan" data-bind="text: initiativeLabel"></span>
-       <input type="number" class="form-control" id="otherStatsInitiativeModiferInput" aria-describedby="basic-addon2" data-bind="value: otherStats().initiative">
-     </div>
-   </div>
-   <div class="col-md-6 col-padded">
-     <div class="input-group">
-       <span class="input-group-addon" id="basic-addon2">Speed</span>
-       <input type="number" class="form-control" id="otherStatsSpeedInput" aria-describedby="basic-addon2" data-bind="value: otherStats().speed" min="0">
-     </div>
-   </div>
- </div>
- <!--  Level and exp -->
- <div class="row">
-   <div class="col-md-6 col-padded">
-     <div class="input-group">
-       <span class="input-group-addon" id="basic-addon2">Level</span>
-       <input type="number" class="form-control" id="otherStatsLevelInput" aria-describedby="basic-addon2"
-        data-bind="value: level" min="0">
-     </div>
-   </div>
-   <div class="col-md-6 col-padded">
-     <div class="input-group">
-       <span class="input-group-addon" id="basic-addon2">Experience</span>
-       <input type="number" class="form-control" id="otherStatsExperienceInput" aria-describedby="basic-addon2"
-        data-bind="value: experience" min="0">
-     </div>
-   </div>
- </div>
- <div class="row">
-   <div class="col-md-6 col-padded">
-     <div class="input-group">
-       <span class="input-group-addon">Inspiration</span>
-       <input type="number" class="form-control" id="otherStatsInspirationInput" aria-describedby="basic-addon2" data-bind="value: otherStats().inspiration" min="0">
-     </div>
-   </div>
- </div>
+<div id="other-stats-panel" style="height: 400px">
+  <button style="position: absolute; right: 0; top: 0" class="btn btn-link" data-bind="click: editStats">
+    <span class="glyphicon" data-bind="css: editModeIcon" aria-hidden="true"></span>
+  </button>
+  <div class="h4" style="padding-left:15px; padding-right: 15px;">
+    Stats <br />
+    <small class="h5">Hover over the (i) icon to learn about these stats.</small>
+  </div>
+
+  <div class="flip-container" data-bind="css: {flipped: editMode}">
+    <div class="flipper">
+      <div class="front">
+        <table style="text-align:left" class="table table-responsive table-ac-bordered table-hover" id="savingThrowTable">
+          <tbody>
+
+            <td>
+              <span style="display: inline-block" class="h4">Armor Class&nbsp;<span class="fa fa-info-circle" id="otherStatsAcPopoverIconSpan" style="cursor:pointer; display: inline; font-size:0.8em; float: right;" data-bind="popover: { content: armorClassPopover }"></span>
+              </span>
+            </td>
+            <td>
+              <div id="ac" style="text-align: center; vertical-align: middle; height: 6ex; color: white;  padding: 5px; padding-top: 2px;">
+                <span style="font-size: 1.4em;" data-bind="text: armorClass"></span>
+              </div>
+            </td>
+            </tr>
+
+            <tr>
+              <tr>
+                <td>
+                  <span style="display: inline-block">Proficiency Bonus&nbsp;<span class="fa fa-info-circle" id="otherStatsProficiencyPopoverIconSpan" style="cursor:pointer; display: inline; float: right;" data-bind="popover: { content: proficiencyPopover }"></span>
+                  </span>
+                </td>
+                <td>
+                  <span style="padding: 5px; display: inline-block">+<span data-bind="text: calculatedProficiencyLabel"></span></span>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <span style="display: inline-block">Initiative&nbsp;<span class="fa fa-info-circle" id="otherStatsInitiativePopoverIconSpan" style="cursor:pointer; display: inline;  float: right;" data-bind="popover: { content: initiativePopover }"></span>
+                  </span>
+                </td>
+                <td>
+                  <span style=" padding: 5px; display: inline-block"><span data-bind="text: parseInt(initiativeLabel) < 0 ? '' : '+'"></span><span data-bind="text: initiativeLabel"></span></span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span style="display: inline-block">Movement</span>
+                </td>
+                <td>
+                  <span style=" padding: 5px; display: inline-block"><span data-bind="text: otherStats().speed"></span></span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span style="display: inline-block">Level</span>
+                </td>
+                <td>
+                  <span style=" padding: 5px; display: inline-block"><span data-bind="text: level" ></span></span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span style="display: inline-block">Experience</span>
+                </td>
+                <td>
+                  <span style=" padding: 5px; display: inline-block"><span data-bind="text: experience"></span></span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span style="display: inline-block">Inspiration&nbsp;</span>
+                </td>
+                <td>
+                  <span data-bind="text: otherStats().inspiration"></span>
+                </td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="back">
+        <form data-bind="{submit: editStats}">
+          <table class="table table-responsive table-ac-bordered table-hover" id="savingThrowTable">
+            <thead>
+              <tr>
+                <th style="width:65%">
+                </th>
+                <th>Modify</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  Armor Class
+                </td>
+                <td>
+                  <input style="height: 30px;" type="number" class="form-control" id="otherStatsAcModifierInput" aria-describedby="basic-addon2" data-bind="value: otherStats().armorClassModifier">
+                </td>
+              </tr>
+
+
+              <tr>
+                <td>
+                  Proficiency Bonus
+                </td>
+                <td>
+                  <input style="height: 30px;" type="number" class="form-control" id="otherStatsProficiencyBonusModifierInput" aria-describedby="basic-addon2" data-bind="value: otherStats().proficiency">
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  Initiative
+                </td>
+                <td>
+                  <input style="height: 30px;" type="number" class="form-control" id="otherStatsInitiativeModiferInput" aria-describedby="basic-addon2" data-bind="value: otherStats().initiative">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Movement
+                </td>
+                <td>
+                  <input style="height: 30px;" type="number" class="form-control" id="otherStatsSpeedInput" aria-describedby="basic-addon2" data-bind="value: otherStats().speed" min="0">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Level
+                </td>
+                <td>
+                  <input style="height: 30px;" type="number" class="form-control" id="otherStatsLevelInput" aria-describedby="basic-addon2" data-bind="value: level" min="0">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Experience
+                </td>
+                <td>
+                  <input style="height: 30px;" type="number" class="form-control" id="otherStatsExperienceInput" aria-describedby="basic-addon2" data-bind="value: experience" min="0">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Inspiration
+                </td>
+                <td>
+                  <input style="height: 30px;" type="number" class="form-control" id="otherStatsInspirationInput" aria-describedby="basic-addon2" data-bind="value: otherStats().inspiration" min="0">
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+          <button type="submit" style="display: none" />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

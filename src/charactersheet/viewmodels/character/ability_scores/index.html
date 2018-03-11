@@ -1,159 +1,307 @@
-<div class="panel panel-default bio">
-  <div class="panel-body">
-    <div class="row" data-bind="click: openModal, with: abilityScores"
-         title="Click to edit Ability Scores.">
-      <div class="table-responsive">
-        <table class="table table-hover table-no-margin" id="abilityScoresTable">
-          <thead>
-            <tr class="clickable">
-              <th width="16%" class="text-center">Strength</th>
-              <th width="16%" class="text-center">Dexterity</th>
-              <th width="16%" class="text-center">Constitution</th>
-              <th width="16%" class="text-center">Intelligence</th>
-              <th width="16%" class="text-center">Wisdom</th>
-              <th width="16%" class="text-center">Charisma</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="clickable">
-              <td class="text-center">
-                <span data-bind='text: str' id="abilityScoresTableStrengthSpan"></span>
-                <sup>
-                  <span class="badge" id="abilityScoresTableStrengthModifierSpan" data-bind="text: strModifier"></span>
-                </sup>
-              </td>
-              <td class="text-center">
-                <span data-bind='text: dex' id="abilityScoresTableDexteritySpan"></span>
-                <sup>
-                  <span class="badge" id="abilityScoresTableDexterityModifierSpan" data-bind="text: dexModifier"></span>
-                </sup>
-              </td>
-              <td class="text-center">
-                <span data-bind='text: con' id="abilityScoresTableConstitutionSpan"></span>
-                <sup>
-                  <span class="badge" id="abilityScoresTableConstitutionModifierSpan" data-bind="text: conModifier"></span>
-                </sup>
-              </td>
-              <td class="text-center">
-                <span data-bind='text: int' id="abilityScoresTableIntelligIntelligenceSpan"></span>
-                <sup>
-                  <span class="badge" id="abilityScoresTableIntelligIntelligenceModifierSpan" data-bind="text: intModifier"></span>
-                </sup>
-              </td>
-              <td class="text-center">
-                <span data-bind='text: wis' id="abilityScoresTableWisdomSpan"></span>
-                <sup>
-                  <span class="badge" id="abilityScoresTableWisdomModifierSpan" data-bind="text: wisModifier"></span>
-                </sup>
-              </td>
-              <td class="text-center">
-                <span data-bind='text: cha' id="abilityScoresTableCharismaSpan"></span>
-                <sup>
-                  <span class="badge" id="abilityScoresTableCharismaModifierSpan" data-bind="text: chaModifier"></span>
-                </sup>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+<div id="score-panel" style="min-width: 211px">
+  <button style="position: absolute; right: 0px; top: 0px; z-index: 5" class="btn btn-link" data-bind="click: editScores">
+    <span class="glyphicon" data-bind="css: editModeIcon" aria-hidden="true"></span>
+  </button>
+  <div class="flip-container" data-bind="css: {flipped: editMode}">
+    <div class="flipper">
+      <div class="front">
+        <div class="inner-flip-container" data-bind="css: {innerFlipped: showSaves()}">
+          <div class="inner-flipper">
+            <div class="inner-front">
+              <div class="h4" style="padding-left:15px; padding-right: 15px;">
+                Ability Scores<br />
+                <small>Click on your Ability Scores to add or edit them.</small>
+              </div>
+              <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-default btn-sm" data-bind="click: toggleSaves(false), css: {active: !showSaves()}">Scores</button>
+                </div>
+                <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-default btn-sm" data-bind="click: toggleSaves(true), css: {active: showSaves()}">Saves</button>
+                </div>
+              </div>
+              <table class="table table-responsive table-ac-bordered table-hover" id="savingThrowTable">
+                <thead>
+                  <tr>
+                    <th>
+                      Score
+                    </th>
+                    <th>
+                      Ability
+                    </th>
+                    <th>
+                      Bonus
+                    </th>
+                  </tr>
+                </thead>
+                <tbody data-bind='with: abilityScores'>
+                  <tr>
+                    <td><span data-bind='text: str'></span></td>
+                    <td>Strength</td>
+                    <td><strong data-bind="text: strModifier"> </strong></td>
+                  </tr>
+                  <tr>
+                    <td><span data-bind='text: dex'></span></td>
+                    <td>Dexterity</td>
+                    <td><strong data-bind="text: dexModifier"> </strong></td>
+                  </tr>
+                  <tr>
+                    <td><span data-bind='text: con'></span></td>
+                    <td>Constitution</td>
+                    <td><strong data-bind="text: conModifier"> </strong></td>
+                  </tr>
+                  <tr>
+                    <td><span data-bind='text: int'></span></td>
+                    <td>Intelligence</td>
+                    <td><strong data-bind="text: intModifier"> </strong></td>
+                  </tr>
+                  <tr>
+                    <td><span data-bind='text: wis'></span></td>
+                    <td>Wisdom</td>
+                    <td><strong data-bind="text: wisModifier"> </strong></td>
+                  </tr>
+                  <tr>
+                    <td><span data-bind='text: cha'></span></td>
+                    <td>Charisma</td>
+                    <td><strong data-bind="text: chaModifier"> </strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="inner-back">
+              <div class="h4" style="padding-left:15px; padding-right: 15px;">
+                Saving Throws<br />
+                <small>Savings
+                Your Ability Score modifier
+                and Proficiency Bonus are included.</small>
+              </div>
+              <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-default btn-sm" data-bind="click: toggleSaves(false), css: {active: !showSaves()}">Scores</button>
+                </div>
+                <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-default btn-sm" data-bind="click: toggleSaves(true), css: {active: showSaves()}">Saves</button>
+                </div>
+              </div>
+              <table class="table table-responsive table-ac-bordered table-hover" id="savingThrowTable">
+                <thead>
+                  <tr>
+                    <th>
+                      <span class="glyphicon glyphicon-ok"></span>
+                    </th>
+                    <th>
+                      Ability
+                    </th>
+                    <th>
+                      Bonus
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-bind="with: findSaveByName('Strength')">
+                    <td><span data-bind="css: proficiencyLabel"></span></td>
+                    <td>Strength</td>
+                    <td><strong data-bind="text: modifierLabel"> </strong></td>
+                  </tr>
+                  <tr data-bind="with: findSaveByName('Dexterity')">
+                    <td><span data-bind="css: proficiencyLabel"></span></td>
+                    <td>Dexterity</td>
+                    <td><strong data-bind="text: modifierLabel"> </strong></td>
+                  </tr>
+                  <tr data-bind="with: findSaveByName('Constitution')">
+                    <td><span data-bind="css: proficiencyLabel"></span></td>
+                    <td>Constitution</td>
+                    <td><strong data-bind="text: modifierLabel"> </strong></td>
+                  </tr>
+                  <tr data-bind="with: findSaveByName('Intelligence')">
+                    <td><span data-bind="css: proficiencyLabel"></span></td>
+                    <td>Intelligence</td>
+                    <td><strong data-bind="text: modifierLabel"> </strong></td>
+                  </tr>
+                  <tr data-bind="with: findSaveByName('Wisdom')">
+                    <td><span data-bind="css: proficiencyLabel"></span></td>
+                    <td>Wisdom</td>
+                    <td><strong data-bind="text: modifierLabel"> </strong></td>
+                  </tr>
+                  <tr data-bind="with: findSaveByName('Charisma')">
+                    <td><span data-bind="css: proficiencyLabel"></span></td>
+                    <td>Charisma</td>
+                    <td><strong data-bind="text: modifierLabel"> </strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="back">
+        <div class="inner-flip-container" data-bind="css: {innerFlipped: showSaves()}">
+          <div class="inner-flipper">
+            <div class="inner-front">
+              <div class="h4" style="padding-left:15px; padding-right: 15px;">
+                Ability Scores<br />
+                <small>Click on your Ability Scores to add or edit them.</small>
+              </div>
+              <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-default btn-sm" data-bind="click: toggleSaves(false), css: {active: !showSaves()}">Scores</button>
+                </div>
+                <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-default btn-sm" data-bind="click: toggleSaves(true), css: {active: showSaves()}">Saves</button>
+                </div>
+              </div>
+              <form class="form-horizontal" data-bind="submit: editScores">
+                <div>
+                  <table class="table table-responsive table-ac-bordered table-hover" id="savingThrowTable">
+                    <thead>
+                      <tr>
+                        <th>
+                          Score
+                        </th>
+                        <th>
+                          Ability
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody data-bind="{with: editItem}">
+                      <tr>
+                        <td>
+                          <input type="number" class="form-control ability-score-input pull-left" id="abilityScoresEditStrengthInput" min="0" data-bind="value: str">
+                        </td>
+                        <td>Strength</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input type="number" class="form-control ability-score-input" id="abilityScoresEditDexterityInput" min="0" data-bind='value: dex'>
+                        </td>
+                        <td>Dexterity</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input type="number" class="form-control ability-score-input" id="abilityScoresEditConstitutionInput" min="0" data-bind='value: con'>
+                        </td>
+                        <td>Constitution</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input type="number" class="form-control ability-score-input" id="abilityScoresEditIntelligenceInput" min="0" data-bind='value: int'>
+                        </td>
+                        <td>Intelligence</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input type="number" class="form-control ability-score-input" id="abilityScoresEditWisdomInput" min="0" data-bind='value: wis'>
+                        </td>
+                        <td>Wisdom</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input type="number" class="form-control ability-score-input" id="abilityScoresEditCharismaTextarea" min="0" data-bind='value: cha'>
+                        </td>
+                        <td>Charisma</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <button type="submit" style="display:none"></button>
+                </div>
+              </form>
+            </div>
+            <div class="inner-back">
+              <div class="h4" style="padding-left:15px; padding-right: 15px;">
+                Saving Throws<br />
+                <small>Savings
+                Your Ability Score modifier
+                and Proficiency Bonus are included.</small>
+              </div>
+              <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-default btn-sm" data-bind="click: toggleSaves(false), css: {active: !showSaves()}">Scores</button>
+                </div>
+                <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-default btn-sm" data-bind="click: toggleSaves(true), css: {active: showSaves()}">Saves</button>
+                </div>
+              </div>
+              <form class="form-horizontal" data-bind="{submit: editScores}">
+                <div>
+                  <table class="table table-responsive table-ac-bordered table-hover" id="savingThrowTable">
+                    <thead>
+                      <tr>
+                        <th>
+                          Prof
+                        </th>
+                        <th>
+                          Ability
+                        </th>
+                        <th>
+                          Bonus
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr data-bind="with: findSaveByName('Strength')">
+                        <td>
+                          <input type="checkbox" style="height: 25px" class="form-control" data-bind="checked: proficiency">
+                        </td>
+                        <td>Strength</td>
+                        <td>
+                          <input type="number" class="form-control ability-score-input" data-bind="value: modifier" />
+                        </td>
+                      </tr>
+                      <tr data-bind="with: findSaveByName('Dexterity')">
+                        <td>
+                          <input type="checkbox" style="height: 25px" class="form-control" data-bind="checked: proficiency">
+                        </td>
+                        <td>Dexterity</td>
+                        <td>
+                          <input type="number" class="form-control ability-score-input" data-bind="value: modifier" />
+                        </td>
+                      </tr>
+                      <tr data-bind="with: findSaveByName('Constitution')">
+                        <td>
+                          <input type="checkbox" style="height: 25px" class="form-control" data-bind="checked: proficiency">
+                        </td>
+                        <td>Constitution</td>
+                        <td>
+                          <input type="number" class="form-control ability-score-input" data-bind="value: modifier" />
+                        </td>
+                      </tr>
+                      <tr data-bind="with: findSaveByName('Intelligence')">
+                        <td>
+                          <input type="checkbox" style="height: 25px" class="form-control" data-bind="checked: proficiency">
+                        </td>
+                        <td>Intelligence</td>
+                        <td>
+                          <input type="number" class="form-control ability-score-input" data-bind="value: modifier" />
+                        </td>
+                      </tr>
+                      <tr data-bind="with: findSaveByName('Wisdom')">
+                        <td>
+                          <input type="checkbox" style="height: 25px" class="form-control" data-bind="checked: proficiency">
+                        </td>
+                        <td>Wisdom</td>
+                        <td>
+                          <input type="number" class="form-control ability-score-input" data-bind="value: modifier" />
+                        </td>
+                      </tr>
+                      <tr data-bind="with: findSaveByName('Charisma')">
+                        <td>
+                          <input type="checkbox" style="height: 25px" class="form-control" data-bind="checked: proficiency">
+                        </td>
+                        <td>Charisma</td>
+                        <td>
+                          <input type="number" class="form-control ability-score-input" data-bind="value: modifier" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <button type="submit" style="display:none"></button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<!-- Edit Modal -->
-<div class="modal fade" tabindex="-1" role="dialog"
-   data-bind="modal: {
-      open: modalStatus,
-      onopen: modalFinishedAnimating,
-      onclose: modalFinishedClosing
-    }, with: editItem">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"> <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">
-          Edit Ability Scores
-        </h4>
-      </div>
-      <div class="modal-body">
-        <form class="form-horizontal">
-          <div class="form-group">
-            <label class="col-xs-7 pull-left">Strength</label>
-            <div class="col-xs-5">
-              <input type="number"
-                     class="form-control ability-score-input pull-left"
-                     id="abilityScoresEditStrengthInput"
-                     min="0"
-                     data-bind='value: str,
-                      hasFocus: $parent.firstModalElementHasFocus'>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-xs-7 pull-left">Dexterity</label>
-            <div class="col-xs-5">
-              <input type="number"
-                     class="form-control ability-score-input"
-                     id="abilityScoresEditDexterityInput"
-                     min="0"
-                     data-bind='value: dex'>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-xs-7 pull-left">Constitution</label>
-            <div class="col-xs-5">
-              <input type="number"
-                     class="form-control ability-score-input"
-                     id="abilityScoresEditConstitutionInput"
-                     min="0"
-                     data-bind='value: con'>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-xs-7 pull-left">Intelligence</label>
-            <div class="col-xs-5">
-              <input type="number"
-                     class="form-control ability-score-input"
-                     id="abilityScoresEditIntelligenceInput"
-                     min="0"
-                     data-bind='value: int'>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-xs-7 pull-left">Wisdom</label>
-            <div class="col-xs-5">
-              <input type="number"
-                     class="form-control ability-score-input"
-                     id="abilityScoresEditWisdomInput"
-                     min="0"
-                     data-bind='value: wis'>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-xs-7 pull-left">Charisma</label>
-            <div class="col-xs-5">
-              <input type="number"
-                     class="form-control ability-score-input"
-                     id="abilityScoresEditCharismaTextarea"
-                     min="0"
-                     data-bind='value: cha'>
-            </div>
-          </div>
-          <div class="modal-footer-ability-scores">
-            <div class="form-group">
-              <div class="col-xs-offset-7 col-xs-5">
-                <button type="button"
-                        class="btn btn-primary"
-                        id="abilityScoresEditDoneButton"
-                        data-dismiss="modal">Done</button>
-              </div>
-             </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
 </div>

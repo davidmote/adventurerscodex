@@ -3,11 +3,17 @@ import {
     AbilityScores,
     getModifier,
     getStrModifier } from 'charactersheet/models/character/ability_scores';
+
 import {
     CharacterManager,
     Notifications
 } from 'charactersheet/utilities';
+
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { SavingThrows } from 'charactersheet/models/character';
+
+import { find } from 'lodash';
+
 import ko from 'knockout';
 import template from './index.html';
 
@@ -19,8 +25,70 @@ export function AbilityScoresViewModel() {
     self.modalStatus = ko.observable(false);
     self.editItem = ko.observable();
     self.firstModalElementHasFocus = ko.observable(false);
+    self.editMode = ko.observable(false);
+    self.showSaves = ko.observable(false);
+
+
+    self.blankSavingThrow = ko.observable(new SavingThrows());
+    self.savingThrows = ko.observableArray([]);
+    // self.modalOpen = ko.observable(false);
+    // self.editItemIndex = null;
+    // self.currentEditItem = ko.observable();
+
+    self.toggleSaves = (newValue) => {
+        self.showSaves(!self.showSaves());
+        // if (self.showSaves() !== newValue) {
+        //     self.showSaves(newValue);
+        // }
+    };
+    self._defaultSavingThrows = function() {
+        var savingThrows = [
+            { name: 'Strength', proficency: false, modifier: null },
+            { name: 'Dexterity', proficency: false, modifier: null },
+            { name: 'Constitution', proficency: false, modifier: null },
+            { name: 'Intelligence', proficency: false, modifier: null },
+            { name: 'Wisdom', proficency: false, modifier: null },
+            { name: 'Charisma', proficency: false, modifier: null }
+        ];
+        return savingThrows.map(function(e,i, _) {
+            var savingThrow = new SavingThrows();
+            e.characterId = CharacterManager.activeCharacter().key();
+            savingThrow.importValues(e);
+            return savingThrow;
+        });
+    };
+
+
+
+    self.findSaveByName = (name) => {
+        const savingThrow = find(self.savingThrows(), (savingthrow)=>{return savingthrow.name() === name;});
+        return savingThrow;
+    };
+
+
+
+    self.editModeIcon = ko.pureComputed(() => (
+         this.editMode() ? 'glyphicon-floppy-save' : 'glyphicon-pencil'
+    ));
 
     self.load = function() {
+
+        Notifications.abilityScores.changed.add(self.updateSaveValues);
+        Notifications.stats.changed.add(self.updateSaveValues);
+        Notifications.global.save.add(self.save);
+        var savingThrows = PersistenceService.findBy(SavingThrows, 'characterId',
+          CharacterManager.activeCharacter().key());
+        if (savingThrows.length > 0) {
+            self.savingThrows(savingThrows);
+        } else {
+            self.savingThrows(self._defaultSavingThrows());
+            self.savingThrows().forEach(function(e, i, _) {
+                e.characterId(CharacterManager.activeCharacter().key());
+            });
+            self.save();
+        }
+
+
         Notifications.global.save.add(self.save);
         var key = CharacterManager.activeCharacter().key();
         var scores = PersistenceService.findBy(AbilityScores, 'characterId', key);
@@ -38,17 +106,30 @@ export function AbilityScoresViewModel() {
         self.abilityScores().int.subscribe(self.intelligenceHasChanged);
         self.abilityScores().wis.subscribe(self.dataHasChanged);
         self.abilityScores().cha.subscribe(self.dataHasChanged);
+
     };
 
     self.unload = function() {
         self.save();
         Notifications.global.save.remove(self.save);
+        Notifications.abilityScores.changed.remove(self.updateSaveValues);
+        Notifications.stats.changed.remove(self.updateSaveValues);
+        Notifications.global.save.remove(self.save);
+
     };
 
     self.save = function() {
         self.abilityScores().save();
+        self.savingThrows().forEach(function(e, i, _) {
+            e.save();
+        });
     };
 
+    self.updateSaveValues = function() {
+        self.savingThrows().forEach(function(e, i, _) {
+            e.updateValues();
+        });
+    };
     self.dataHasChanged = function() {
         self.abilityScores().save();
         Notifications.abilityScores.changed.dispatch();
@@ -67,6 +148,24 @@ export function AbilityScoresViewModel() {
     };
 
     // Modal Methods
+    self.editItem(new AbilityScores());
+
+    self.editScores = function() {
+        if (self.editMode()) {
+            self.abilityScores().importValues(self.editItem().exportValues());
+            self.editMode(false);
+            self.abilityScores().save();
+            self.savingThrows().forEach(function(e, i, _) {
+                e.save();
+            });
+        } else {
+            self.editItem().importValues(self.abilityScores().exportValues());
+            self.editMode(true);
+         // Alert the modal even if the value didn't technically change.
+            self.modalStatus.valueHasMutated();
+        }
+    };
+
 
     self.openModal = function() {
         self.editItem(new AbilityScores());
