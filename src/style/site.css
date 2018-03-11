@@ -988,16 +988,14 @@ div.toggle-arrow-container {
 /* entire container, keeps perspective */
 .inner-flip-container, .flip-container {
 	perspective: 0px;
-  -webkit-perspective: 0px;
+  -webkit-perspective-origin: 0;
   padding-top: 0px;
-  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 /* flip the pane when hovered */
 .inner-flip-container.innerFlipped .inner-flipper,
 .flip-container.flipped .flipper {
-  transform: rotate3d(0, 1, 0, 180deg);
-  -webkit-ransform: rotateY(180deg);
+  transform: rotate3d(0, 1, 0, 180deg) translate3d(0,0,-50px);
 }
 
 .inner-flip-container, .inner-front, .inner-back,
@@ -1019,20 +1017,17 @@ div.toggle-arrow-container {
 .inner-front, .inner-back,
 .front, .back  {
 	backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  visibility: visible;
 	position: absolute;
 	top: 0;
 	left: 0;
-  -webkit-backface-visibility: hidden;
-  visibility:visible;
-  -webkit-font-smoothing: subpixel-antialiased;
-  -webkit-filter: blur(0);
 }
 
 /* front pane, placed above back */
 .inner-front, .front {
 	z-index: 2;
-  transform:  rotate3d(0, 1, 0, 0deg);
-  -webkit-transform:  rotate3d(0, 1, 0, 0deg);
+  transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
 }
 
 .innerFlipped .inner-back,
@@ -1042,8 +1037,11 @@ div.toggle-arrow-container {
 /* back, initially hidden pane */
 .inner-back,
 .back {
-  transform:  rotate3d(0, 1, 0, 180deg);
-  -webkit-transform:  rotate3d(0, 1, 0, 180deg);
+  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+}
+
+.flipped .back .innerFlipped .inner-back {
+  transform: rotate3d(0, 1, 0, 180deg) translateZ(-50px);
 }
 
 
