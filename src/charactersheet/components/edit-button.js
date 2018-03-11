@@ -9,10 +9,11 @@ import ko from 'knockout';
  */
 export function EditButtonComponentViewModel(params) {
     var self = this;
-    self.clickAction = ko.utils.unwrapObservable(params.clickAction);
-    self.toggleMode = ko.utils.unwrapObservable(params.toggleMode);
+    self.clickAction = params.clickAction;
+    self.toggleMode = params.toggleMode;
+
     self.editModeIcon = ko.pureComputed(() => (
-         this.toggleMode ? 'glyphicon-floppy-save' : 'glyphicon-pencil'
+         self.toggleMode() ? 'glyphicon-floppy-save' : 'glyphicon-pencil'
     ));
 }
 
