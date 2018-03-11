@@ -988,13 +988,15 @@ div.toggle-arrow-container {
 /* entire container, keeps perspective */
 .inner-flip-container, .flip-container {
 	perspective: 1000px;
+  -webkit-perspective: 1000px;
   padding-top: 0px;
 }
 
 /* flip the pane when hovered */
 .inner-flip-container.innerFlipped .inner-flipper,
 .flip-container.flipped .flipper {
-	transform: rotateY(180deg);
+  transform: rotateY(180deg);
+  -webkit-ransform: rotateY(180deg);
 }
 
 .inner-flip-container, .inner-front, .inner-back,
@@ -1007,6 +1009,8 @@ div.toggle-arrow-container {
 .inner-flipper, .flipper {
 	transition: 0.6s;
 	transform-style: preserve-3d;
+  -webkit-transition: 0.6s;
+  -webkit-transform-style: preserve-3d;
 	position: relative;
 }
 
@@ -1017,13 +1021,17 @@ div.toggle-arrow-container {
 	position: absolute;
 	top: 0;
 	left: 0;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translate3d(0,0,0);
+  visibility:visible;
 }
 
 /* front pane, placed above back */
 .inner-front, .front {
 	z-index: 2;
 	/* for firefox 31 */
-	transform: rotateY(0deg);
+  transform: rotateY(0deg);
+  -webkit-transform: rotateY(0deg);
 }
 
 .innerFlipped .inner-back,
@@ -1033,7 +1041,8 @@ div.toggle-arrow-container {
 /* back, initially hidden pane */
 .inner-back,
 .back {
-	transform: rotateY(180deg);
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
 }
 
 #health-panel {
@@ -1084,10 +1093,10 @@ div.toggle-arrow-container {
     margin-top: 10px;
     margin-bottom: 10px;
   }
-
+/*
 input[type='number'] {
     -moz-appearance:textfield;
-}
+} */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     /* display: none; <- Crashes Chrome on hover */
