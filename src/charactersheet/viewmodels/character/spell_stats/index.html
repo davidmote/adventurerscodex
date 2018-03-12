@@ -1,3 +1,174 @@
+<div id="spell-stats-panel" style="height: 400px">
+  <edit-button params="toggleMode: editMode, clickAction: editStats">
+  </edit-button>
+  <div class="h4">
+    Spell Stats<br/>
+    <small>Click to edit.</small>
+  </div>
+  <div class="flip-container" data-bind="css: {flipped: editMode}">
+    <div class="flipper">
+      <div class="front">
+        <table data-bind="{with: spellStats}" style="text-align:left" class="table table-responsive table-ac-bordered table-hover" id="spellStatsTable">
+          <tbody>
+              <tr>
+                <td>
+                  <span class="h4" style="display: inline-block">Spell Attack Bonus</span>
+                </td>
+                <td>
+                  <span style=" padding: 5px; display: inline-block">
+                    <strong>+<span data-bind="text: spellAttackBonus"></span></strong>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="h4" style="display: inline-block">Spell Save DC</span>
+                </td>
+                <td>
+                  <span style=" padding: 5px; display: inline-block">
+                    <strong data-bind="text: spellSaveDc"></strong>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span style="display: inline-block">Spell Casting Ability</span>
+                </td>
+                <td>
+                  <span style=" padding: 5px; display: inline-block">
+                    <span data-bind="text: spellcastingAbility"></span>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span style="display: inline-block">Cantrips Known</span>
+                </td>
+                <td>
+                  <span style=" padding: 5px; display: inline-block">
+                    <span data-bind="text: spellsCantripsKnown"></span>
+                  </span>
+                </td>
+              </tr>
+              <!-- ko if: spellsKnown -->
+              <tr>
+                <td>
+                  <span style="display: inline-block">Spells Known</span>
+                </td>
+                <td>
+                  <span style=" padding: 5px; display: inline-block">
+                    <span data-bind="text: spellsKnown"></span>
+                  </span>
+                </td>
+              </tr>
+              <!-- /ko -->
+              <!-- ko if: spellsMaxPrepared  -->
+              <tr>
+                <td>
+                  <span style="display: inline-block">Max Prepared</span>
+                </td>
+                <td>
+                  <span style=" padding: 5px; display: inline-block">
+                    <span data-bind="text: spellsMaxPrepared"></span>
+                  </span>
+                </td>
+              </tr>
+              <!-- /ko -->
+              <!-- ko if: spellsInvocationsKnown  -->
+              <tr>
+                <td>
+                  <span style="display: inline-block">Invocations Known</span>
+                </td>
+                <td>
+                  <span style=" padding: 5px; display: inline-block">
+                    <span data-bind="text: spellsInvocationsKnown"></span>
+                  </span>
+                </td>
+              </tr>
+              <!-- /ko -->
+          </tbody>
+        </table>
+      </div>
+      <div class="back">
+        <form  data-bind="{submit: editStats, with: editItem}" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-xs-7 pull-left">Spell Attack Bonus</label>
+            <div class="col-xs-5">
+              <input type="number"
+                     class="form-control ability-score-input pull-left"
+                     id="spellStatsEditSpellAttackBonusInput"
+                     data-bind='textInput: spellAttackBonus,
+                      hasFocus: $parent.firstModalElementHasFocus'>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-7 pull-left">Spell Save DC</label>
+            <div class="col-xs-5">
+              <input type="number"
+                     class="form-control ability-score-input"
+                     id="spellStatsEditSpellSaveDcInput"
+                     data-bind='textInput: spellSaveDc'>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-7 pull-left">Spell Casting Ability</label>
+            <div class="col-xs-5">
+              <input type="text"
+                     class="form-control ability-score-input"
+                     id="spellStatsEditSpellCastingAbilityInput"
+                     data-bind='value: spellcastingAbility,
+        								autocomplete: { source: spellcastingAbilityOptions,
+        								onselect: $parent.setSpellCastingAbility }'>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-7 pull-left">Cantrips Known</label>
+            <div class="col-xs-5">
+              <input type="number"
+                     class="form-control ability-score-input"
+                     id="spellStatsEditCantripKnownInput"
+                     data-bind='textInput: spellsCantripsKnown'>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-7 pull-left">Spells Known</label>
+            <div class="col-xs-5">
+              <input type="number"
+                     class="form-control ability-score-input"
+                     id="spellStatsEditSpellKnownInput"
+                     data-bind='textInput: spellsKnown'>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-7 pull-left">Max Prepared</label>
+            <div class="col-xs-5">
+              <input type="number"
+                     class="form-control ability-score-input"
+                     id="spellStatsEditMaxPrepareInput"
+                     data-bind='textInput: spellsMaxPrepared'>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-7 pull-left">Invocations Known</label>
+            <div class="col-xs-5">
+              <input type="number"
+                     class="form-control ability-score-input"
+                     id= "spellStatsEditInvocationsKnownInput"
+                     data-bind='textInput: spellsInvocationsKnown'>
+            </div>
+          </div>
+          <button type="submit" style="display:none"></button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--
 <div class="panel panel-default">
   <div class="panel-body tight-inner" data-bind="click: editSpellStats, with: spellStats">
     <div class="table-responsive">
@@ -41,7 +212,7 @@
       </table>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- Add Modal -->
 <div class="modal fade" tabindex="-1" role="dialog"

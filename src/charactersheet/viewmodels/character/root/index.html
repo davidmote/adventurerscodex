@@ -143,26 +143,16 @@
 
 <div role="tabpanel" class="tab-pane" id="spells" data-bind="css: spellsTabStatus">
   <div class="row">
-    <div class="col-sm-4 col-lg-3 hidden-xs">
-      <img data-bind="attr: { src: icons.spellSection }" alt="Spells image"/>
-    </div>
-    <div class="col-sm-8 col-lg-9 col-padded">
-      <div class="h3">
-        Spell Slots<br/>
-        <small>These slots are configurable to reset on a short or long rest. Click
-        on a slot to edit it.</small>
-      </div>
+    <div class="col-sm-8 col-lg-9">
       <spell-slots></spell-slots>
+    </div>
+    <div class="col-sm-4 col-lg-3">
+      <spell-stats></spell-stats>
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12 col-padded">
-      <div class="h3">
-        Spell Stats<br/>
-        <small>Click to edit. In the future, these values will auto-calculate and auto-populate.</small>
-      </div>
-      <spell-stats></spell-stats>
-    </div>
+    <!-- <div class="col-sm-12 col-padded">
+    </div> -->
     <div class="col-sm-12 col-padded">
       <div class="h3">
         Spells<br/>

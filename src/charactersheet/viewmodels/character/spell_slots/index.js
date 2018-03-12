@@ -1,3 +1,4 @@
+import 'bin/knockout-bar-progress';
 import 'bin/knockout-bootstrap-modal';
 import {
     CharacterManager,
@@ -43,6 +44,112 @@ export function SpellSlotsViewModel() {
     self.campingTent = campingTent;
     self.meditationWhite = meditationWhite;
     self.campingTentWhite = campingTentWhite;
+    self.editMode = ko.observable(false);
+
+    self.editSlots = function() {
+        if (self.editMode()) {
+//            Utility.array.updateElement(self.slots(), self.currentEditItem(), self.editItemIndex);
+            self.save();
+            self.dataHasChanged();
+            self.editMode(false);
+        } else {
+            $('#editSpellTabs a:first').tab('show');
+            self.editHasFocus(true);
+            self.editMode(true);
+        }
+    };
+
+    // if (self.openModal()) {
+    //     Utility.array.updateElement(self.slots(), self.currentEditItem(), self.editItemIndex);
+    // }
+    //
+    // self.save();
+    // self.dataHasChanged();
+    // self.openModal(false);
+
+    self.spellChart = ko.computed(()=>({
+        data: {
+            // text: {value: self.hpText()},
+            value: 1,
+            maxValue: 5
+        },
+        config: {
+            strokeWidth: 4,
+            from: { color: '#FF0000' },
+            to: { color: '#FF0000' }
+        }
+    }));
+
+    // const mapToColor = (level) => {
+    //     console.log(cssName);
+    //     switch (cssName) {
+    //     case 'progress-bar-forest':
+    //         return '#2F972F';
+    //     case 'progress-bar-sky':
+    //         return '#71D4E8';
+    //     case 'progress-bar-orange':
+    //         return '#f0ad4e';
+    //     case 'progress-bar-red':
+    //         return '#d9534f';
+    //     case 'progress-bar-purple':
+    //         return '#800080';
+    //     case 'progress-bar-teal':
+    //         return '#01DFD7';
+    //     case 'progress-bar-indigo':
+    //         return '#8000FF';
+    //     case 'progress-bar-brown':
+    //         return '#906713';
+    //     case 'progress-bar-yellow':
+    //         return '#D7DF01';
+    //     default:
+    //         return '#777';
+    //     }
+    // };
+
+
+    const mapToColor = (level) => {
+        switch (level.toString()) {
+        case '1':
+            return '#e74c3c'; //'#d9534f'; // red
+        case '2':
+            return '#e67e22'; //'#f0ad4e'; // orange
+        case '3':
+            return '#f1c40f'; //'#D7DF01'; // yellow
+        case '4':
+            return '#1abc9c'; //'#2F972F'; // forest
+        case '5':
+            return '#2ecc71'; //'#01DFD7'; // teal
+        case '6':
+            return '#3498db'; //'#71D4E8'; // sky blue
+        case '7':
+            return '#9b59b6'; //'#8000FF'; // indigo
+        case '8':
+            return '#34495e'; //'#800080'; // purple
+        case '9':
+            return '#95a5a6'; //'#906713'; //brown
+
+        default:
+            return '#777';
+        }
+    };
+    self.mapToChart = (slot) => ({
+        data: {
+            value: parseInt(slot.maxSpellSlots()) - parseInt(slot.usedSpellSlots()),
+            maxValue: slot.maxSpellSlots()
+        },
+        config: {
+            strokeWidth: 2,
+            trailWidth: 1,
+            from: {
+                color: mapToColor(slot.level())
+            },
+            to: {
+                color: mapToColor(slot.level())
+            }
+
+        }
+
+    });
 
     self.load = function() {
         Notifications.global.save.add(self.save);
@@ -197,6 +304,7 @@ export function SpellSlotsViewModel() {
             slot.usedSpellSlots.subscribe(self.dataHasChanged);
         });
         self.dataHasChanged();
+        self.editSlots(false);
     };
 
     self.removeSlot = function(slot) {
@@ -208,6 +316,7 @@ export function SpellSlotsViewModel() {
             slot.usedSpellSlots.subscribe(self.dataHasChanged);
         });
         self.dataHasChanged();
+        self.editSlots(false);
     };
 
     self.resetSlot = function(slot) {

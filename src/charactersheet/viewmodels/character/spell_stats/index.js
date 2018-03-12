@@ -13,8 +13,43 @@ export function SpellStatsViewModel() {
 
     self.spellStats = ko.observable(new SpellStats());
     self.modalStatus = ko.observable(false);
-    self.editItem = ko.observable();
+    self.editItem = ko.observable(new SpellStats());
     self.firstModalElementHasFocus = ko.observable(false);
+    self.editMode = ko.observable(false);
+
+    // self.editSpellStats = function() {
+    //     self.modalStatus(true);
+    //     self.editItem(new SpellStats());
+    //     self.editItem().importValues(self.spellStats().exportValues());
+    // };
+    //
+    // self.modalFinishedAnimating = function() {
+    //     self.firstModalElementHasFocus(true);
+    //     self.firstModalElementHasFocus.valueHasMutated();
+    // };
+    //
+    // self.modalFinishedClosing = function() {
+    //     if (self.modalStatus()) {
+    //         self.spellStats().importValues(self.editItem().exportValues());
+    //     }
+    //     self.dataHasChanged();
+    //     self.modalStatus(false);
+    // };
+
+
+    self.editStats = function() {
+        if (self.editMode()) {
+            self.spellStats().importValues(self.editItem().exportValues());
+            self.dataHasChanged();
+            self.editMode(false);
+        } else {
+            self.editItem(new SpellStats());
+            self.editItem().importValues(self.spellStats().exportValues());
+            self.editMode(true);
+            self.firstModalElementHasFocus(true);
+            self.firstModalElementHasFocus.valueHasMutated();
+        }
+    };
 
     self.load = function() {
         Notifications.global.save.add(self.save);
