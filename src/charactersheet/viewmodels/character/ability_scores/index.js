@@ -31,9 +31,31 @@ export function AbilityScoresViewModel() {
 
     self.blankSavingThrow = ko.observable(new SavingThrows());
     self.savingThrows = ko.observableArray([]);
+    self.elementHeight = ko.observable('400px');
     // self.modalOpen = ko.observable(false);
     // self.editItemIndex = null;
     // self.currentEditItem = ko.observable();
+
+    const PANEL_ID = '#score-panel';
+    self.setNewHeight = function () {
+        let setHeight = 0;
+        if (self.editMode()) {
+            if (self.showSaves()) {
+                setHeight = $(`${PANEL_ID} .back .inner-back`).height();
+            } else {
+                setHeight = $(`${PANEL_ID} .back .inner-front`).height();
+            }
+        } else {
+            if (self.showSaves()) {
+                setHeight = $(`${PANEL_ID} .front .inner-back`).height();
+            } else {
+                setHeight = $(`${PANEL_ID} .front .inner-front`).height();
+            }
+        }
+        if (setHeight > 0) {
+            self.elementHeight(setHeight.toString()+'px');
+        }
+    };
 
     self.toggleSaves = (newValue) => {
         self.showSaves(!self.showSaves());
@@ -64,8 +86,6 @@ export function AbilityScoresViewModel() {
         const savingThrow = find(self.savingThrows(), (savingthrow)=>{return savingthrow.name() === name;});
         return savingThrow;
     };
-
-
 
     self.editModeIcon = ko.pureComputed(() => (
          this.editMode() ? 'glyphicon-floppy-save' : 'glyphicon-pencil'
@@ -166,6 +186,8 @@ export function AbilityScoresViewModel() {
         }
     };
 
+    self.editMode.subscribe(self.setNewHeight);
+    self.showSaves.subscribe(self.setNewHeight);
 
     self.openModal = function() {
         self.editItem(new AbilityScores());

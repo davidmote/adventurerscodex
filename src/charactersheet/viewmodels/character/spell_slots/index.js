@@ -45,6 +45,23 @@ export function SpellSlotsViewModel() {
     self.meditationWhite = meditationWhite;
     self.campingTentWhite = campingTentWhite;
     self.editMode = ko.observable(false);
+    self.elementHeight = ko.observable('400px');
+
+    const PANEL_ID = '#slot-panel';
+
+    self.setNewHeight = function () {
+        let setHeight = 0;
+        if (self.editMode()) {
+            setHeight = $(`${PANEL_ID} .back`).height();
+        } else {
+            setHeight = $(`${PANEL_ID} .front`).height();
+        }
+        if (setHeight > 0) {
+            self.elementHeight(setHeight.toString()+'px');
+        }
+    };
+    // Wait for page load
+    setTimeout(self.setNewHeight,0);
 
     self.editSlots = function() {
         if (self.editMode()) {
@@ -66,19 +83,6 @@ export function SpellSlotsViewModel() {
     // self.save();
     // self.dataHasChanged();
     // self.openModal(false);
-
-    self.spellChart = ko.computed(()=>({
-        data: {
-            // text: {value: self.hpText()},
-            value: 1,
-            maxValue: 5
-        },
-        config: {
-            strokeWidth: 4,
-            from: { color: '#FF0000' },
-            to: { color: '#FF0000' }
-        }
-    }));
 
     // const mapToColor = (level) => {
     //     console.log(cssName);
@@ -166,6 +170,7 @@ export function SpellSlotsViewModel() {
             slot.maxSpellSlots.subscribe(self.dataHasChanged);
             slot.usedSpellSlots.subscribe(self.dataHasChanged);
         });
+        self.setNewHeight();
     };
 
     self.unload = function() {
@@ -337,6 +342,7 @@ export function SpellSlotsViewModel() {
         self.save();
         Notifications.spellSlots.changed.dispatch();
     };
+    self.editMode.subscribe(self.setNewHeight);
 }
 
 ko.components.register('spell-slots', {

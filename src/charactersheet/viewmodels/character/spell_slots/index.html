@@ -1,4 +1,4 @@
-<div id="slot-panel" style="height: 450px">
+<div id="slot-panel">
     <edit-button params="toggleMode: editMode, clickAction: editSlots">
     </edit-button>
     <div class="h4">
@@ -7,13 +7,13 @@
       on a slot to edit it.</small>
     </div>
     <div class="flip-container" data-bind="css: {flipped: editMode}">
-      <div class="flipper">
+      <div class="flipper" data-bind="{style: {height: elementHeight()}}">
         <div class="front">
-          <table class="table table-responsive">
+          <table class="table table-responsive" style="border-width:0px">
             <tbody>
               <!-- ko foreach: filteredAndSortedSlots -->
               <tr>
-                <td style="padding: 4px;">Lvl <span data-bind="text: level"></span>
+                <td style="padding: 4px;">Lvl&nbsp;<span data-bind="text: level"></span>
                 </td>
                 <td  style="padding: 4px;">
                   <!-- ko if: $parent.needsResetsOnImg($data) -->
@@ -36,7 +36,7 @@
                 </td>
 
                 <td  style="padding: 4px;">
-                    <span data-bind="text: parseInt(maxSpellSlots()) - parseInt(usedSpellSlots())"></span> / <span data-bind=" text: maxSpellSlots"></span>
+                    <span data-bind="text: parseInt(maxSpellSlots()) - parseInt(usedSpellSlots())"></span>&nbsp;/&nbsp;<span data-bind=" text: maxSpellSlots"></span>
                 </td>
               </tr>
           <!-- /ko -->
@@ -92,7 +92,7 @@
             <label class="col-sm-2 control-label">Resets on...</label>
               <div class="col-sm-10">
                 <div class="btn-group btn-group-justified" role="group">
-                  <label class="btn btn-default" id="spellSlotsEditModalShortRestButton"
+                  <label class="btn btn-default btn-sm" id="spellSlotsEditModalShortRestButton"
                          data-bind="css: { active: resetsOn() == 'short'}">
                     <input type="radio"
                            class="hide-block"
@@ -103,7 +103,7 @@
                       data-bind="attr: { src: $parent.meditationWhite }"></img>
                          &nbsp;&nbsp;&nbsp;Short Rest
                   </label>
-                  <label class="btn btn-default" id="spellSlotsEditModalLongRestButton"
+                  <label class="btn btn-default  btn-sm" id="spellSlotsEditModalLongRestButton"
                          data-bind="css: { active: resetsOn() != 'short'}">
                   <input type="radio"
                          class="hide-block"
@@ -117,11 +117,14 @@
                 </div>
               </div>
             </div>
+            <div style="height: 30px;"></div>
             <button type="submit" style="display:none"> </button>
           </form>
         </div>
         <!-- /ko -->
         <div role="tabpanel" class="tab-pane" id="addSpellSlot">
+          <div class="h3">Add Spell Slot
+          </div>
           <form class="form-horizontal" data-bind="{submit: addSlot}">
             <div class="form-group">
               <label for="name" class="col-sm-2 control-label">Level</label>
@@ -149,7 +152,7 @@
               <label class="col-sm-2 control-label">Resets on...</label>
               <div class="col-sm-10">
                 <div class="btn-group btn-group-justified" role="group">
-                  <label class="btn btn-default" id="spellSlotsAddModalShortRestButton"
+                  <label class="btn btn-default btn-sm" id="spellSlotsAddModalShortRestButton"
                          data-bind="css: { active: blankSlot().resetsOn() == 'short'}">
                      <input type="radio"
                             class="hide-block"
@@ -158,7 +161,7 @@
                       <img class="action-bar-icon" data-bind="attr: { src: meditationWhite }"></img>
                       &nbsp;&nbsp;&nbsp;Short Rest
                   </label>
-                  <label class="btn btn-default" id="spellSlotsAddModalLongRestButton"
+                  <label class="btn btn-default btn-sm" id="spellSlotsAddModalLongRestButton"
                    data-bind="css: { active: blankSlot().resetsOn() != 'short'}">
                      <input type="radio"
                             class="hide-block"

@@ -16,6 +16,23 @@ export function SpellStatsViewModel() {
     self.editItem = ko.observable(new SpellStats());
     self.firstModalElementHasFocus = ko.observable(false);
     self.editMode = ko.observable(false);
+    self.elementHeight = ko.observable('400px');
+
+    const PANEL_ID = '#spell-stats-panel';
+
+    self.setNewHeight = function () {
+        let setHeight = 0;
+        if (self.editMode()) {
+            setHeight = $(`${PANEL_ID} .back`).height();
+        } else {
+            setHeight = $(`${PANEL_ID} .front`).height();
+        }
+        if (setHeight > 0) {
+            self.elementHeight(setHeight.toString()+'px');
+        }
+    };
+    // Wait for page load
+    setTimeout(self.setNewHeight,0);
 
     // self.editSpellStats = function() {
     //     self.modalStatus(true);
@@ -63,6 +80,7 @@ export function SpellStatsViewModel() {
         }
         self.spellStats().characterId(key);
         self.spellStats().spellAttackBonus.subscribe(self.dataHasChanged);
+        self.setNewHeight();
     };
 
     self.unload = function() {
@@ -81,6 +99,8 @@ export function SpellStatsViewModel() {
     self.setSpellCastingAbility = function(label, value) {
         self.editItem().spellcastingAbility(label);
     };
+
+    self.editMode.subscribe(self.setNewHeight);
 
     // Modal Methods
 

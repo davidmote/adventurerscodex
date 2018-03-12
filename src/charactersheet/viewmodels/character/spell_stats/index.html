@@ -1,4 +1,4 @@
-<div id="spell-stats-panel" style="height: 400px">
+<div id="spell-stats-panel">
   <edit-button params="toggleMode: editMode, clickAction: editStats">
   </edit-button>
   <div class="h4">
@@ -6,9 +6,9 @@
     <small>Click to edit.</small>
   </div>
   <div class="flip-container" data-bind="css: {flipped: editMode}">
-    <div class="flipper">
+    <div class="flipper" data-bind="{style: {height: elementHeight()}}">
       <div class="front">
-        <table data-bind="{with: spellStats}" style="text-align:left" class="table table-responsive table-ac-bordered table-hover" id="spellStatsTable">
+        <table data-bind="{with: spellStats}" style="text-align:left; border-width:0px" class="table table-responsive table-ac-bordered table-hover" id="spellStatsTable">
           <tbody>
               <tr>
                 <td>

@@ -7,15 +7,15 @@
     <small class="h5">Click on the health wheel to change max hit points or temporary hit points.</small>
   </div>
   <div class="flip-container" data-bind="css: {flipped: editMode}">
-    <div class="flipper">
+    <div class="flipper" data-bind="{style: {height: elementHeight()}}">
       <div class="front">
         <div class="inner-flip-container" data-bind="css: {innerFlipped: deathSavesVisible()}">
-          <div class="inner-flipper">
+          <div class="inner-flipper" data-bind="{style: {height: elementHeight()}}">
             <div class="inner-front">
               <div class="row">
                 <div class="col-xs-6">
                 <h4 style="text-align: center">Hit Points</h4>
-                <div class="healtContainer">
+                <div id="healthContainer">
                 <div class="clickable" data-bind="click: editHealth">
                 <div style="padding: 10px; position: absolute; top:0px" data-bind="circleProgress: hpChart()"> </div>
                 <!-- ko if: health().tempHitpointsRemaining() -->

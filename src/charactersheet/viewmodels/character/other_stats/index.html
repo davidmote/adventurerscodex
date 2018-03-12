@@ -1,5 +1,5 @@
 <!--AC, Initiative, Speed-->
-<div id="other-stats-panel" style="height: 400px">
+<div id="other-stats-panel">
   <edit-button params="toggleMode: editMode, clickAction: editStats">
   </edit-button>
   <div class="h4" style="padding-left:15px; padding-right: 15px;">
@@ -8,9 +8,9 @@
   </div>
 
   <div class="flip-container" data-bind="css: {flipped: editMode}">
-    <div class="flipper">
+    <div class="flipper" data-bind="{style: {height: elementHeight()}}">
       <div class="front">
-        <table style="text-align:left" class="table table-responsive table-ac-bordered table-hover" id="savingThrowTable">
+        <table style="text-align:left; border-width: 0px" class="table table-responsive table-ac-bordered table-hover" id="savingThrowTable">
           <tbody>
 
             <td>
@@ -81,7 +81,7 @@
       </div>
       <div class="back">
         <form data-bind="{submit: editStats}">
-          <table class="table table-responsive table-ac-bordered table-hover" id="savingThrowTable">
+          <table style="border-width: 0px" class="table table-responsive table-ac-bordered table-hover" id="savingThrowTable">
             <thead>
               <tr>
                 <th style="width:65%">

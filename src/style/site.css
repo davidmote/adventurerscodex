@@ -1052,14 +1052,8 @@ div.toggle-arrow-container {
   z-index: 6;
 }
 
-#health-panel {
-  height: 320px;
-}
 
-#score-panel {
-  height: 450px;
-}
-.healtContainer {
+#healthContainer {
   width: 175px;
   display: block;
   position: relative;

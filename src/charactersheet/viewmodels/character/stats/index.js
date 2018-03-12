@@ -30,6 +30,28 @@ export function StatsViewModel() {
     self.editMode = ko.observable(false);
     self._dummy = ko.observable();
     self.modifierHasFocus = ko.observable(false);
+    self.elementHeight = ko.observable('400px');
+
+    const PANEL_ID = '#health-panel';
+    self.setNewHeight = function () {
+        let setHeight = 0;
+        if (self.editMode()) {
+            setHeight =  $(`${PANEL_ID} .back`).height();
+        } else if (self.deathSavesVisible()) {
+            setHeight = $(`${PANEL_ID} .inner-back`).outerHeight();
+        } else {
+            const heights = [
+                $(`${PANEL_ID} .inner-front`).outerHeight(),
+                $('#healthContainer').outerHeight() || 0
+            ];
+            setHeight =  Math.max.apply(Math,heights);
+        }
+        if (setHeight > 0) {
+            self.elementHeight(setHeight.toString()+'px');
+        }
+    };
+    // Wait for page load
+    setTimeout(self.setNewHeight,500);
 
     self.getHealthColor = () => {
         if (self.health().isDangerous()) {
@@ -181,12 +203,15 @@ export function StatsViewModel() {
             save.deathSaveSuccess.subscribe(self._alertPlayerIsStable);
             save.deathSaveSuccess.subscribe(self.deathSaveSuccessDataHasChanged);
         });
+        self.deathSavesVisible.subscribe(self.setNewHeight);
+        self.editMode.subscribe(self.setNewHeight);
 
         Notifications.events.longRest.add(self.resetOnLongRest);
         Notifications.profile.level.changed.add(self.calculateHitDice);
         self._alertPlayerHasDied();
         self._alertPlayerIsStable();
         self.healthDataHasChange();
+        self.setNewHeight();
     };
 
     self.save = function() {
@@ -419,7 +444,6 @@ export function StatsViewModel() {
             Notifications.stats.deathSaves.notSuccess.changed.dispatch();
             self.deathSaveFailureVisible(true);
         }
-
     };
 }
 
