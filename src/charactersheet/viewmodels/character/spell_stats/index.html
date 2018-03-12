@@ -90,7 +90,8 @@
         </table>
       </div>
       <div class="back">
-        <form  data-bind="{submit: editStats, with: editItem}" class="form-horizontal">
+        <form data-bind="{submit: editStats}" class="form-horizontal">
+          <div data-bind="{with: editItem}">
           <div class="form-group">
             <label class="col-xs-7 pull-left">Spell Attack Bonus</label>
             <div class="col-xs-5">
@@ -157,6 +158,8 @@
                      data-bind='textInput: spellsInvocationsKnown'>
             </div>
           </div>
+        </div>
+
           <button type="submit" style="display:none"></button>
         </form>
 
