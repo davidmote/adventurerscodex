@@ -19,10 +19,8 @@ export function SpellbookViewModel() {
     self.sorts = {
         'spellName asc': { field: 'spellName', direction: 'asc'},
         'spellName desc': { field: 'spellName', direction: 'desc'},
-        'spellPrepared asc': { field: 'spellPrepared', direction: 'asc', booleanType: true},
-        'spellPrepared desc': { field: 'spellPrepared', direction: 'desc', booleanType: true},
-        'spellType asc': { field: 'spellType', direction: 'asc'},
-        'spellType desc': { field: 'spellType', direction: 'desc'},
+        'spellTypeLabel asc': { field: 'spellTypeLabel', direction: 'asc'},
+        'spellTypeLabel desc': { field: 'spellTypeLabel', direction: 'desc'},
         'spellDmg asc': { field: 'spellDmg', direction: 'asc'},
         'spellDmg desc': { field: 'spellDmg', direction: 'desc'},
         'spellLevel asc': { field: 'spellLevel', direction: 'asc', numeric: true},
@@ -33,6 +31,7 @@ export function SpellbookViewModel() {
         'spellRange desc': { field: 'spellRange', direction: 'desc'}
     };
 
+    self._dummy = ko.observable();
     self.blankSpell = ko.observable(new Spell());
     self.spellbook = ko.observableArray([]);
     self.modalOpen = ko.observable(false);
@@ -44,8 +43,27 @@ export function SpellbookViewModel() {
     self.firstModalElementHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.spellSchoolIconCSS = ko.observable('');
+    self.elementHeight = ko.observable('auto');
+    self.editMode = ko.observable(false);
+    self.elementHeight = ko.observable('auto');
+
+    // self.toggleEditSpell = function (id) {
+    //     console.log('toggle id');
+    //     if(self.editMode()) {
+    //         self.editMode(false);
+    //     } else {
+    //         // self.collapseAll();
+    //         // $(id).collapse('show');
+    //         self.editMode(!self.editMode());
+    //     }
+    //     self.setNewHeight(id);
+    //
+    // };
 
     self.filter = ko.observable('');
+
+    self.filteredByCastable = ko.observable(false);
+
     self.sort = ko.observable(self.sorts['spellName asc']);
 
     self.numberOfPrepared = ko.computed(function(){
@@ -55,9 +73,19 @@ export function SpellbookViewModel() {
                 prepared++;
             }
         });
-
         return prepared;
     });
+
+    self.collapseAll = () => {
+        $('.collapse.in').collapse('hide');
+    };
+
+    self.memorizeSpell = (data, event) => {
+        event.stopPropagation();
+        if(!(data.spellLevel() == 0  || data.spellAlwaysPrepared())) {
+            data.spellPrepared(!data.spellPrepared());
+        }
+    };
 
     self.numberOfSpells = ko.computed(function() {
         return self.spellbook() ? self.spellbook().length : 0;
@@ -184,7 +212,13 @@ export function SpellbookViewModel() {
      * questions/17387435/javascript-sort-array-of-objects-by-a-boolean-property
      */
     self.filteredAndSortedSpells = ko.computed(function() {
-        return SortService.sortAndFilter(self.spellbook(), self.sort(), null);
+        let spellbook = self.spellbook();
+        if (self.filteredByCastable()) {
+            spellbook = self.spellbook().filter(function(spell) {
+                return spell.spellIsCastable();
+            }, self);
+        }
+        return SortService.sortAndFilter(spellbook, self.sort(), null);
     });
 
     /**

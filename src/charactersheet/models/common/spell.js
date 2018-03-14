@@ -6,8 +6,8 @@ import {
 } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { SpellStats } from 'charactersheet/models/character/spell_stats';
+import { includes } from 'lodash';
 import ko from 'knockout';
-
 
 export function Spell() {
     var self = this;
@@ -58,6 +58,10 @@ export function Spell() {
         }
     });
 
+    self.isConcentration = ko.pureComputed(function() {
+        return includes(self.spellDuration().toLowerCase(), 'concentration');
+    });
+
     self.spellDamageLabel = ko.pureComputed(function() {
         self._dummy();
         var key = CharacterManager.activeCharacter().key();
@@ -76,6 +80,22 @@ export function Spell() {
             return 'Cantrip';
         } else {
             return self.spellLevel();
+        }
+    });
+
+    self.spellIsCastable = ko.pureComputed(function() {
+        if (self.spellPrepared() === true || self.spellAlwaysPrepared() === true || self.spellLevel() === 0) {
+            return true;
+        } else {
+            return false;
+        }
+    });
+
+    self.spellTypeLabel = ko.pureComputed(function() {
+        if (self.spellType() === 'Savings Throw') {
+            return ('Savings Throw' + ': ' + self.spellSaveAttr());
+        } else {
+            return self.spellType();
         }
     });
 
