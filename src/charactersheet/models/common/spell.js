@@ -84,7 +84,7 @@ export function Spell() {
     });
 
     self.spellIsCastable = ko.pureComputed(function() {
-        if (self.spellPrepared() === true || self.spellAlwaysPrepared() === true || self.spellLevel() === 0) {
+        if (self.spellPrepared() === true || self.spellAlwaysPrepared() === true || self.spellLevel() == 0) {
             return true;
         } else {
             return false;

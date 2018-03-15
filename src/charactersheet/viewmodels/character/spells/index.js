@@ -10,6 +10,7 @@ import {
     SortService
 } from 'charactersheet/services/common';
 import { Spell } from 'charactersheet/models';
+import { debounce } from 'lodash';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -43,28 +44,15 @@ export function SpellbookViewModel() {
     self.firstModalElementHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.spellSchoolIconCSS = ko.observable('');
-    self.elementHeight = ko.observable('auto');
     self.editMode = ko.observable(false);
     self.elementHeight = ko.observable('auto');
 
-    // self.toggleEditSpell = function (id) {
-    //     console.log('toggle id');
-    //     if(self.editMode()) {
-    //         self.editMode(false);
-    //     } else {
-    //         // self.collapseAll();
-    //         // $(id).collapse('show');
-    //         self.editMode(!self.editMode());
-    //     }
-    //     self.setNewHeight(id);
-    //
-    // };
 
     self.filter = ko.observable('');
 
     self.filteredByCastable = ko.observable(false);
 
-    self.sort = ko.observable(self.sorts['spellName asc']);
+    self.sort = ko.observable(self.sorts['spellLevel asc']);
 
     self.numberOfPrepared = ko.computed(function(){
         var prepared = 0;
@@ -164,16 +152,16 @@ export function SpellbookViewModel() {
         self.modalOpen(false);
     };
 
-    self.selectPreviewTab = function() {
-        self.previewTabStatus('active');
-        self.editTabStatus('');
-    };
-
-    self.selectEditTab = function() {
-        self.editTabStatus('active');
-        self.previewTabStatus('');
-        self.editFirstModalElementHasFocus(true);
-    };
+    // self.selectPreviewTab = function() {
+    //     self.previewTabStatus('active');
+    //     self.editTabStatus('');
+    // };
+    //
+    // self.selectEditTab = function() {
+    //     self.editTabStatus('active');
+    //     self.previewTabStatus('');
+    //     self.editFirstModalElementHasFocus(true);
+    // };
 
     self.determineSpellSchoolIcon = ko.computed(function() {
         if (self.currentEditItem() && self.currentEditItem().spellSchool()) {
@@ -238,20 +226,35 @@ export function SpellbookViewModel() {
 
     self.spellsPrePopFilter = function(request, response) {
         var term = request.term.toLowerCase();
-        var keys = DataRepository.spells ? Object.keys(DataRepository.spells) : [];
-        var results = keys.filter(function(name, idx, _) {
-            return name.toLowerCase().indexOf(term) > -1;
-        });
+        let results = [];
+        if (term && term.length > 2) {
+            const keys = DataRepository.spells ? Object.keys(DataRepository.spells) : [];
+            results = keys.filter(function(name, idx, _) {
+                return name.toLowerCase().indexOf(term) > -1;
+            });
+        }
         response(results);
     };
 
+    self.delayedSpellsPrePopFilter = debounce(self.spellsPrePopFilter, 350);
+
     //Manipulating spells
-    self.addSpell = function() {
+
+
+    self.addSpell = (data, event) => {
+        event.stopPropagation();
         var spell = self.blankSpell();
         spell.characterId(CharacterManager.activeCharacter().key());
         spell.save();
         spell.spellPrepared.subscribe(self.save);
         self.spellbook.push(spell);
+        $('#add-spell').collapse('hide');
+        self.blankSpell(new Spell());
+    };
+
+    self.cancelAddSpell =  (data, event) => {
+        event.stopPropagation();
+        $('#add-spell').collapse('hide');
         self.blankSpell(new Spell());
     };
 

@@ -1,5 +1,7 @@
 import ko from 'knockout';
-//data-bind="well: { open: moreInfoOpen }
+import { debounce } from 'lodash';
+import { Spell } from 'charactersheet/models';
+
 import template from './spellcard.html';
 /**
  * edit-button component
@@ -9,7 +11,7 @@ import template from './spellcard.html';
  * Usage:
  */
  //
-ko.bindingHandlers.autoHeight = {
+ko.bindingHandlers.spellCard = {
     init: function(element, valueAccessor, allBindingsAccessor) {
         var value = valueAccessor();
         var callback = ko.utils.unwrapObservable(value.callback);
@@ -23,97 +25,105 @@ ko.bindingHandlers.autoHeight = {
             $(element).on('hidden.bs.collapse', callback);
             $(element).on('shown.bs.collapse', callback);
         }
-         // ko.bindingHandlers.well.toggle(openOrClosed, element);
     }
-     //
-     // update: function(element, valueAccessor) {
-     //     var value = valueAccessor();
-     //     var openOrClosed = ko.utils.unwrapObservable(value.open);
-     //     ko.bindingHandlers.well.toggle(openOrClosed, element);
-     // },
-     //
-     // toggle: function(openOrClosed, element) {
-     //     var action = openOrClosed ? 'show' : 'hide';
-     //     $(element).collapse(action);
-     // }
 };
 
-class SpellCardComponentViewModel {
+export class SpellCardComponentViewModel {
     constructor(params) {
         this.spell = params.spell;
+        this.removeSpell = params.removeSpell;
         this.editMode = ko.observable(false);
         this.elementHeight = ko.observable('auto');
-    //     $(document).ready(function() {
-    //
-    //         $(window).resize(function() {
-    //             this.setNewHeight();
-    //         });
-    //
-    // // BOTH were required to work on any device "document" and "window".
-    // // I don't know if newer jQuery versions fixed this issue for any device.
-    //         $(document).resize(function() {
-    //             this.setNewHeight();
-    //         });
-    //
-    // // First processing when document is ready
-    //         this.setNewHeight();
-    //     });
+        this.firstFormElementHasFocus = ko.observable(false);
+        this.currentEditItem = ko.observable();
+
     }
 
-    load() {
-
-        $(window).on('resize', ()=>(this.setNewHeight(this.editMode(), this.spell.__id)));
-        // $(`#spell_list_${this.spell.__id} .back`).bind('heightChange', function(){
-        //     alert('xxx');
-        // });
-        // $(`#spell_list_${this.spell.__id} .front`).bind('heightChange', function(){
-        //     alert('xxx');
-        // });
-        // $(`#spell_list_${this.spell.__id} .front`).on('resize', this.setNewHeight);
+    load = () => {
+        $(window).on('resize', debounce(this.setNewHeight, 150));
     }
 
-    toggleEditSpell() {
+    collapseCallback = () => {
+        if( this.editMode()) {
+          this.editMode(false);
+        }
+        this.setNewHeight();
+    }
 
+    toggleEditSpell = () => {
         if(this.editMode()) {
+            this.spell.importValues(this.currentEditItem().exportValues())
+            this.spell.save();
             this.editMode(false);
+            this.firstFormElementHasFocus(false);
             this.setNewHeight();
         } else {
-        // self.collapseAll();
-        // $(id).collapse('show');
+            this.currentEditItem(new Spell());
+            this.currentEditItem().importValues(this.spell.exportValues());
             this.editMode(true);
+            this.firstFormElementHasFocus(true);
             this.setNewHeight();
         }
-    // self.setNewHeight(id);
     }
 
-    setNewHeight(editMode=this.editMode(), spellId=this.spell.__id) {
+    cancelEditSpell = () => {
+      this.currentEditItem(new Spell());
+      this.editMode(false);
+      this.setNewHeight();
+    }
+
+    preparedRowVisibleEdit = (spell) => {
+        return parseInt(spell.spellLevel()) !== 0;
+    };
+
+    setNewHeight = () => {
         let setHeight = 0;
-        if (editMode) {
-            setHeight = $(`#spell_list_${spellId} .back`).height();
-            console.log('back: ', setHeight);
+        if (this.editMode()) {
+            setHeight = $(`#spell_list_${this.spell.__id} .back`).height();
         } else {
-            setHeight = $(`#spell_list_${spellId} .front`).height();
-            console.log('front: ', setHeight);
+            setHeight = $(`#spell_list_${this.spell.__id} .front`).height();
         }
         if (setHeight && setHeight > 1) {
-            console.log('yay new heights');
-            //setHeight.toString()+'px';
             this.elementHeight(setHeight.toString()+'px');
         }
     }
-}
 
-// export function SpellCardComponentViewModel(params) {
-//     var self = this;
-//     self.spell =
-//     console.log(params);
-    // self.clickAction = params.clickAction;
-    // self.toggleMode = params.toggleMode;
-    //
-    // self.editModeIcon = ko.pureComputed(() => (
-    //      self.toggleMode() ? 'glyphicon-floppy-save' : 'glyphicon-pencil'
-    // ));
-//}
+    removeSpell = () => {
+        this.removeSpell(this.spell);
+    }
+
+    setSpellSchool = (label, value) => {
+        this.currentEditItem().spellSchool(value);
+    }
+
+    setSpellType = (label, value) => {
+        this.currentEditItem().spellType(value);
+    }
+
+    setSpellSaveAttr = (label, value) => {
+        this.currentEditItem().spellSaveAttr(value);
+    }
+
+    setSpellCastingTime = (label, value) => {
+        this.currentEditItem().spellCastingTime(value);
+    }
+
+    setSpellRange = (label, value) => {
+        this.currentEditItem().spellRange(value);
+    }
+
+    setSpellComponents = (label, value) => {
+        this.currentEditItem().spellComponents(value);
+    }
+
+    setSpellDuration = (label, value) => {
+        this.currentEditItem().spellDuration(value);
+    }
+
+    alwaysPreparedPopoverText = () => (
+      'Always prepared spells will not count against total prepared spells.')
+      ;
+}
 
 ko.components.register('spell-card', {
     viewModel: SpellCardComponentViewModel,

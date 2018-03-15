@@ -1142,10 +1142,37 @@ input[type='checkbox'].pseudo-checkbox + label:after{
 input[type='checkbox'].pseudo-checkbox + label:before{/*unchecked icon*/
     content: "\e157";
 }
-input[type='checkbox']:checked.pseudo-checkbox + label:before{/*checked icon*/
-    content: "\e067";
+
+input[type='checkbox']:disabled.pseudo-checkbox + label:before{/*unchecked icon*/
+  color: #999;
 }
 
+input[type='checkbox']:checked.pseudo-checkbox + label:before{/*checked icon*/
+    content: "\e067";
+    /* content:"\e138"; */
+}
+
+
+input[type='checkbox'].filter-checkbox + label:before,
+input[type='checkbox'].filter-checkbox + label:after{
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+input[type='checkbox'].filter-checkbox + label:before{/*unchecked icon*/
+  color: #999;
+  content:"\e138";
+}
+input[type='checkbox']:checked.filter-checkbox + label:before{/*checked icon*/
+  color: #2c3e50;
+  content:"\e138";
+}
 
 .rotate {
     -moz-transition: all 0.3s linear;
@@ -1175,6 +1202,21 @@ input[type='checkbox']:checked.pseudo-checkbox + label:before{/*checked icon*/
   color: #fff!important;
 }
 
+#spellsAddButton[aria-expanded="true"] {
+   display: none;
+}
+#spellsAddAddButton,
+#spellsAddCancelButton
+ {
+   display: none;
+}
+
+#spellsAddAddButton[aria-expanded="true"],
+#spellsAddCancelButton[aria-expanded="true"]
+ {
+   display: inline-block;
+}
+
 .spellDetail th {
   white-space: nowrap;
 }
@@ -1186,6 +1228,10 @@ overflow: hidden;
 -moz-transition: height .35s ease;
 -o-transition: height .35s ease;
 transition: height .35s ease;
+}
+
+.table .table.spellDetail {
+  background-color: transparent;
 }
 
 .table-hover>tbody>tr.collapse:hover {
