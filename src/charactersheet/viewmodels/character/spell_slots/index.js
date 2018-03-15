@@ -76,40 +76,9 @@ export function SpellSlotsViewModel() {
         }
     };
 
-    // if (self.openModal()) {
-    //     Utility.array.updateElement(self.slots(), self.currentEditItem(), self.editItemIndex);
-    // }
-    //
-    // self.save();
-    // self.dataHasChanged();
-    // self.openModal(false);
-
-    // const mapToColor = (level) => {
-    //     console.log(cssName);
-    //     switch (cssName) {
-    //     case 'progress-bar-forest':
-    //         return '#2F972F';
-    //     case 'progress-bar-sky':
-    //         return '#71D4E8';
-    //     case 'progress-bar-orange':
-    //         return '#f0ad4e';
-    //     case 'progress-bar-red':
-    //         return '#d9534f';
-    //     case 'progress-bar-purple':
-    //         return '#800080';
-    //     case 'progress-bar-teal':
-    //         return '#01DFD7';
-    //     case 'progress-bar-indigo':
-    //         return '#8000FF';
-    //     case 'progress-bar-brown':
-    //         return '#906713';
-    //     case 'progress-bar-yellow':
-    //         return '#D7DF01';
-    //     default:
-    //         return '#777';
-    //     }
-    // };
-
+    self.cancelAddSlot = function() {
+        self.editMode(false);     
+    };
 
     const mapToColor = (level) => {
         switch (level.toString()) {
