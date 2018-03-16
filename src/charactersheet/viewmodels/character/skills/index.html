@@ -1,5 +1,5 @@
 
-<div id="skill-panel" data-bind="{style: {height: elementHeight}}" style="min-width: 280px;">
+<div id="skill-panel" style="min-width: 280px;">
   <edit-button params="toggleMode: editMode, clickAction: editSkills">
   </edit-button>
   <div class="h4">
@@ -8,7 +8,7 @@
     and Proficiency Bonus.</small>
   </div>
     <div  class="flip-container" data-bind="css: {flipped: editMode}" >
-      <div class="flipper">
+      <div class="flipper" data-bind="{style: {height: elementHeight}}" >
         <div class="front">
     <table style="border-width: 0px" class="table table-responsive table-ac-bordered table-hover">
       <thead>

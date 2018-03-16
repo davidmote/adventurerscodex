@@ -241,8 +241,7 @@ export function SpellbookViewModel() {
     //Manipulating spells
 
 
-    self.addSpell = (data, event) => {
-        event.stopPropagation();
+    self.addSpell = () => {
         var spell = self.blankSpell();
         spell.characterId(CharacterManager.activeCharacter().key());
         spell.save();
@@ -253,8 +252,6 @@ export function SpellbookViewModel() {
     };
 
     self.cancelAddSpell =  (data, event) => {
-        event.stopPropagation();
-        $('#add-spell').collapse('hide');
         self.blankSpell(new Spell());
     };
 

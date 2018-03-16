@@ -985,83 +985,6 @@ div.toggle-arrow-container {
     padding: 15px;
 }
 
-/* entire container, keeps perspective */
-.inner-flip-container, .flip-container {
-	perspective: 0px;
-  -webkit-perspective-origin: 0;
-  padding-top: 0px;
-  transition: all 0.6s ease;
-}
-
-/* flip the pane when hovered */
-.inner-flip-container.innerFlipped .inner-flipper,
-.flip-container.flipped .flipper {
-  transform: rotate3d(0, 1, 0, 180deg) translate3d(0,0,-50px);
-}
-
-.collapsing, .collapse {
-    /* height: 100px !important; */
-    -moz-transition : all 0.6s ease;
-    -webkit-transition : all 0.6s ease;
-    -o-transition : all 0.6s ease;
-    transition : all 0.6s ease !important;
-}
-
-.inner-flip-container, .inner-front, .inner-back,
-.flip-container, .front, .back {
-  width: 100%;
-  text-align: center;
-}
-
-/* flip speed goes here */
-.inner-flipper, .flipper {
-	transition: 0.6s;
-	transform-style: preserve-3d;
-  -webkit-transition: 0.6s;
-  -webkit-transform-style: preserve-3d;
-	position: relative;
-}
-
-/* hide back of pane during swap */
-.inner-front, .inner-back,
-.front, .back  {
-	backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  visibility: visible;
-	position: absolute;
-	top: 0;
-	left: 0;
-}
-
-/* front pane, placed above back */
-.inner-front, .front {
-	z-index: 2;
-  transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
-}
-
-.innerFlipped .inner-back,
-.flipped .back {
-  z-index: 3;
-}
-/* back, initially hidden pane */
-.inner-back,
-.back {
-  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
-}
-
-.flipped .back .innerFlipped .inner-back {
-  transform: rotate3d(0, 1, 0, 180deg) translateZ(-50px);
-}
-
-
-.edit-btn {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  z-index: 6;
-}
-
-
 #healthContainer {
   width: 175px;
   display: block;
@@ -1174,19 +1097,6 @@ input[type='checkbox']:checked.filter-checkbox + label:before{/*checked icon*/
   content:"\e138";
 }
 
-.rotate {
-    -moz-transition: all 0.3s linear;
-    -webkit-transition: all 0.3s linear;
-    transition: all 0.3s linear;
-}
-
-.rotate[aria-expanded="true"]{
-    -ms-transform: rotate(-90deg);
-    -moz-transform: rotate(-90deg);
-    -webkit-transform: rotate(-90deg);
-    transform: rotate(-90deg);
-}
-
 .notCastable {
   color: #999;
 }
@@ -1202,15 +1112,30 @@ input[type='checkbox']:checked.filter-checkbox + label:before{/*checked icon*/
   color: #fff!important;
 }
 
+
+tr.expandRow[aria-expanded="true"],
+tr.expandRow[aria-expanded="true"]:hover {
+  background-color:  #2c3e50;
+  color: #fff!important;
+}
+
+.spellRow.notCastable[aria-expanded="true"],
+.spellRow.notCastable[aria-expanded="true"]:hover {
+  background-color: #95a5a6;
+  color: #fff!important;
+}
+
 #spellsAddButton[aria-expanded="true"],
-#skillAddButton[aria-expanded="true"]
+#skillAddButton[aria-expanded="true"],
+.collapseAddButton[aria-expanded="true"]
  {
    display: none;
 }
 #spellsAddAddButton,
 #spellsAddCancelButton,
 #skillAddAddButton,
-#skillAddCancelButton
+#skillAddCancelButton,
+.collapseFormButton
  {
    display: none;
 }
@@ -1218,7 +1143,8 @@ input[type='checkbox']:checked.filter-checkbox + label:before{/*checked icon*/
 #spellsAddAddButton[aria-expanded="true"],
 #spellsAddCancelButton[aria-expanded="true"],
 #skillAddAddButton[aria-expanded="true"],
-#skillAddCancelButton[aria-expanded="true"]
+#skillAddCancelButton[aria-expanded="true"],
+.collapseFormButton[aria-expanded="true"]
  {
    display: inline-block;
 }
@@ -1226,15 +1152,164 @@ input[type='checkbox']:checked.filter-checkbox + label:before{/*checked icon*/
 .spellDetail th {
   white-space: nowrap;
 }
+
+/* Animations */
+
+.collapsing, .collapse {
+    -moz-transition : all 0.35s ease;
+    -webkit-transition : all 0.35s ease;
+    -o-transition : all 0.35s ease;
+    transition : all 0.35s ease !important;
+}
+
 .collapsing {
 position: relative;
 height: 0px;
 overflow: hidden;
--webkit-transition: height .100s ease;
+-webkit-transition: height .35s ease;
 -moz-transition: height .35s ease;
 -o-transition: height .35s ease;
 transition: height .35s ease;
 }
+
+
+.rotate {
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+}
+
+.rotate[aria-expanded="true"]{
+    -ms-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+/* end Animations */
+
+/* Flip Card */
+
+/* entire container, keeps perspective */
+.card-flip-container {
+  perspective: 0px;
+  -webkit-perspective-origin: 0;
+  padding-top: 0px;
+  transition: all 0.6s ease;
+}
+
+.card-flip-container.flipped > .card-flipper {
+  transform: rotate3d(0, 1, 0, 180deg) translate3d(0,0,-50px);
+}
+
+.card-flip-container > .card-flipper {
+	transition: 0.6s;
+	transform-style: preserve-3d;
+  -webkit-transition: 0.6s;
+  -webkit-transform-style: preserve-3d;
+	position: relative;
+}
+
+.card-flip-container > .card-flipper > .front,
+.card-flip-container > .card-flipper > .back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  visibility: visible;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* front pane, placed above back */
+.card-flip-container > .card-flipper > .front {
+  z-index: 2;
+  transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
+}
+
+.card-flip-container.flipped > .card-flipper > .back {
+  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+}
+
+.card-flip-container.flipped > .card-flipper > .back {
+  z-index: 3;
+}
+
+.card-flip-container.flipped > .card-flipper > .back .card-flip-container.flipped > .card-flipper > .back {
+  transform: rotate3d(0, 1, 0, 180deg) translateZ(-50px);
+
+}
+
+
+.inner-flip-container, .flip-container {
+	perspective: 0px;
+  -webkit-perspective-origin: 0;
+  padding-top: 0px;
+  transition: all 0.6s ease;
+}
+
+
+/* flip the pane when hovered */
+.inner-flip-container.innerFlipped .inner-flipper,
+.flip-container.flipped .flipper {
+  transform: rotate3d(0, 1, 0, 180deg) translate3d(0,0,-50px);
+}
+
+
+.inner-flip-container, .inner-front, .inner-back,
+.flip-container, .front, .back {
+  width: 100%;
+  text-align: center;
+}
+
+/* flip speed goes here */
+.inner-flipper, .flipper {
+	transition: 0.6s;
+	transform-style: preserve-3d;
+  -webkit-transition: 0.6s;
+  -webkit-transform-style: preserve-3d;
+	position: relative;
+}
+
+/* hide back of pane during swap */
+.inner-front, .inner-back,
+.front, .back  {
+	backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  visibility: visible;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* front pane, placed above back */
+.inner-front, .front {
+	z-index: 2;
+  transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
+}
+
+.innerFlipped .inner-back,
+.flipped .back {
+  z-index: 3;
+}
+/* back, initially hidden pane */
+.inner-back,
+.back {
+  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+}
+
+.flipped .back .innerFlipped .inner-back {
+  transform: rotate3d(0, 1, 0, 180deg) translateZ(-50px);
+}
+
+
+.edit-btn {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  z-index: 6;
+}
+/* end Flip Card */
+
 
 .table .table.spellDetail {
   background-color: transparent;

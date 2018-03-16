@@ -23,23 +23,32 @@ export function ProficienciesViewModel() {
 
     self.proficiencies = ko.observableArray([]);
     self.blankProficiency = ko.observable(new Proficiency());
-    self.modalOpen = ko.observable(false);
-    self.editItemIndex = null;
-    self.currentEditItem = ko.observable(new Proficiency());
-    self.sort = ko.observable(self.sorts['name asc']);
-    self.filter = ko.observable('');
-    self.shouldShowDisclaimer = ko.observable(false);
-    self.previewTabStatus = ko.observable('active');
-    self.editTabStatus = ko.observable('');
-    self.firstModalElementHasFocus = ko.observable(false);
-    self.editFirstModalElementHasFocus = ko.observable(false);
 
+    self.addProficiencyItem = ko.observable(new Proficiency());
+
+    self.sort = ko.observable(self.sorts['name asc']);
+
+    self.filter = ko.observable('');
+
+    self.shouldShowDisclaimer = ko.observable(false);
+
+    self.firstModalElementHasFocus = ko.observable(false);
+    self.elementHasFocus = ko.observable(false);
+
+        // Wait for page load
     self.load = function() {
         Notifications.global.save.add(self.save);
-
         var key = CharacterManager.activeCharacter().key();
         self.proficiencies(PersistenceService.findBy(Proficiency, 'characterId', key));
+        $('#add-proficiency').on('shown.bs.collapse', ()=>{
+            self.elementHasFocus(true);
+        });
+        $('#add-proficiency').on('hidden.bs.collapse', ()=>{
+            self.elementHasFocus(false);
+        });
     };
+
+    self.generateBlank = () => (new Proficiency());
 
     self.unload = function() {
         Notifications.global.save.remove(self.save);
@@ -51,6 +60,9 @@ export function ProficienciesViewModel() {
         });
     };
 
+    self.update = () => {
+        Notifications.proficiency.changed.dispatch();
+    };
     // Pre-pop methods
     self.proficienciesPrePopFilter = function(request, response) {
         var term = request.term.toLowerCase();
@@ -63,8 +75,7 @@ export function ProficienciesViewModel() {
 
     self.populateProficiency = function(label, value) {
         var proficiency = DataRepository.proficiencies[label];
-
-        self.blankProficiency().importValues(proficiency);
+        self.addProficiencyItem().importValues(proficiency);
         self.shouldShowDisclaimer(true);
     };
 
@@ -118,11 +129,19 @@ export function ProficienciesViewModel() {
     };
 
     self.addProficiency = function() {
-        var proficiency = self.blankProficiency();
+        var proficiency = self.addProficiencyItem();
         proficiency.characterId(CharacterManager.activeCharacter().key());
         proficiency.save();
         self.proficiencies.push(proficiency);
-        self.blankProficiency(new Proficiency());
+        self.addProficiencyItem(new Proficiency());
+        self.shouldShowDisclaimer(false);
+        self.elementHasFocus(false);
+    };
+
+
+    self.cancelAddProficiency = () => {
+        self.shouldShowDisclaimer(false);
+        self.addProficiencyItem(new Proficiency());
     };
 
     self.clear = function() {

@@ -110,7 +110,8 @@
       <tfoot>
         <tr>
           <td colspan="8">
-            <form data-bind="with: blankSpell">
+            <form data-bind=" submit: addSpell">
+              <div data-bind="with: blankSpell">
               <div style="padding: 10px" id="add-spell" class="collapse">
                 <div class="row">
                   <div class="form-group col-xs-6 col-sm-4 col-md-3 col-lg-3">
@@ -219,12 +220,13 @@
                   <center>
                     <button type="button" class="btn btn-primary btn-sm" id="spellsAddButton" data-toggle="collapse" data-target="#add-spell">Add Spell</button>
                     <button type="button" class="btn btn-default btn-sm" id="spellsAddCancelButton" data-toggle="collapse" data-target="#add-spell" data-bind='click: $parent.cancelAddSpell'>Cancel</button>
-                    <button type="submit" class="btn btn-primary btn-sm" id="spellsAddAddButton" data-toggle="collapse" data-target="#add-spell" data-bind='click: $parent.addSpell'>Add</button>
+                    <button type="submit" class="btn btn-primary btn-sm" id="spellsAddAddButton" data-toggle="collapse" data-target="#add-spell">Add</button>
                   </center>
                   <div style="right: 10px; top: 10px; position:absolute" class="pull-right">Total Spells:&nbsp;
                     <span data-bind="text: $parent.numberOfSpells"></span>
                   </div>
                 </div>
+              </div>
             </form>
 
           </td>

@@ -75,7 +75,7 @@ export function Skill() {
             Math.abs(self.bonus());
         }
 
-        str += ' <i><small>('
+        str += ' <i><small class="skills-ability-type">('
                 + self.abilityScore() + ')</small></i>';
         return str;
     });

@@ -1,10 +1,10 @@
 <div class="panel panel-default spellList collapse" style="margin-bottom: 0px;" data-bind="attr:{id: `spell_list_${spell.__id}`}, spellCard: {callback: collapseCallback}">
 
-  <div class="panel-body spellDetails" style="position: relative;" data-bind="css: spell.spellSchool().toLowerCase()">
+  <div class="panel-body spellDetails" style="position: relative;">
     <edit-button params="toggleMode: editMode, clickAction: ()=>{toggleEditSpell()}"></edit-button>
     <div class="flip-container" data-bind="css: {flipped:  editMode}, style: { height: elementHeight}">
       <div class="flipper">
-        <div class="front" data-bind="with: spell">
+        <div class="front" data-bind="with: spell, css: spell.spellSchool().toLowerCase()">
           <div class="h3" style="text-align: left">
             <span data-bind="text: spellNameLabel"></span>&nbsp;
             <small data-bind="text: spellSummaryLabel"></small>
@@ -58,7 +58,7 @@
             </div>
           </div>
         </div>
-        <div class="back" data-bind="with: currentEditItem" style="padding: 10px">
+        <div class="back" data-bind="with: currentEditItem, css: spell.spellSchool().toLowerCase()" style="padding: 10px">
           <form class="" data-bind="submit: $parent.toggleEditSpell">
             <div class="row">
             <div class="form-group col-xs-6 col-sm-4 col-md-3 col-lg-3">
