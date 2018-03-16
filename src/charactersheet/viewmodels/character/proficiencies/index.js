@@ -24,15 +24,9 @@ export function ProficienciesViewModel() {
     self.proficiencies = ko.observableArray([]);
     self.blankProficiency = ko.observable(new Proficiency());
 
-    self.addProficiencyItem = ko.observable(new Proficiency());
-
     self.sort = ko.observable(self.sorts['name asc']);
-
     self.filter = ko.observable('');
-
     self.shouldShowDisclaimer = ko.observable(false);
-
-    self.firstModalElementHasFocus = ko.observable(false);
     self.elementHasFocus = ko.observable(false);
 
         // Wait for page load
@@ -40,6 +34,7 @@ export function ProficienciesViewModel() {
         Notifications.global.save.add(self.save);
         var key = CharacterManager.activeCharacter().key();
         self.proficiencies(PersistenceService.findBy(Proficiency, 'characterId', key));
+
         $('#add-proficiency').on('shown.bs.collapse', ()=>{
             self.elementHasFocus(true);
         });
@@ -75,44 +70,12 @@ export function ProficienciesViewModel() {
 
     self.populateProficiency = function(label, value) {
         var proficiency = DataRepository.proficiencies[label];
-        self.addProficiencyItem().importValues(proficiency);
+        self.blankProficiency().importValues(proficiency);
         self.shouldShowDisclaimer(true);
     };
 
     self.setType = function(label, value) {
         self.blankProficiency().type(value);
-    };
-
-    // Modal methods
-    self.modalFinishedOpening = function() {
-        self.shouldShowDisclaimer(false);
-        self.firstModalElementHasFocus(true);
-    };
-
-    self.modalFinishedClosing = function() {
-        self.previewTabStatus('active');
-        self.editTabStatus('');
-
-        if (self.modalOpen()) {
-            Utility.array.updateElement(self.proficiencies(), self.currentEditItem(), self.editItemIndex);
-        }
-
-        // Just in case data was changed.
-        self.save();
-
-        self.modalOpen(false);
-        Notifications.proficiency.changed.dispatch();
-    };
-
-    self.selectPreviewTab = function() {
-        self.previewTabStatus('active');
-        self.editTabStatus('');
-    };
-
-    self.selectEditTab = function() {
-        self.editTabStatus('active');
-        self.previewTabStatus('');
-        self.editFirstModalElementHasFocus(true);
     };
 
     self.filteredAndSortedProficiencies = ko.computed(function() {
@@ -129,11 +92,11 @@ export function ProficienciesViewModel() {
     };
 
     self.addProficiency = function() {
-        var proficiency = self.addProficiencyItem();
+        var proficiency = self.blankProficiency();
         proficiency.characterId(CharacterManager.activeCharacter().key());
         proficiency.save();
         self.proficiencies.push(proficiency);
-        self.addProficiencyItem(new Proficiency());
+        self.blankProficiency(new Proficiency());
         self.shouldShowDisclaimer(false);
         self.elementHasFocus(false);
     };
@@ -141,7 +104,7 @@ export function ProficienciesViewModel() {
 
     self.cancelAddProficiency = () => {
         self.shouldShowDisclaimer(false);
-        self.addProficiencyItem(new Proficiency());
+        self.blankProficiency(new Proficiency());
     };
 
     self.clear = function() {

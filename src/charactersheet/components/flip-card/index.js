@@ -56,6 +56,7 @@ export class FlipCardComponentViewModel {
         this.elementHeight = ko.observable(params.defaultHeight || 'auto');
         this.elementId = `${this.paramElementId}_${this.viewData.__id}`
         this.currentEditItem = ko.observable();
+        this.formElementHasFocus = ko.observable(false);
     }
 
     load = () => {
@@ -65,11 +66,13 @@ export class FlipCardComponentViewModel {
 
     shownCallback = () => {
         this.editMode(false);
+        this.formElementHasFocus(true)
         this.setNewHeight();
     }
 
     hiddenCallback = () => {
         this.editMode(false);
+        this.formElementHasFocus(false)
         this.elementHeight('auto');
     }
 
@@ -118,9 +121,10 @@ export class FlipCardComponentViewModel {
     }
 
     remove = () => {
-      this.editMode(false);
       if (this.collapsable) {
         $(`#${this.elementId}`).collapse('hide');
+      } else {
+        this.editMode(false);  
       }
       setTimeout(()=>{
       this.removeCallback(this.viewData)},

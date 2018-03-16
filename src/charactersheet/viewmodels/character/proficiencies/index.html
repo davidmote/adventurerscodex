@@ -46,7 +46,7 @@
               <form style="padding: 10px; text-align: left" data-bind="submit: $parent.save">
                 <div class="form-group">
                   <label for="name" class="control-label">Name</label>
-                  <input type="text" class="form-control proficiencyEditNameInput" placeholder="Daggers" data-bind='textInput: name'>
+                  <input type="text" class="form-control proficiencyEditNameInput" placeholder="Daggers" data-bind='textInput: name, hasFocus: $parent.formElementHasFocus'>
                 </div>
                 <div class="form-group">
                   <label for="type" class="control-label">Type</label>
@@ -81,7 +81,7 @@
       <tr>
         <td colspan="4">
           <form data-bind="submit: addProficiency">
-            <div data-bind="with: addProficiencyItem">
+            <div data-bind="with: blankProficiency">
               <div style="padding: 10px" id="add-proficiency" class="collapse">
 
                 <div class="form-group">
