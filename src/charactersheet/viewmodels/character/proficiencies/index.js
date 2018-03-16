@@ -101,8 +101,9 @@ export function ProficienciesViewModel() {
         self.elementHasFocus(false);
     };
 
-
-    self.cancelAddProficiency = () => {
+    self.cancelAddProficiency = (data, event) => {
+        event.stopPropagation();
+        $('#add-proficiency').collapse('hide');
         self.shouldShowDisclaimer(false);
         self.blankProficiency(new Proficiency());
     };
@@ -117,12 +118,6 @@ export function ProficienciesViewModel() {
         Notifications.proficiency.changed.dispatch();
     };
 
-    self.editProficiency = function(proficiency) {
-        self.editItemIndex = proficiency.__id;
-        self.currentEditItem(new Proficiency());
-        self.currentEditItem().importValues(proficiency.exportValues());
-        self.modalOpen(true);
-    };
 }
 
 ko.components.register('proficiencies', {
