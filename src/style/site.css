@@ -1202,17 +1202,23 @@ input[type='checkbox']:checked.filter-checkbox + label:before{/*checked icon*/
   color: #fff!important;
 }
 
-#spellsAddButton[aria-expanded="true"] {
+#spellsAddButton[aria-expanded="true"],
+#skillAddButton[aria-expanded="true"]
+ {
    display: none;
 }
 #spellsAddAddButton,
-#spellsAddCancelButton
+#spellsAddCancelButton,
+#skillAddAddButton,
+#skillAddCancelButton
  {
    display: none;
 }
 
 #spellsAddAddButton[aria-expanded="true"],
-#spellsAddCancelButton[aria-expanded="true"]
+#spellsAddCancelButton[aria-expanded="true"],
+#skillAddAddButton[aria-expanded="true"],
+#skillAddCancelButton[aria-expanded="true"]
  {
    display: inline-block;
 }

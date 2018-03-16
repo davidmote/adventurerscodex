@@ -1,10 +1,13 @@
+import 'select2/dist/css/select2.min.css';
 import 'bin/knockout-bootstrap-modal';
+import 'bin/knockout-select2';
 import {
     CharacterManager,
     Utility
 } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { ProficiencyTypeComponentViewModel } from 'charactersheet/components/proficiency-marker';
 import { Skill } from 'charactersheet/models/character';
 import { SortService } from 'charactersheet/services/common';
 import ko from 'knockout';
@@ -59,10 +62,101 @@ export function SkillsViewModel() {
     self.skills = ko.observableArray([]);
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
+    self.editMode = ko.observable(false);
+    self.elementHeight = ko.observable('800px');
+    const PANEL_ID = '#skill-panel';
+
+    self.proficiencyOptions = [
+        'not',
+        'half',
+        'proficient',
+        'expertise'
+    ];
+
+    self.abilityScoreOptions = [
+        {id: 'Str',
+        'text': 'Strength'},
+        {id: 'Dex',
+        'text': 'Dexterity'},
+        {id: 'Con',
+        'text': 'Constitution'},
+        {id: 'Int',
+        'text': 'Intelligence'},
+        {id: 'Wis',
+        'text': 'Wisdom'},
+        {id: 'Cha',
+        'text': 'Charisma'}
+    ];
+
+    self.formatProficiencyOptions = (choice) => {
+        if (choice.id === undefined) {
+            return '';
+        } else if (choice.id == 'not') {
+            return $('<span style="padding: 10px">No Proficiency</span>');
+        }
+        else if (choice.id == 'expertise') {
+            return $('<span style="padding: 10px"> '+ ProficiencyTypeComponentViewModel.EXPERT_TEMPLATE + ' Expertise</span>');
+        }
+        else if (choice.id == 'proficient') {
+            return $('<span style="padding: 10px"> '+ ProficiencyTypeComponentViewModel.NORMAL_TEMPLATE + ' Proficient</span>');
+        }
+        else if (choice.id == 'half') {
+            return $('<span style="padding: 10px"> '+ ProficiencyTypeComponentViewModel.HALF_TEMPLATE + ' Half</span>');
+        }
+      else return '';
+    };
+
+    self.formatProficiency = (choice) => {
+        if (!choice.id) {
+            return '';
+        }
+        if (choice.id == 'expertise') {
+            return $(ProficiencyTypeComponentViewModel.EXPERT_TEMPLATE);
+        }
+        else if (choice.id == 'proficient') {
+            return $(ProficiencyTypeComponentViewModel.NORMAL_TEMPLATE);
+        }
+        else if (choice.id == 'half') {
+            return $(ProficiencyTypeComponentViewModel.HALF_TEMPLATE);
+        }
+      else return '';
+    };
+
+    self.setNewHeight = function () {
+        let setHeight = 0;
+        if (self.editMode()) {
+            setHeight = $(`${PANEL_ID} .back`).height();
+        } else {
+            setHeight = $(`${PANEL_ID} .front`).height();
+        }
+        if (setHeight > 0) {
+            self.elementHeight(setHeight.toString()+'px');
+        }
+    };
+    // Wait for page load
+    setTimeout(self.setNewHeight,0);
+
+    self.editSkills = function() {
+        if (self.editMode()) {
+            if(self.blankSkill().name()) {
+                self.addSkill();
+            }
+            self.dataHasChanged();
+            self.editMode(false);
+            self.setNewHeight();
+        } else {
+            self.editMode(true);
+            self.setNewHeight();
+        }
+    };
 
     self.load = function() {
         Notifications.global.save.add(self.save);
 
+
+        $('#add-skill').on('shown.bs.collapse', self.setNewHeight);
+
+        $('#add-skill').on('hidden.bs.collapse', self.setNewHeight);
         var skills = PersistenceService.findBy(Skill, 'characterId',
             CharacterManager.activeCharacter().key());
 
@@ -167,6 +261,11 @@ export function SkillsViewModel() {
         skill.save();
         self.addNotifiers(skill);
         self.skills.push(skill);
+        self.blankSkill(new Skill());
+    };
+
+    self.cancelAddSkill = () => {
+        $('#add-skill').collapse('hide');
         self.blankSkill(new Skill());
     };
 
