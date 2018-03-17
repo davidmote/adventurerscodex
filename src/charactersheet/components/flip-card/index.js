@@ -41,8 +41,11 @@ ko.bindingHandlers.collapseCard = {
 */
 export class FlipCardComponentViewModel {
     constructor(params) {
-        this.viewData = params.viewData;
-        this.generateBlank = params.generateBlank;
+        this.viewData = ko.utils.unwrapObservable(params.viewData);
+
+        this.context = ko.utils.unwrapObservable(params.context);
+
+        this.generateBlank = ko.utils.unwrapObservable(params.generateBlank);
 
         this.saveCallback = ko.utils.unwrapObservable(params.saveCallback);
 
@@ -103,7 +106,7 @@ export class FlipCardComponentViewModel {
 
     edit = () => {
       this.currentEditItem(this.generateBlank());
-      this.currentEditItem().importValues(this.viewData.exportValues())
+      this.currentEditItem().importValues(this.viewData.exportValues());
     }
 
     save = () => {
@@ -124,7 +127,7 @@ export class FlipCardComponentViewModel {
       if (this.collapsable) {
         $(`#${this.elementId}`).collapse('hide');
       } else {
-        this.editMode(false);  
+        this.editMode(false);
       }
       setTimeout(()=>{
       this.removeCallback(this.viewData)},
