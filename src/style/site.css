@@ -1331,6 +1331,10 @@ transition: height .35s ease;
   transition: all 0.3s linear !important;
 } */
 
+@-moz-document url-prefix() {
+  fieldset { display: table-cell; }
+}
+
 #ac {
   background:url('../images/shield.svg') no-repeat;
    background-size: 100% 100%;
@@ -1342,4 +1346,22 @@ transition: height .35s ease;
 
 .form-control.hit-dice-list {
   height: 100%;
+}
+
+fieldset.fieldset-bordered {
+      border: 1px solid #ddd;
+      padding: 0 1.4em 1.4em 1.4em;
+      margin: 0 0 1.5em 0;
+  }
+
+
+.fieldset-bordered>legend {
+    font-size: 1.1em;
+    width:inherit; /* Or auto */
+    padding:0 10px; /* To give a bit of padding on the left and right */
+    border-bottom:none;
+}
+
+.collapsing .back {
+  display: none;
 }

@@ -14,12 +14,12 @@ import {
     PersistenceService,
     SortService
 } from 'charactersheet/services/common';
+import { TrackedFormComponentViewModel } from './form';
 import campingTent from 'images/camping-tent-blue.svg';
-import campingTentWhite from 'images/camping-tent.svg';
 import ko from 'knockout';
 import meditation from 'images/meditation-blue.svg';
-import meditationWhite from 'images/meditation.svg';
 import template from './index.html';
+
 
 export function TrackerViewModel() {
     var self = this;
@@ -30,15 +30,10 @@ export function TrackerViewModel() {
     };
 
     self.trackables = ko.observableArray([]);
-    self.editItem = ko.observable();
-    self.modalOpen = ko.observable(false);
-    self.editModalTitle = ko.observable('');
+
     self.sort = ko.observable(self.sorts['name asc']);
     self.filter = ko.observable('');
-    self.meditation = meditation;
-    self.campingTent = campingTent;
-    self.meditationWhite = meditationWhite;
-    self.campingTentWhite = campingTentWhite;
+
     // List of all models that can be tracked
     self.trackedTypes = [ Feat, Trait, Feature ];
 
@@ -55,36 +50,6 @@ export function TrackerViewModel() {
         }
         return metaText;
     };
-
-    self.consoleIt =(it)=>{
-        console.log(it);
-    };
-    self.generateBlank = () => (new Tracked());
-    // const mapToColor = (level) => {
-    //     console.log(cssName);
-    //     switch (cssName) {
-    //     case 'progress-bar-forest':
-    //         return '#2F972F';
-    //     case 'progress-bar-sky':
-    //         return '#71D4E8';
-    //     case 'progress-bar-orange':
-    //         return '#f0ad4e';
-    //     case 'progress-bar-red':
-    //         return '#d9534f';
-    //     case 'progress-bar-purple':
-    //         return '#800080';
-    //     case 'progress-bar-teal':
-    //         return '#01DFD7';
-    //     case 'progress-bar-indigo':
-    //         return '#8000FF';
-    //     case 'progress-bar-brown':
-    //         return '#906713';
-    //     case 'progress-bar-yellow':
-    //         return '#D7DF01';
-    //     default:
-    //         return '#777';
-    //     }
-    // };
 
     const mapToColor = (trackableColor) => {
         switch (trackableColor) {
@@ -201,11 +166,6 @@ export function TrackerViewModel() {
     };
 
     /* UI Methods */
-
-    self.trackedElementProgressWidth = function(max, used) {
-        return (parseInt(max) - parseInt(used)) / parseInt(max);
-    };
-
     self.shortName = function(string) {
         return Utility.string.truncateStringAtLength(string(), 30);
     };
@@ -247,49 +207,27 @@ export function TrackerViewModel() {
         });
     };
 
-    self.maxTrackerWidth = function() {
-        return 100 / self.trackables().length;
-    };
-
     // Modal Methods
 
-    self.modifierHasFocus = ko.observable(false);
-    self.editHasFocus = ko.observable(false);
-
-    self.modalFinishedAnimating = function() {
-        self.modifierHasFocus(true);
-    };
-
-    self.modalFinishedClosing = function() {
-        if (self.modalOpen()) {
-            var tracked = PersistenceService.findFirstBy(Tracked, 'trackedId',
-                self.editItem().trackedId());
-            tracked.importValues(self.editItem().exportValues());
-            tracked.save();
-            self.trackables().forEach(function(item, idx, _) {
-                if (item.trackedId() === tracked.trackedId()) {
-                    item.tracked().importValues(tracked.exportValues());
-                }
-            });
-        }
-        self.dataHasChanged();
-        self.modalOpen(false);
-    };
+    // self.modalFinishedClosing = function() {
+    //     if (self.modalOpen()) {
+    //         var tracked = PersistenceService.findFirstBy(Tracked, 'trackedId',
+    //             self.editItem().trackedId());
+    //         tracked.importValues(self.editItem().exportValues());
+    //         tracked.save();
+    //         self.trackables().forEach(function(item, idx, _) {
+    //             if (item.trackedId() === tracked.trackedId()) {
+    //                 item.tracked().importValues(tracked.exportValues());
+    //             }
+    //         });
+    //     }
+    //     self.dataHasChanged();
+    //     self.modalOpen(false);
+    // };
 
     self.dataHasChanged = function() {
         self.save();
         Notifications.tracked.changed.dispatch();
-    };
-
-    self.editModalOpen = function() {
-        self.editHasFocus(true);
-    };
-
-    self.editTracked = function(item) {
-        self.editModalTitle(item.name());
-        self.editItem(new Tracked());
-        self.editItem().importValues(item.tracked().exportValues());
-        self.modalOpen(true);
     };
 
     self.refreshTracked = function(item) {

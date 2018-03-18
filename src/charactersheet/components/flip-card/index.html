@@ -1,27 +1,26 @@
-<div
-  class="panel panel-default"
-  style="margin-bottom: 0px;"
-  data-bind="attr:{id: `${elementId}`},
+<div class="panel panel-default"
+     style="margin-bottom: 0px;"
+     data-bind="attr:{id: `${elementId}`},
   collapseCard: { hiddenCallback: hiddenCallback, shownCallback: shownCallback },
   css: collapsable && 'collapse'">
-  <div class="panel-body" style="position: relative; height: 100%">
+  <div class="panel-body"
+       style="position: relative; height: 100%">
     <edit-button params="toggleMode: editMode, clickAction: toggleMode"></edit-button>
-    <div class="card-flip-container" data-bind="css: {'flipped':  editMode}, style: { height: elementHeight}">
+    <div class="card-flip-container"
+         data-bind="css: {'flipped':  editMode}, style: { height: elementHeight}">
       <div class="card-flipper">
         <!-- ko template: {
         nodes: $componentTemplateNodes,
         data: {
-        viewData: viewData,
-        currentEditItem: currentEditItem,
-        remove: remove,
-        save: toggleMode,
-        cancel: cancel,
-        context: context,
-         formElementHasFocus: formElementHasFocus } } -->
-          <div class="front">
-          </div>
-          <div class="back">
-          </div>
+          editMode: editMode,
+          context: context,
+          elementId: elementId,
+          toggleCallback: toggleMode,
+          resizeCallback: setNewHeight } } -->
+        <div class="front">
+        </div>
+        <div class="back">
+        </div>
         <!-- /ko -->
       </div>
     </div>

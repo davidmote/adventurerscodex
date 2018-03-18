@@ -24,11 +24,13 @@ ko.bindingHandlers.collapseCard = {
 
 /* Usage example
 <flip-card params={
-  data: $data,
-  template: template,
-  update: update,
-  delete: delete,
-  elementId: 'some-string'
+  dataId: $data.__id,
+  elementid: 'unique dom id',
+  collapsable: collapsable,
+  context: {
+    data: $data,
+    parent: $parent,
+}
 }>
   <div class="front">
     Front of Card
@@ -41,25 +43,21 @@ ko.bindingHandlers.collapseCard = {
 */
 export class FlipCardComponentViewModel {
     constructor(params) {
-        this.viewData = ko.utils.unwrapObservable(params.viewData);
-
-        this.context = ko.utils.unwrapObservable(params.context);
-
-        this.generateBlank = ko.utils.unwrapObservable(params.generateBlank);
-
-        this.saveCallback = ko.utils.unwrapObservable(params.saveCallback);
-
-        this.removeCallback = ko.utils.unwrapObservable(params.remove);
-
-        this.paramElementId = params.elementId;
-
+        // Unique id for the card's data
+        this.dataId = ko.utils.unwrapObservable(params.dataId);
+        // element id for collapsable behavior
+        this.paramElementId = ko.utils.unwrapObservable(params.elementId);
+        // unique identifier for this card
+        this.elementId = `${this.paramElementId}_${this.dataId}`
+        // Whether or not to trigger animations on collapse
         this.collapsable = ko.observable(ko.utils.unwrapObservable(params.collapsable) || false);
-
+        // contextual data to be passed to children objects
+        this.context = params.context;
+        // Whether or not this 'back' is displayed.
         this.editMode = ko.observable(false);
+        // calculated element height
         this.elementHeight = ko.observable(params.defaultHeight || 'auto');
-        this.elementId = `${this.paramElementId}_${this.viewData.__id}`
-        this.currentEditItem = ko.observable();
-        this.formElementHasFocus = ko.observable(false);
+
     }
 
     load = () => {
@@ -69,28 +67,25 @@ export class FlipCardComponentViewModel {
 
     shownCallback = () => {
         this.editMode(false);
-        this.formElementHasFocus(true)
         this.setNewHeight();
     }
 
     hiddenCallback = () => {
         this.editMode(false);
-        this.formElementHasFocus(false)
         this.elementHeight('auto');
     }
 
-    toggleMode = () => {
-        if(this.editMode()) {
-            this.save();
-            this.editMode(false);
-            this.setNewHeight();
-        } else {
-          this.edit();
-          this.editMode(true);
-          this.setNewHeight();
-        }
-    }
+    toggleMode = (data, event) => {
+      let toggleTo = (!this.editMode());
+      if (data === true) { //override default behavior from function call
+        toggleTo = true;
 
+      } else if (data === false) { //override default behavior from function call
+        toggleTo = false;
+      }
+      this.editMode(toggleTo);
+      this.setNewHeight();
+    }
 
     setNewHeight = () => {
         let setHeight = 0;
@@ -102,36 +97,6 @@ export class FlipCardComponentViewModel {
         if (setHeight && setHeight > 1) {
             this.elementHeight(setHeight.toString()+'px');
         }
-    }
-
-    edit = () => {
-      this.currentEditItem(this.generateBlank());
-      this.currentEditItem().importValues(this.viewData.exportValues());
-    }
-
-    save = () => {
-      this.viewData.importValues(this.currentEditItem().exportValues());
-      this.viewData.save();
-      this.saveCallback(this.viewData);
-      this.currentEditItem(this.generateBlank());
-    }
-
-
-    cancel = () => {
-      this.editMode(false);
-      this.currentEditItem(this.generateBlank());
-      this.setNewHeight();
-    }
-
-    remove = () => {
-      if (this.collapsable) {
-        $(`#${this.elementId}`).collapse('hide');
-      } else {
-        this.editMode(false);
-      }
-      setTimeout(()=>{
-      this.removeCallback(this.viewData)},
-      650);
     }
 }
 

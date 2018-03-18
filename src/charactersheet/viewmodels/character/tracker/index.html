@@ -8,9 +8,8 @@
 			<tr>
 				<th>Name
 				</th>
-				<th colspan="2">Resets on
+				<th colspan="3">Resets&nbsp;on
 				</th>
-				<th></th>
 				<th></th>
 				<th>Used</th>
 				<th>
@@ -51,63 +50,36 @@
 					<span data-toggle="collapse" data-bind="attr:{'data-target': `#tracked_${__id}`}" class="rotate fa fa-chevron-left"></span>
 				</td>
 			</tr>
-			<tr data-bind="with: $data.tracked()">
+			<tr>
 				<td colspan="8">
 				<flip-card params="{
-							viewData: $data,
-							generateBlank: $component.generateBlank,
+					    dataId: $data.tracked().__id,
 							collapsable: true,
-							saveCallback: $component.dataHasChanged,
-							remove: ()=>{},
 							elementId: 'tracked',
 							context: {
-								parent: $parent,
-								component: $component
+								viewData: $data,
+								nameMeta: $component.nameMeta
 							}
 						}">
-					<div class="front" data-bind="with: viewData">
+					<div class="front">
 						<div class="h4" style="text-align: left">
-							<span data-bind="text: $parent.context.parent.name"></span>
-							<small data-bind="text: $parent.context.component.nameMeta($parent.context.parent)"></small>
+							<span data-bind="text: context.viewData.name"></span>
+							<small data-bind="text: context.nameMeta(context.viewData)"></small>
 						</div>
-						<p data-bind="markdownPreview: $parent.context.parent.description"></p>
+						<p style="text-align:justify" data-bind="markdownPreview: context.viewData.description"></p>
 					</div>
-					<div class="back" data-bind="with: currentEditItem">
+					<div class="back" >
 							<div class="h4" style="text-align: left">
-								<span data-bind="text: $parent.context.parent.name"></span>
-								<small data-bind="text: $parent.context.component.nameMeta($parent.context.parent)"></small>
-
+								<span data-bind="text: context.viewData.name"></span>
+								<small data-bind="text: context.nameMeta(context.viewData)"></small>
 							</div>
-
-						<form class="form-horizontal">
-							<div class="form-group">
-								<label for="bonus" class="col-sm-3 control-label">Max</label>
-								<div class="col-sm-9">
-									<input type="number" class="form-control" id="max" min="1" data-bind='textInput: maxUses, hasFocus: $parent.formElementHasFocus'>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-3 control-label">Resets on...</label>
-								<div class="col-sm-9">
-									<div class="btn-group btn-group-justified btn-group-sm" role="group">
-										<label class="btn btn-default btn-sm" data-bind="css: { active: resetsOn() == 'short'}">
-											<input type="radio" class="hide-block"
-											name="featureResetsOnShort" value="short" data-bind="checked: resetsOn"/>
-											<img class="action-bar-icon" data-bind="attr: { src: $parent.context.component.meditationWhite }"></img>
-											&nbsp;&nbsp;&nbsp;Short Rest
-										</label>
-										<label class="btn btn-default  btn-sm" data-bind="css: { active: resetsOn() == 'long'}">
-											<input type="radio" class="hide-block"
-											name="featureResetsOnLong" value="long" data-bind="checked: resetsOn"/>
-											<img class="action-bar-icon" data-bind="attr: { src: $parent.context.component.campingTentWhite }"></img>
-											&nbsp;&nbsp;&nbsp;Long Rest
-										</label>
-									</div>
-								</div>
-							</div>
-						</form>
-					</div>
+							<tracked-form params="{
+								data: context.viewData.tracked,
+								containerId: elementId,
+								showForm: editMode,
+								toggle: toggleCallback,
+								 }">
+							</tracked-form>
 				</flip-card>
 			</td>
 			</tr>
