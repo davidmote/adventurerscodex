@@ -1,7 +1,6 @@
 import 'bin/knockout-bootstrap-modal';
 import {
     CharacterManager,
-    DataRepository,
     Fixtures,
     Notifications
 } from 'charactersheet/utilities';
@@ -15,11 +14,8 @@ import {
 } from 'charactersheet/services/common';
 import { FeatureFormComponentViewModel } from './form';
 import { Utility } from 'charactersheet/utilities';
-import campingTent from 'images/camping-tent.svg';
 import ko from 'knockout';
-import meditation from 'images/meditation.svg';
 import template from './index.html';
-import uuid from 'node-uuid';
 
 export function FeaturesViewModel() {
     var self = this;
