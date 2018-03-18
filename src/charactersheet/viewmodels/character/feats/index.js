@@ -42,6 +42,10 @@ export function FeatsViewModel() {
         }
     };
 
+    self.collapseAll = () => {
+        $('#feat-panel .collapse.in').collapse('hide');
+    };
+
     self.load = function() {
         Notifications.global.save.add(self.save);
 

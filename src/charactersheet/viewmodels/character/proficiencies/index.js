@@ -39,6 +39,11 @@ export function ProficienciesViewModel() {
             $('#add-proficiency').collapse('show');
         }
     };
+
+
+    self.collapseAll = () => {
+        $('#proficiency-panel .collapse.in').collapse('hide');
+    };
         // Wait for page load
     self.load = function() {
         Notifications.global.save.add(self.save);

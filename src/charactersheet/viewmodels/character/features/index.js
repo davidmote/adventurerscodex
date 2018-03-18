@@ -41,6 +41,10 @@ export function FeaturesViewModel() {
         }
     };
 
+    self.collapseAll = () => {
+        $('#feature-panel .collapse.in').collapse('hide');
+    };
+
     self.features = ko.observableArray([]);
     self.sort = ko.observable(self.sorts['name asc']);
     self.filter = ko.observable('');

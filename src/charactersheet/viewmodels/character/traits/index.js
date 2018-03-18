@@ -9,11 +9,10 @@ import { PersistenceService,
     SortService } from 'charactersheet/services/common';
 import { Tracked,
     Trait } from 'charactersheet/models';
-import campingTent from 'images/camping-tent.svg';
+
+import { TraitFormComponentViewModel } from './form';
 import ko from 'knockout';
-import meditation from 'images/meditation.svg';
 import template from './index.html';
-import uuid from 'node-uuid';
 
 export function TraitsViewModel() {
     var self = this;
@@ -28,24 +27,29 @@ export function TraitsViewModel() {
     };
 
     self.traits = ko.observableArray([]);
-    self.blankTrait = ko.observable(new Trait());
-    self.blankTracked = ko.observable(new Tracked());
-    self.modalOpen = ko.observable(false);
-    self.editItemIndex = null;
-    self.currentEditItem = ko.observable(new Trait());
-    self.currentEditTracked = ko.observable(new Tracked());
     self.sort = ko.observable(self.sorts['name asc']);
     self.filter = ko.observable('');
-    self.shouldShowDisclaimer = ko.observable(false);
-    self.previewTabStatus = ko.observable('active');
-    self.editTabStatus = ko.observable('');
-    self.firstModalElementHasFocus = ko.observable(false);
-    self.editFirstModalElementHasFocus = ko.observable(false);
-    self.meditation = meditation;
-    self.campingTent = campingTent;
 
-    //Static Data
-    self.raceOptions = Fixtures.profile.raceOptions;
+
+    self.showAddForm = ko.observable(false);
+
+    self.toggleAddForm = () => {
+        if (self.showAddForm()) {
+            self.showAddForm(false);
+            $('#add-trait').collapse('hide');
+        } else {
+            self.showAddForm(true);
+            $('#add-trait').collapse('show');
+        }
+    };
+
+    self.collapseAll = () => {
+        $('#trait-panel .collapse.in').collapse('hide');
+    };
+
+    self.shortName = function(string) {
+        return Utility.string.truncateStringAtLength(string(), 25);
+    };
 
     self.load = function() {
         Notifications.global.save.add(self.save);
@@ -64,78 +68,6 @@ export function TraitsViewModel() {
         });
     };
 
-    // Pre-pop methods
-    self.traitsPrePopFilter = function(request, response) {
-        var term = request.term.toLowerCase();
-        var keys = DataRepository.traits ? Object.keys(DataRepository.traits) : [];
-        var results = keys.filter(function(name, idx, _) {
-            return name.toLowerCase().indexOf(term) > -1;
-        });
-        response(results);
-    };
-
-    self.populateRace = function(label, value) {
-        self.blankTrait().race(value);
-    };
-
-    self.populateRaceEdit = function(label, value) {
-        self.currentEditItem().race(value);
-    };
-
-    self.populateTrait = function(label, value) {
-        var trait = DataRepository.traits[label];
-
-        self.blankTrait().importValues(trait);
-        self.shouldShowDisclaimer(true);
-    };
-
-    // Modal methods
-    self.modalFinishedOpening = function() {
-        self.shouldShowDisclaimer(false);
-        self.firstModalElementHasFocus(true);
-    };
-
-    self.modalFinishedClosing = function() {
-        self.previewTabStatus('active');
-        self.editTabStatus('');
-
-        if (self.modalOpen()) {
-            if (self.currentEditItem().isTracked()) {
-                if (self.currentEditItem().trackedId()) {
-                    var tracked = PersistenceService.findFirstBy(Tracked, 'trackedId', self.currentEditItem().trackedId());
-                    tracked.importValues(self.currentEditTracked().exportValues());
-                    tracked.save();
-                } else {
-                    self.currentEditItem().trackedId(uuid.v4());
-                    self.addTracked(self.currentEditItem().trackedId(),
-                        self.currentEditItem().characterId(), self.currentEditTracked());
-                }
-            } else if (self.currentEditItem().trackedId()) {
-                var trackedToDelete = PersistenceService.findFirstBy(Tracked, 'trackedId', self.currentEditItem().trackedId());
-                trackedToDelete.delete();
-                self.currentEditItem().trackedId(null);
-            }
-            Utility.array.updateElement(self.traits(), self.currentEditItem(), self.editItemIndex);
-        }
-
-        self.save();
-        self.currentEditItem(new Trait());
-        self.currentEditTracked(new Tracked());
-        self.modalOpen(false);
-        Notifications.trait.changed.dispatch();
-    };
-
-    self.selectPreviewTab = function() {
-        self.previewTabStatus('active');
-        self.editTabStatus('');
-    };
-
-    self.selectEditTab = function() {
-        self.editTabStatus('active');
-        self.previewTabStatus('');
-        self.editFirstModalElementHasFocus(true);
-    };
-
     self.filteredAndSortedTraits = ko.computed(function() {
         return SortService.sortAndFilter(self.traits(), self.sort(), null);
     });
@@ -150,29 +82,8 @@ export function TraitsViewModel() {
     };
 
     self.addTrait = function() {
-        var trait = self.blankTrait();
-        trait.characterId(CharacterManager.activeCharacter().key());
-        if (trait.isTracked()) {
-            trait.trackedId(uuid.v4());
-            self.addTracked(trait.trackedId(), trait.characterId(), self.blankTracked());
-        }
         trait.save();
         self.traits.push(trait);
-        self.blankTrait(new Trait());
-        self.blankTracked(new Tracked());
-    };
-
-    self.addTracked = function(uuid, characterId, tracked) {
-        var newTracked = new Tracked();
-        newTracked.characterId(characterId);
-        newTracked.trackedId(uuid);
-        newTracked.maxUses(tracked.maxUses());
-        newTracked.resetsOn(tracked.resetsOn());
-        newTracked.type(Trait);
-        var trackedList = PersistenceService.findBy(Tracked, 'characterId', characterId);
-        newTracked.color(Fixtures.general.colorList[trackedList.length
-          % Fixtures.general.colorList.length]);
-        newTracked.save();
     };
 
     self.clear = function() {
@@ -188,20 +99,6 @@ export function TraitsViewModel() {
         self.traits.remove(trait);
         trait.delete();
         Notifications.trait.changed.dispatch();
-    };
-
-    self.editTrait = function(trait) {
-        self.editItemIndex = trait.__id;
-        self.currentEditItem(new Trait());
-        self.currentEditItem().importValues(trait.exportValues());
-        if (trait.isTracked()) {
-            self.currentEditTracked(PersistenceService.findFirstBy(Tracked, 'trackedId', trait.trackedId()));
-        }
-        self.modalOpen(true);
-    };
-
-    self.trackedPopoverText = function() {
-        return 'Tracked Traits are listed in the Tracker.';
     };
 }
 

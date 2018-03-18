@@ -167,8 +167,11 @@ export class FeatureFormComponentViewModel {
     };
 
     populateClass = (label, value) => {
-        self.currentEditItem().characterClass(value);
+        this.currentEditItem().characterClass(value);
     };
+
+    popoverText = () => ('Tracked Features are listed in the Tracker.');
+
 }
 
 ko.components.register('feature-form', {

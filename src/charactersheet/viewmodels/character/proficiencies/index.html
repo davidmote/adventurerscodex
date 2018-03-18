@@ -1,5 +1,4 @@
-<div id="proficiency-panel"
-     style="min-width: 280px;">
+<div id="proficiency-panel">
   <div class="h4">
     Proficiencies
   </div>
@@ -14,6 +13,10 @@
         <th data-bind="click: function(){sortBy('type');}">
           Type
           <span data-bind="css: sortArrow('type')"></span>
+        </th>
+        <th>
+          <a href="#" class="" data-bind="{click: collapseAll}">
+              <span class="fa fa-minus"></span></a>
         </th>
       </tr>
     </thead>
@@ -65,17 +68,6 @@
         </td>
       </tr>
       <!-- /ko -->
-      <!-- ko if: filteredAndSortedProficiencies().length == 0 -->
-      <tr class="clickable">
-        <td data-toggle="collapse"
-            data-target="#add-proficiency"
-            href="#"
-            colspan="4"
-            class="text-center">
-          <i class="fa fa-plus fa-color"></i> Add a new Proficiency
-        </td>
-      </tr>
-      <!-- /ko -->
     </tbody>
     <tfoot>
       <tr>
@@ -92,11 +84,11 @@
         <!-- ko ifnot: $component.showAddForm -->
         <center>
           <button type="button"
-                  class="btn btn-primary btn-sm"
+                  class="btn btn-default btn-sm btn-block"
                   id="proficiencyAddButton"
                   data-toggle="collapse"
                   data-target="#add-proficiency"
-                  data-bind="click: toggleAddForm">Add Proficiency</button>
+                  data-bind="click: toggleAddForm"><i class="fa fa-plus"></i> Add Proficiency</button>
           </center>
           <!-- /ko -->
         </td>

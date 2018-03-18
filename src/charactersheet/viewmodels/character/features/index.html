@@ -5,13 +5,17 @@
   <table style="border-width: 0px" class="table table-responsive table-ac-bordered table-hover">
     <thead>
       <tr>
-        <th data-bind="click: function(){sortBy('name');}" class="col-md-7">
+        <th data-bind="click: function(){sortBy('name');}">
           Feature
           <span data-bind="css: sortArrow('name')"></span>
         </th>
-        <th data-bind="click: function(){sortBy('characterClass');}" class="col-md-4">
+        <th data-bind="click: function(){sortBy('characterClass');}">
           Class
           <span data-bind="css: sortArrow('characterClass')"></span>
+        </th>
+        <th>
+          <a href="#" class="" data-bind="{click: collapseAll}">
+              <span class="fa fa-minus"></span></a>
         </th>
       </tr>
     </thead>
@@ -63,13 +67,6 @@
         </td>
       </tr>
       <!-- /ko -->
-      <!-- ko if: filteredAndSortedFeatures().length == 0 -->
-      <tr class="clickable">
-        <td data-toggle="collapse" data-target="#add-feature" href="#" colspan="4" class="text-center">
-          <i class="fa fa-plus fa-color"></i> Add a new feature
-        </td>
-      </tr>
-      <!-- /ko -->
     </tbody>
     <tfoot>
       <tr>
@@ -88,11 +85,11 @@
         <!-- ko ifnot: $component.showAddForm -->
         <center>
           <button type="button"
-                  class="btn btn-primary btn-sm"
+                  class="btn btn-default btn-sm btn-block"
                   id="proficiencyAddButton"
                   data-toggle="collapse"
                   data-target="#add-feature"
-                  data-bind="click: toggleAddForm">Add Feature</button>
+                  data-bind="click: toggleAddForm"><i class="fa fa-plus"></i> Add Feature</button>
           </center>
           <!-- /ko -->
         </td>
