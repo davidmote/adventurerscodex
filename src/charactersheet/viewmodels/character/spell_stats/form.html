@@ -1,0 +1,72 @@
+<form data-bind="{submit: submit}" class="form-horizontal">
+  <div data-bind="{with: currentEditItem}">
+  <div class="form-group">
+    <label class="col-xs-7 pull-left">Spell Attack Bonus</label>
+    <div class="col-xs-5">
+      <input type="number"
+             class="form-control ability-score-input pull-left"
+             id="spellStatsEditSpellAttackBonusInput"
+             data-bind='textInput: spellAttackBonus,
+              hasFocus: $component.firstModalElementHasFocus'>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-xs-7 pull-left">Spell Save DC</label>
+    <div class="col-xs-5">
+      <input type="number"
+             class="form-control ability-score-input"
+             id="spellStatsEditSpellSaveDcInput"
+             data-bind='textInput: spellSaveDc'>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-xs-7 pull-left">Spell Casting Ability</label>
+    <div class="col-xs-5">
+      <input type="text"
+             class="form-control ability-score-input"
+             id="spellStatsEditSpellCastingAbilityInput"
+             data-bind='value: spellcastingAbility,
+                autocomplete: { source: spellcastingAbilityOptions,
+                onselect: $component.setSpellCastingAbility }'>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-xs-7 pull-left">Cantrips Known</label>
+    <div class="col-xs-5">
+      <input type="number"
+             class="form-control ability-score-input"
+             id="spellStatsEditCantripKnownInput"
+             data-bind='textInput: spellsCantripsKnown'>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-xs-7 pull-left">Spells Known</label>
+    <div class="col-xs-5">
+      <input type="number"
+             class="form-control ability-score-input"
+             id="spellStatsEditSpellKnownInput"
+             data-bind='textInput: spellsKnown'>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-xs-7 pull-left">Max Prepared</label>
+    <div class="col-xs-5">
+      <input type="number"
+             class="form-control ability-score-input"
+             id="spellStatsEditMaxPrepareInput"
+             data-bind='textInput: spellsMaxPrepared'>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-xs-7 pull-left">Invocations Known</label>
+    <div class="col-xs-5">
+      <input type="number"
+             class="form-control ability-score-input"
+             id= "spellStatsEditInvocationsKnownInput"
+             data-bind='textInput: spellsInvocationsKnown'>
+    </div>
+  </div>
+</div>
+
+  <button type="submit" style="display:none"></button>
+</form>
