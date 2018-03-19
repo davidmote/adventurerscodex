@@ -16,7 +16,6 @@ export { SkillsViewModel } from './skills';
 export { SpellSlotsViewModel } from './spell_slots';
 export { SpellStatsViewModel } from './spell_stats';
 export { SpellbookViewModel } from './spells';
-export { SpellCardComponentViewModel } from './spells/spellcard';
 export { StatsViewModel } from './stats';
 export { StatusLineViewModel } from './status_line';
 export { TrackerViewModel } from './tracker';

@@ -1,58 +1,77 @@
-<div class="row">
+<div class="row" id="spells-panel">
   <div class="col-xs-12">
     <div class="h4">
       Spells<br/>
       <small>You can sort your spells by clicking on the headers. View the
     bottom of the list for a count of your prepared spells.</small>
     </div>
-    <table class="listing table table-responsive table-ac-bordered table-hover" id="spellsTable">
+    <table class="listing table table-responsive table-ac-bordered table-hover"
+           id="spellsTable">
       <thead>
         <tr>
           <th id="spellsTablePreparedHeader">
-            <input id="filterByCastable" type='checkbox' class='filter-checkbox sr-only' data-bind="checked: filteredByCastable"></input>
-            <label for="filterByCastable" class='fancy-checkbox-label'>
-        Castable
+            <input id="filterByCastable"
+                   type='checkbox'
+                   class='filter-checkbox sr-only'
+                   data-bind="checked: filteredByCastable"></input>
+            <label for="filterByCastable"
+                   class='fancy-checkbox-label'>
+        <small>Memorized</small>
         </label>
           </th>
-          <th id="spellsTableSpellHeader" data-bind="click: function(){sortBy('spellName');}">
+          <th id="spellsTableSpellHeader"
+              data-bind="click: function(){sortBy('spellName');}">
             Spell
             <span data-bind="css: sortArrow('spellName')"></span>
           </th>
-          <th id="spellsTableLevelHeader" data-bind="click: function(){sortBy('spellLevel');}">
+          <th id="spellsTableLevelHeader"
+              data-bind="click: function(){sortBy('spellLevel');}">
             Level
             <span data-bind="css: sortArrow('spellLevel')"></span>
           </th>
-          <th id="spellsTableTypeHeader" data-bind="click: function(){sortBy('spellTypeLabel');}">
+          <th id="spellsTableTypeHeader"
+              data-bind="click: function(){sortBy('spellTypeLabel');}">
             Type
             <span data-bind="css: sortArrow('spellTypeLabel')"></span>
           </th>
-          <th id="spellsTableDamageHeader" data-bind="click: function(){sortBy('spellDmg');}">
+          <th id="spellsTableDamageHeader"
+              data-bind="click: function(){sortBy('spellDmg');}">
             Damage
             <span data-bind="css: sortArrow('spellDmg')"></span>
           </th>
-          <th id="spellsTableCastingHeader" data-bind="click: function(){sortBy('spellCastingTime');}">
+          <th id="spellsTableCastingHeader"
+              data-bind="click: function(){sortBy('spellCastingTime');}">
             Casting Time
             <span data-bind="css: sortArrow('spellCastingTime')"></span>
           </th>
-          <th id="spellsTableRangeHeader" data-bind="click: function(){sortBy('spellRange');}">
+          <th id="spellsTableRangeHeader"
+              data-bind="click: function(){sortBy('spellRange');}">
             Range
             <span data-bind="css: sortArrow('spellRange')"></span>
           </th>
           <th>
-            <button class="btn btn-link" data-bind="{click: collapseAll}">
+            <button class="btn btn-link"
+                    data-bind="{click: collapseAll}">
         <span class="fa fa-minus"></span></button>
           </th>
         </tr>
       </thead>
-
       <tbody>
         <!-- ko foreach: filteredAndSortedSpells -->
-        <tr class="spellRow" data-toggle="collapse" class="clickable spellRow" data-bind="css: {notCastable: !spellIsCastable()}, attr:{'data-target': `#spell_list_${__id}`, id: `#spell_row_${__id}`}">
-          <td class="memorize-spell" data-bind="click: $parent.memorizeSpell">
+        <tr class="spellRow"
+            data-toggle="collapse"
+            class="clickable spellRow"
+            data-bind="css: {notCastable: !spellIsCastable()}, attr:{'data-target': `#spell_list_${__id}`, id: `#spell_row_${__id}`}">
+          <td class="memorize-spell"
+              data-bind="click: $parent.memorizeSpell">
             <!-- ko ifnot: spellLevel() == 0  || spellAlwaysPrepared -->
             <div>
-              <input type='checkbox' style="" class='pseudo-checkbox sr-only' data-bind="checked: spellPrepared, attr: {id: `spell_memorize_${__id}`}"></input>
-              <label data-bind="attr: {for: `spell_memorize_${__id}`}" class='fancy-checkbox-label'>
+              <input type='checkbox'
+                     style=""
+                     class='pseudo-checkbox sr-only'
+                     data-bind="checked: spellPrepared, attr: {id: `spell_memorize_${__id}`}"></input>
+              <label data-bind="attr: {for: `spell_memorize_${__id}`}"
+                     class='fancy-checkbox-label'>
             </label>
             </div>
             <!-- /ko -->
@@ -61,14 +80,17 @@
             <!-- /ko -->
           </td>
           <td>
-            <i class="glyphicon" style="display: inline-block;
+            <!-- <i class="glyphicon"
+               style="display: inline-block;
             text-align: center;
             word-wrap: break-word;
             width: 18px;
-            height: 18px;" data-bind="css: spellSchool().toLowerCase()"></i>
+            height: 18px;"
+               data-bind="css: spellSchool().toLowerCase()"></i> -->
             <span data-bind="text: spellName"></span>
             <!-- ko if: isConcentration -->
-            <span style="color: #18bc9c" class="glyphicon glyphicon-copyright-mark"></span>
+            <span style="color: #18bc9c"
+                  class="glyphicon glyphicon-copyright-mark"></span>
             <!-- /ko -->
           </td>
           <td>
@@ -78,160 +100,157 @@
           <td><span data-bind="text: spellDamageLabel"></span></td>
           <td><span data-bind="text: spellCastingTime"></span>
             <!-- ko if: isRitual -->
-            <span style="color: #18bc9c" class="glyphicon glyphicon-registration-mark"></span>
+            <span style="color: #18bc9c"
+                  class="glyphicon glyphicon-registration-mark"></span>
             <!-- /ko -->
           </td>
-          <td><span data-bind="text: spellRange"></span></td>
+          <td><span data-bind="text: $component.trunc(spellRange, 10)"></span></td>
           <td>
-            <span data-toggle="collapse" data-bind="attr:{'data-target': `#spell_list_${__id}`}" class="rotate fa fa-chevron-left"></span>
+            <span data-toggle="collapse"
+                  data-bind="attr:{'data-target': `#spell_list_${__id}`}"
+                  class="rotate fa fa-chevron-left"></span>
           </td>
         </tr>
         <tr style="backgound-color: white !important;">
-          <td colspan="8" style="padding: 0px; height: 100%">
-            <spell-card params="{spell: $data, removeSpell: $parent.removeSpell}"></spell-card>
+          <td colspan="8"
+              style="padding: 0px; height: 100%">
+            <flip-card params="{
+                  dataId: $data.__id,
+                  collapsable: true,
+                  elementId: 'spell_list',
+                  context: {
+                    data: $data,
+                    remove: $component.removeSpell,
+                  }
+                }">
+              <div class="front">
+                <div data-bind="with: context.data, css: context.data.spellSchool().toLowerCase()">
+                  <div class="h3"
+                       style="text-align: left">
+                    <span data-bind="text: spellNameLabel"></span>&nbsp;
+                    <small data-bind="text: spellSummaryLabel"></small>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <table class="spellDetail table table-hover table-condensed table-ac-bordered">
+                        <tbody>
+                          <tr>
+                            <th>Type:</th>
+                            <td><span data-bind="text: spellType"></span></td>
+                          </tr>
+                          <!-- ko if: spellDamageLabel -->
+                          <tr>
+                            <th>Damage:</th>
+                            <td><span data-bind="text: spellDamageLabel"></span></td>
+                          </tr>
+                          <!-- /ko -->
+                          <tr>
+                            <th>Casting Time:</th>
+                            <td><span data-bind="text: spellCastingTime"></span></td>
+                          </tr>
+                          <tr>
+                            <th>Range:</th>
+                            <td><span data-bind="text: spellRange"></span></td>
+                          </tr>
+                          <tr>
+                            <th>Duration:</th>
+                            <td><span data-bind="text: spellDuration"></span></td>
+                          </tr>
+                          <tr>
+                            <th>Components:</th>
+                            <td><span data-bind="text: spellComponents"></span></td>
+                          </tr>
+                          <!-- ko if: spellMaterialComponents -->
+                          <tr>
+                            <td colspan="2"><i data-bind="text: spellMaterialComponents"></i></td>
+                          </tr>
+                          <!-- /ko -->
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="col-sm-9">
+                      <div class="col-xs-12 col-padded">
+                        <div style="text-align:justify"
+                             data-bind="html: spellDescriptionHTML"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!--  data-bind="with: spell, css: spell.spellSchool().toLowerCase()" -->
+              </div>
+              <div class="back">
+                <div data-bind="css: context.data.spellSchool().toLowerCase()">
+                <spell-form params="{
+                      data: context.data,
+                      containerId: elementId,
+                      showForm: editMode,
+                      toggle: toggleCallback,
+                      remove: context.remove
+                    }"></spell-form>
+                  </div>
+              </div>
           </td>
         </tr>
         <!-- /ko -->
         <!-- ko if: spellbook().length == 0 -->
         <tr class="clickable">
-          <td href="#" data-toggle="collapse" data-target="#add-spell" colspan="8" class="text-center">
+          <td href="#"
+              data-toggle="collapse"
+              data-target="#add-spell"
+              colspan="8"
+              class="text-center">
             <i class="fa fa-plus fa-color"></i> Add a new spell
           </td>
         </tr>
         <!-- /ko -->
         <!-- ko if: spellbook().length > 0 && filteredAndSortedSpells().length == 0 -->
         <tr class="clickable">
-          <td href="#" colspan="8" class="text-center">
+          <td href="#"
+              colspan="8"
+              class="text-center">
             No Spells are currently castable
           </td>
         </tr>
         <!-- /ko -->
+        <tr id="add-spell" class="collapse">
+          <td colspan="8">
+              <spell-form params="{
+                    data: null,
+                    containerId: 'add-spell',
+                    showForm: $component.showAddForm,
+                    add: $component.addSpell,
+                    toggle: $component.toggleAddForm
+                  }"></spell-form>
+          </td>
+        </tr>
       </tbody>
       <tfoot>
         <tr>
           <td colspan="8">
-            <form data-bind=" submit: addSpell">
-              <div data-bind="with: blankSpell">
-              <div style="padding: 10px" id="add-spell" class="collapse">
-                <div class="row">
-                  <div class="form-group col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                    <label for="spellName" class="control-label">Name</label>
-                    <input type="text" class="form-control spellsEditNameInput" placeholder="Magic Missile" data-bind="textInput: spellName,
-                      autocomplete: { source: $parent.spellsPrePopFilter,
-                      onselect: $parent.populateSpell },
-                      "></input>
-                  </div>
-
-                  <div class="form-group col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                    <label for="spellLevel" class="control-label">Level</label>
-                    <input type="number" class="form-control spellsEditLevelInput" min="0" max="9" placeholder="1" data-bind="value: spellLevel">
-                  </div>
-                  <div class="form-group col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                    <label for="spellSchool" class="control-label">School</label>
-                    <input class="form-control" id="spellsEditSchoolInput" placeholder="Abjuration" data-bind="textInput: spellSchool,
-                    autocomplete: { source: spellSchoolOptions,
-                                    onselect:  $parent.setSpellSchool }">
-                  </div>
-                  <div class="form-group  col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                    <label for="spellType" class="ontrol-label">Type</label>
-                    <input class="form-control spellsEditTypeInput" placeholder="Automatic" data-bind="textInput: spellType,
-                    autocomplete: { source: spellTypeOptions,
-                                    onselect: $parent.setSpellType }">
-                  </div>
-                  <div data-bind="visible: spellType() == 'Savings Throw'">
-                    <div class="form-group  col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                      <label for="spellType" class="control-label">Save Attr</label>
-                      <input class="form-control spellsEditSaveAttrInput" placeholder="Str" data-bind="textInput: spellSaveAttr,
-                      autocomplete: { source: spellSaveAttrOptions,
-                                      onselect: $parent.setSpellSaveAttr }">
-                    </div>
-                  </div>
-                  <div class="form-group col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                    <label for="spellDmg" class="control-label">Damage</label>
-                    <input type="text" class="form-control spellsEditDamageInput" placeholder="1d4 + 1" data-bind="value: spellDmg">
-                  </div>
-
-                  <div class="form-group  col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                    <label for="spellCastingTime" class="control-label">Cast Time</label>
-                    <input class="form-control" id="spellsEditCastTimeInput" placeholder="1 action" data-bind="textInput: spellCastingTime,
-                    autocomplete: { source: spellCastingTimeOptions,
-                                    onselect: $parent.setSpellCastingTime }">
-                  </div>
-                  <div class="form-group col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                    <label for="spellRange" class="control-label">Range</label>
-                    <input class="form-control" id="spellsEditRangeInput" placeholder="1 mile" data-bind="textInput: spellRange,
-                        autocomplete: { source: spellRangeOptions,
-                                        onselect: $parent.setSpellRange }">
-                  </div>
-                  <div class="form-group  col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                    <label for="spellDuration" class="control-label">Duration</label>
-                    <input class="form-control" id="spellsEditDurationInput" placeholder="1 day" data-bind="textInput: spellDuration">
-                  </div>
-                  <div class="form-group col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                    <label for="spellComponents" class="control-label">Components</label>
-                    <input class="form-control" id="spellsEditComponentsInput" placeholder="V, S, M" data-bind="textInput: spellComponents,
-                                autocomplete: { source: spellComponentsOptions,
-                                                onselect: $parent.setSpellComponents }">
-                  </div>
-
-                  <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                    <label for="spellMaterialComponents" class="control-label">Material Components</label>
-                    <input type="text" class="form-control spellsEditMaterialComponentsInput" placeholder="Feather" data-bind="textInput: spellMaterialComponents">
-                  </div>
-                  <!--  ko if: $parent.preparedRowVisibleEdit($data) -->
-                  <div class="col-xs-12">
-                    <hr />
-                    <div class="row form-horizontal">
-                      <div class="col-sm-4">
-                        <input id="spellPrepared" type='checkbox' class='pseudo-checkbox sr-only' data-bind="checked: spellPrepared, disable: spellAlwaysPrepared"></input>
-                        <label for="spellPrepared" class='control-label fancy-checkbox-label'>
-                        Prepared
-                    </label>
-                      </div>
-
-                      <div class="col-sm-4">
-                        <input id="spellAlwaysPrepared" type='checkbox' class='pseudo-checkbox sr-only' data-bind="checked: spellAlwaysPrepared, disable: spellPrepared"></input>
-                        <label for="spellAlwaysPrepared" class='control-label fancy-checkbox-label'>
-                        Always Prepared&nbsp;<span class="fa fa-info-circle hidden-xs" style="cursor:pointer;"
-                        data-bind="popover: { content: $parent.alwaysPreparedPopoverText }">
-                    </label>
-                      </div>
-
-                      <div class="col-sm-4">
-                        <input id="spellIsRitual" type='checkbox' class='pseudo-checkbox sr-only' data-bind="checked: isRitual"></input>
-                        <label for="spellIsRitual" class='control-label fancy-checkbox-label'>
-                        Ritual
-                    </label>
-                      </div>
-                    </div>
-                    <hr />
-                  </div>
-                  <!-- /ko -->
-                  <div class="form-group col-xs-12">
-                    <label for="spellDescription" class="control-label">Description</label>
-                    <textarea style="position: relative" type="password" class="form-control spellsEditDescriptionTextarea" placeholder="You create three glowing ..." data-bind="value: spellDescription" rows="6"></textarea>
-                  </div>
-                </div>
-              </div>
-                <div class="panel-footer" style="position: relative">
-                  <div style="left: 10px; top: 10px; position: absolute" class="pull-left">Spells prepared:&nbsp;
-                    <span data-bind="text: $parent.numberOfPrepared"></span>
+                <div class="panel-footer"
+                     style="position: relative">
+                  <div style="left: 10px; top: 10px; position: absolute"
+                       class="pull-left">Spells prepared:&nbsp;
+                    <span data-bind="text: $component.numberOfPrepared"></span>
                   </div>
                   <center>
-                    <button type="button" class="btn btn-primary btn-sm" id="spellsAddButton" data-toggle="collapse" data-target="#add-spell">Add Spell</button>
-                    <button type="button" class="btn btn-default btn-sm" id="spellsAddCancelButton" data-toggle="collapse" data-target="#add-spell" data-bind='click: $parent.cancelAddSpell'>Cancel</button>
-                    <button type="submit" class="btn btn-primary btn-sm" id="spellsAddAddButton" data-toggle="collapse" data-target="#add-spell">Add</button>
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="spellsAddButton"
+
+                            data-bind="click: $component.toggleAddForm, disable: $component.showAddForm">Add Spell</button>
                   </center>
-                  <div style="right: 10px; top: 10px; position:absolute" class="pull-right">Total Spells:&nbsp;
-                    <span data-bind="text: $parent.numberOfSpells"></span>
+                  <div style="right: 10px; top: 10px; position:absolute"
+                       class="pull-right">Total Spells:&nbsp;
+                    <span data-bind="text: $component.numberOfSpells"></span>
                   </div>
                 </div>
               </div>
             </form>
-
           </td>
         </tr>
       </tfoot>
     </table>
-    </div>
   </div>
+</div>

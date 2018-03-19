@@ -1,0 +1,206 @@
+<div data-bind="with: currentEditItem">
+  <form data-bind="submit: $component.save">
+    <div class="row">
+      <div class="form-group col-xs-6 col-sm-4 col-md-3 col-lg-3">
+        <label for="spellName"
+               class="control-label">Name</label>
+        <input type="text"
+               class="form-control spellsEditNameInput"
+               placeholder="Magic Missile"
+               data-bind="textInput: spellName,
+               hasFocus: $component.firstFormElementHasFocus,
+               autocomplete: {
+                 source: $component.spellsPrePopFilter,
+               onselect: $component.populateSpell }">
+      </div>
+      <div class="form-group col-xs-6 col-sm-4 col-md-3 col-lg-3">
+        <label for="spellLevel"
+               class="control-label">Level</label>
+        <input type="number"
+               class="form-control spellsEditLevelInput"
+               min="0"
+               max="9"
+               placeholder="1"
+               data-bind="value: spellLevel">
+      </div>
+      <div class="form-group col-xs-6 col-sm-4 col-md-3 col-lg-3">
+        <label for="spellSchool"
+               class="control-label">School</label>
+        <input class="form-control"
+               id="spellsEditSchoolInput"
+               placeholder="Abjuration"
+               data-bind="textInput: spellSchool,
+      autocomplete: { source: spellSchoolOptions,
+                      onselect:  $component.setSpellSchool }">
+      </div>
+      <div class="form-group  col-xs-6 col-sm-4 col-md-3 col-lg-3">
+        <label for="spellType"
+               class="ontrol-label">Type</label>
+        <input class="form-control spellsEditTypeInput"
+               placeholder="Automatic"
+               data-bind="textInput: spellType,
+      autocomplete: { source: spellTypeOptions,
+                      onselect: $component.setSpellType }">
+      </div>
+      <div data-bind="visible: spellType() == 'Savings Throw'">
+        <div class="form-group  col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <label for="spellType"
+                 class="control-label">Save Attr</label>
+          <input class="form-control spellsEditSaveAttrInput"
+                 placeholder="Str"
+                 data-bind="textInput: spellSaveAttr,
+        autocomplete: { source: spellSaveAttrOptions,
+                        onselect: $component.setSpellSaveAttr }">
+        </div>
+      </div>
+      <div class="form-group col-xs-6 col-sm-4 col-md-3 col-lg-3">
+        <label for="spellDmg"
+               class="control-label">Damage</label>
+        <input type="text"
+               class="form-control spellsEditDamageInput"
+               placeholder="1d4 + 1"
+               data-bind="value: spellDmg">
+      </div>
+
+      <div class="form-group  col-xs-6 col-sm-4 col-md-3 col-lg-3">
+        <label for="spellCastingTime"
+               class="control-label">Cast Time</label>
+        <input class="form-control"
+               id="spellsEditCastTimeInput"
+               placeholder="1 action"
+               data-bind="textInput: spellCastingTime,
+      autocomplete: { source: spellCastingTimeOptions,
+                      onselect: $component.setSpellCastingTime }">
+      </div>
+      <div class="form-group col-xs-6 col-sm-4 col-md-3 col-lg-3">
+        <label for="spellRange"
+               class="control-label">Range</label>
+        <input class="form-control"
+               id="spellsEditRangeInput"
+               placeholder="1 mile"
+               data-bind="textInput: spellRange,
+          autocomplete: { source: spellRangeOptions,
+                          onselect: $component.setSpellRange }">
+      </div>
+      <div class="form-group  col-xs-6 col-sm-4 col-md-3 col-lg-3">
+        <label for="spellDuration"
+               class="control-label">Duration</label>
+        <input class="form-control"
+               id="spellsEditDurationInput"
+               placeholder="1 day"
+               data-bind="textInput: spellDuration">
+      </div>
+      <div class="form-group col-xs-6 col-sm-4 col-md-3 col-lg-3">
+        <label for="spellComponents"
+               class="control-label">Components</label>
+        <input class="form-control"
+               id="spellsEditComponentsInput"
+               placeholder="V, S, M"
+               data-bind="textInput: spellComponents,
+                  autocomplete: { source: spellComponentsOptions,
+                                  onselect: $component.setSpellComponents }">
+      </div>
+
+      <div class="form-group col-sm-6 col-md-6 col-lg-6">
+        <label for="spellMaterialComponents"
+               class="control-label">Material Components</label>
+        <input type="text"
+               class="form-control spellsEditMaterialComponentsInput"
+               placeholder="Feather"
+               data-bind="textInput: spellMaterialComponents">
+      </div>
+      <!--  ko if: $component.preparedRowVisibleEdit() -->
+      <div class="col-xs-12">
+        <hr />
+        <div class="row form-horizontal">
+          <div class="col-sm-4">
+            <input type='checkbox'
+                   class='pseudo-checkbox sr-only'
+                   data-bind="checked: spellPrepared, disable: spellAlwaysPrepared, attr: {id: `${$component.containerId}_prepared`}"></input>
+            <label for="spellPrepared"
+                    data-bind="attr: {for: `${$component.containerId}_prepared`}"
+                   class='control-label fancy-checkbox-label'>
+          Prepared
+      </label>
+          </div>
+
+          <div class="col-sm-4">
+            <input type='checkbox'
+                   class='pseudo-checkbox sr-only'
+                   data-bind="checked: spellAlwaysPrepared, disable: spellPrepared, attr: {id: `${$component.containerId}_alwaysPrepared`}"></input>
+            <label data-bind="attr: {for: `${$component.containerId}_alwaysPrepared`}"
+                   class='control-label fancy-checkbox-label'>
+          Always Prepared&nbsp;<span class="fa fa-info-circle hidden-xs" style="cursor:pointer;"
+          data-bind="popover: { content: $component.alwaysPreparedPopoverText }">
+      </label>
+          </div>
+
+          <div class="col-sm-4">
+            <input id="spellIsRitual"
+                   type='checkbox'
+                   class='pseudo-checkbox sr-only'
+                   data-bind="checked: isRitual, attr: {id: `${$component.containerId}_alwaysPrepared`}"></input>
+            <label data-bind="attr: {for: `${$component.containerId}_ritual`}"
+                   class='control-label fancy-checkbox-label'>
+          Ritual
+      </label>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <!-- /ko -->
+      <div class="form-group col-xs-12">
+        <label for="spellDescription"
+               class="control-label">Description</label>
+        <textarea style="position: relative"
+                  type="password"
+                  class="form-control spellsEditDescriptionTextarea"
+                  placeholder="You create three glowing ..."
+                  data-bind="value: spellDescription"
+                  rows="6"></textarea>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <p class="text-muted" data-bind='visible: $component.shouldShowDisclaimer'>
+          <sm><i>This data is distributed under the
+                  <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
+                    target='_blank'>
+                    OGL</a><br/>
+                    Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
+                  </i>
+            <sm>
+        </p>
+      </div>
+      <!-- ko ifnot: $component.addForm -->
+      <div class="col-xs-12">
+        <div style="float: left">
+        <button class="btn btn-sm btn-danger"
+                type="button"
+                data-bind="click: $component.removeSpell">Delete</button>
+        </div>
+        <div style="float: right">
+          <button class="btn btn-sm btn-default"
+                  type="button"
+                  data-bind="click: $component.cancel">Cancel</button>
+          <button class="btn btn-sm btn-primary"
+                  type="submit">Save</button>
+        </div>
+      </div>
+      <!-- /ko -->
+      <!-- ko if: $component.addForm -->
+      <div class="col-xs-12">
+        <center>
+          <div style="float: right">
+            <button type="button"
+                    class="btn btn-default btn-sm"
+                    data-bind="click: $component.cancel">Cancel</button>
+            <button type="submit"
+                    class="btn btn-primary btn-sm">Add Spell</button>
+          </div>
+        </center>
+      </div>
+      <!-- /ko -->
+  </form>
+  </div>

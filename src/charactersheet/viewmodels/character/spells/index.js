@@ -10,6 +10,7 @@ import {
     SortService
 } from 'charactersheet/services/common';
 import { Spell } from 'charactersheet/models';
+import { SpellFormComponentViewModel } from './form';
 import { debounce } from 'lodash';
 import ko from 'knockout';
 import template from './index.html';
@@ -64,8 +65,20 @@ export function SpellbookViewModel() {
         return prepared;
     });
 
+    self.showAddForm = ko.observable(false);
+
+    self.toggleAddForm = () => {
+        if (self.showAddForm()) {
+            $('#add-spell').collapse('hide');
+            self.showAddForm(false);
+        } else {
+            self.showAddForm(true);
+            $('#add-spell').collapse('show');
+        }
+    };
+
     self.collapseAll = () => {
-        $('.collapse.in').collapse('hide');
+        $('#spells-panel .collapse.in').collapse('hide');
     };
 
     self.memorizeSpell = (data, event) => {
@@ -96,73 +109,6 @@ export function SpellbookViewModel() {
         });
     };
 
-    // Prepopulate methods
-    self.populateSpell = function(label, value) {
-        var spell = DataRepository.spells[label];
-
-        self.blankSpell().importValues(spell);
-        self.shouldShowDisclaimer(true);
-    };
-
-    self.setSpellSchool = function(label, value) {
-        self.blankSpell().spellSchool(value);
-    };
-
-    self.setSpellType = function(label, value) {
-        self.blankSpell().spellType(value);
-    };
-
-    self.setSpellSaveAttr = function(label, value) {
-        self.blankSpell().spellSaveAttr(value);
-    };
-
-    self.setSpellCastingTime = function(label, value) {
-        self.blankSpell().spellCastingTime(value);
-    };
-
-    self.setSpellRange = function(label, value) {
-        self.blankSpell().spellRange(value);
-    };
-
-    self.setSpellComponents = function(label, value) {
-        self.blankSpell().spellComponents(value);
-    };
-
-    self.setSpellDuration = function(label, value) {
-        self.blankSpell().spellDuration(value);
-    };
-
-    // Modal methods
-
-    self.modalFinishedOpening = function() {
-        self.shouldShowDisclaimer(false);
-        self.firstModalElementHasFocus(true);
-    };
-
-    self.modalFinishedClosing = function() {
-        self.previewTabStatus('active');
-        self.editTabStatus('');
-        self.firstModalElementHasFocus(false);
-        self.spellSchoolIconCSS('');
-        if (self.modalOpen()) {
-            Utility.array.updateElement(self.spellbook(), self.currentEditItem(), self.editItemIndex);
-        }
-        self.save();
-
-        self.modalOpen(false);
-    };
-
-    // self.selectPreviewTab = function() {
-    //     self.previewTabStatus('active');
-    //     self.editTabStatus('');
-    // };
-    //
-    // self.selectEditTab = function() {
-    //     self.editTabStatus('active');
-    //     self.previewTabStatus('');
-    //     self.editFirstModalElementHasFocus(true);
-    // };
-
     self.determineSpellSchoolIcon = ko.computed(function() {
         if (self.currentEditItem() && self.currentEditItem().spellSchool()) {
             var spellSchool = self.currentEditItem().spellSchool();
@@ -170,27 +116,8 @@ export function SpellbookViewModel() {
         }
     });
 
-    /* UI Methods */
-
-    /**
-     * Popover for prepared spells
-     */
-    self.alwaysPreparedPopoverText = function() {
-        return 'Always prepared spells will not count against total prepared spells.';
-    };
-
-    /**
-     * Returns true if the spell prepared row should be visible in the add modal
-     */
-    self.preparedRowVisibleAdd = function() {
-        return parseInt(self.blankSpell().spellLevel()) !== 0;
-    };
-
-    /**
-     * Returns true if the spell prepared row should be visible in the edit modal
-     */
-    self.preparedRowVisibleEdit = function(spell) {
-        return parseInt(spell.spellLevel()) !== 0;
+    self.trunc = function(string, len=20) {
+        return Utility.string.truncateStringAtLength(string(), len);
     };
 
     /**
@@ -224,47 +151,17 @@ export function SpellbookViewModel() {
             columnName, self.sorts));
     };
 
-    self.spellsPrePopFilter = function(request, response) {
-        var term = request.term.toLowerCase();
-        let results = [];
-        if (term && term.length > 2) {
-            const keys = DataRepository.spells ? Object.keys(DataRepository.spells) : [];
-            results = keys.filter(function(name, idx, _) {
-                return name.toLowerCase().indexOf(term) > -1;
-            });
-        }
-        response(results);
-    };
-
-    self.delayedSpellsPrePopFilter = debounce(self.spellsPrePopFilter, 350);
-
     //Manipulating spells
-
-
-    self.addSpell = () => {
-        var spell = self.blankSpell();
+    self.addSpell = (spell) => {
         spell.characterId(CharacterManager.activeCharacter().key());
         spell.save();
         spell.spellPrepared.subscribe(self.save);
         self.spellbook.push(spell);
-        $('#add-spell').collapse('hide');
-        self.blankSpell(new Spell());
-    };
-
-    self.cancelAddSpell =  (data, event) => {
-        self.blankSpell(new Spell());
     };
 
     self.removeSpell = function(spell) {
         self.spellbook.remove(spell);
         spell.delete();
-    };
-
-    self.editSpell = function(spell) {
-        self.editItemIndex = spell.__id;
-        self.currentEditItem(new Spell());
-        self.currentEditItem().importValues(spell.exportValues());
-        self.modalOpen(true);
     };
 
     self.clear = function() {

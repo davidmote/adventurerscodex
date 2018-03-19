@@ -1125,25 +1125,16 @@ tr.expandRow[aria-expanded="true"]:hover {
   color: #fff!important;
 }
 
-#spellsAddButton[aria-expanded="true"],
-#skillAddButton[aria-expanded="true"],
 .collapseAddButton[aria-expanded="true"]
  {
    display: none;
 }
-#spellsAddAddButton,
-#spellsAddCancelButton,
-#skillAddAddButton,
-#skillAddCancelButton,
+
 .collapseFormButton
  {
    display: none;
 }
 
-#spellsAddAddButton[aria-expanded="true"],
-#spellsAddCancelButton[aria-expanded="true"],
-#skillAddAddButton[aria-expanded="true"],
-#skillAddCancelButton[aria-expanded="true"],
 .collapseFormButton[aria-expanded="true"]
  {
    display: inline-block;
