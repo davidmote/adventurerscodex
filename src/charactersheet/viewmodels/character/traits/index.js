@@ -81,7 +81,7 @@ export function TraitsViewModel() {
             columnName, self.sorts));
     };
 
-    self.addTrait = function() {
+    self.addTrait = function(trait) {
         trait.save();
         self.traits.push(trait);
     };
