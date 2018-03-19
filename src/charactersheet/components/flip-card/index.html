@@ -1,8 +1,7 @@
-<div class="panel panel-default"
-     style="margin-bottom: 0px;"
+<div style="margin-bottom: 0px;"
      data-bind="attr:{id: `${elementId}`},
   collapseCard: { hiddenCallback: hiddenCallback, shownCallback: shownCallback },
-  css: collapsable && 'collapse'">
+  css: collapsable() ? 'panel panel-default collapse':''">
   <div class="panel-body"
        style="position: relative; height: 100%">
     <edit-button params="toggleMode: editMode, clickAction: toggleMode"></edit-button>

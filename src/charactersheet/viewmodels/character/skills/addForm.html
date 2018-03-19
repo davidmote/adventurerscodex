@@ -1,0 +1,44 @@
+<form data-bind="{submit: addSkill}">
+  <div style="padding: 10px; margin-top:10px" id="add-skill" class="collapse" data-bind="with: blankSkill">
+      <div class="form-group">
+        <label class=" control-label">Skill Name</label>
+        <input type="text"
+               class="form-control"
+               id="name"
+               placeholder="Name"
+               data-bind='textInput: name, hasFocus: $component.newSkillFieldHasFocus'>
+        </div>
+      <div class="form-group">
+        <label class="control-label">Proficient</label>
+            <select class="form-control" style="width: 100%"
+              data-bind="value: proficiency,
+              options: $component.proficiencyOptions,
+              select2: {
+                placeholder: '',
+                minimumResultsForSearch: Infinity,
+                templateSelection: $component.formatProficiencyOptions,
+                templateResult: $component.formatProficiencyOptions,
+                dropdownAutoWidth: true
+               }"></select>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label">Ability Score</label>
+              <select class="form-control" style="width: 100%"
+                data-bind="value: abilityScore,
+                select2: {
+                  data: $component.abilityScoreOptions,
+                  placeholder: 'Strength',
+                  minimumResultsForSearch: Infinity,
+                  dropdownAutoWidth: true
+                 }"></select>
+          </div>
+          <center>
+            <button type="button" class="btn btn-default btn-sm" id="skillAddCancelButton" data-toggle="collapse" data-target="#add-skill" data-bind='click: $component.cancelAddSkill'>Cancel</button>
+            <button type="submit" class="btn btn-primary btn-sm" id="skillAddAddButton" data-toggle="collapse" data-target="#add-skill">Add</button>
+          </center>
+      </div>
+<center>
+  <button type="button" class="btn btn-default btn-sm btn-block" id="skillAddButton" data-toggle="collapse" data-target="#add-skill"><i class="fa fa-plus"></i> Add Skill</button>
+</center>
+</form>

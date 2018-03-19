@@ -38,12 +38,12 @@
             style="padding: 0px; height: 100%">
           <flip-card params="{
                 dataId: $data.__id,
+                collapsable: true,
+                elementId: 'proficiency_list',
                 context: {
                   data: $data,
                   remove: $component.removeProficiency,
                 }
-                collapsable: true,
-                elementId: 'proficiency_list'
               }">
             <div class="front"
                  data-bind="with: context.data">

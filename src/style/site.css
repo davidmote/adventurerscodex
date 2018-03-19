@@ -1365,3 +1365,7 @@ fieldset.fieldset-bordered {
 .collapsing .back {
   display: none;
 }
+
+.front .collapsing, .back .collapsing  {
+  visibility: hidden;
+}

@@ -50,13 +50,15 @@ export class FlipCardComponentViewModel {
         // unique identifier for this card
         this.elementId = `${this.paramElementId}_${this.dataId}`
         // Whether or not to trigger animations on collapse
+
         this.collapsable = ko.observable(ko.utils.unwrapObservable(params.collapsable) || false);
+
         // contextual data to be passed to children objects
         this.context = params.context;
         // Whether or not this 'back' is displayed.
         this.editMode = ko.observable(false);
         // calculated element height
-        this.elementHeight = ko.observable(params.defaultHeight || 'auto');
+        this.elementHeight = ko.observable(ko.utils.unwrapObservable(params.defaultHeight) || 'auto');
 
     }
 
@@ -66,13 +68,17 @@ export class FlipCardComponentViewModel {
     }
 
     shownCallback = () => {
+      if(this.collapsable()){
         this.editMode(false);
         this.setNewHeight();
+      }
     }
 
     hiddenCallback = () => {
+      if(this.collapsable()){
         this.editMode(false);
         this.elementHeight('auto');
+      }
     }
 
     toggleMode = (data, event) => {

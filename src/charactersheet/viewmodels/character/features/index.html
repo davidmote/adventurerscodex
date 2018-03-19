@@ -32,13 +32,13 @@
         <td colspan="3" style="padding: 0px; height: 100%">
           <flip-card params="{
                 dataId: $data.__id,
+                collapsable: true,
+                elementId: 'feature_list',
                 context: {
                   data: $data,
                   addFeature: $component.addFeature,
                   removeFeature: $component.removeFeature
                 }
-                collapsable: true,
-                elementId: 'feature_list'
               }">
             <div class="front" data-bind="with: context.data">
               <div class="h4">
