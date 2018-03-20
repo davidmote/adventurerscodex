@@ -9,23 +9,28 @@ import {
     PersistenceService,
     SortService } from 'charactersheet/services/common';
 import { Weapon } from 'charactersheet/models/common';
+import { WeaponFormComponentViewModel } from './form';
 import ko from 'knockout';
 import template from './index.html';
 
 export function WeaponsViewModel() {
     var self = this;
 
-    self.blankWeapon = ko.observable(new Weapon());
     self.weapons = ko.observableArray([]);
-    self.modalOpen = ko.observable(false);
-    self.editItemIndex = null;
-    self.currentEditItem = ko.observable(new Weapon());
-    self.shouldShowDisclaimer = ko.observable(false);
-    self.previewTabStatus = ko.observable('active');
-    self.editTabStatus = ko.observable('');
-    self.firstModalElementHasFocus = ko.observable(false);
-    self.editFirstModalElementHasFocus = ko.observable(false);
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
+
+    self.showAddForm = ko.observable(false);
+
+    self.toggleAddForm = () => {
+        if (self.showAddForm()) {
+            self.showAddForm(false);
+            $('#add-weapon').collapse('hide');
+        } else {
+            self.showAddForm(true);
+            $('#add-weapon').collapse('show');
+        }
+    };
+
 
     self.sorts = {
         'weaponName asc': { field: 'weaponName', direction: 'asc'},
@@ -106,87 +111,26 @@ export function WeaponsViewModel() {
             columnName, self.sorts));
     };
 
-    // Prepopulate methods
 
-    self.populateWeapon = function(label, value) {
-        var weapon = DataRepository.weapons[label];
-
-        self.blankWeapon().importValues(weapon);
-        self.shouldShowDisclaimer(true);
-    };
-
-    self.setWeaponType = function(label, value) {
-        self.blankWeapon().weaponType(value);
-    };
-
-    self.setWeaponHandedness = function(label, value) {
-        self.blankWeapon().weaponHandedness(value);
-    };
-
-    self.setWeaponProficiency = function(label, value) {
-        self.blankWeapon().weaponProficiency(value);
-    };
-
-    self.setWeaponCurrencyDenomination = function(label, value) {
-        self.blankWeapon().weaponCurrencyDenomination(value);
-    };
-
-    self.setWeaponDamageType = function(label, value) {
-        self.blankWeapon().weaponDamageType(value);
-    };
-
-    self.setWeaponProperty = function(label, value) {
-        self.blankWeapon().weaponProperty(value);
-    };
-
-    /* Modal Methods */
-
-    self.modalFinishedOpening = function() {
-        self.shouldShowDisclaimer(false);
-        self.firstModalElementHasFocus(true);
-    };
-
-    self.modalFinishedClosing = function() {
-        self.previewTabStatus('active');
-        self.editTabStatus('');
-        if (self.modalOpen()) {
-            Utility.array.updateElement(self.weapons(), self.currentEditItem(), self.editItemIndex);
-        }
-
-        // Just in case data was changed.
-        self.save();
-
-        self.modalOpen(false);
-        Notifications.weapon.changed.dispatch();
-    };
-
-    self.selectPreviewTab = function() {
-        self.previewTabStatus('active');
-        self.editTabStatus('');
-    };
-
-    self.selectEditTab = function() {
-        self.editTabStatus('active');
-        self.previewTabStatus('');
-        self.editFirstModalElementHasFocus(true);
-    };
-
-    self.weaponsPrePopFilter = function(request, response) {
-        var term = request.term.toLowerCase();
-        var keys = DataRepository.weapons ? Object.keys(DataRepository.weapons) : [];
-        var results = keys.filter(function(name, idx, _) {
-            return name.toLowerCase().indexOf(term) > -1;
-        });
-        response(results);
-    };
+    // self.modalFinishedClosing = function() {
+    //     self.previewTabStatus('active');
+    //     self.editTabStatus('');
+    //     if (self.modalOpen()) {
+    //         Utility.array.updateElement(self.weapons(), self.currentEditItem(), self.editItemIndex);
+    //     }
+    //
+    //     // Just in case data was changed.
+    //     self.save();
+    //
+    //     self.modalOpen(false);
+    //     Notifications.weapon.changed.dispatch();
+    // };
 
     //Manipulating weapons
-    self.addWeapon = function() {
-        var weapon = self.blankWeapon();
+    self.addWeapon = function(weapon) {
         weapon.characterId(CharacterManager.activeCharacter().key());
         weapon.save();
         self.weapons.push(weapon);
-        self.blankWeapon(new Weapon());
         Notifications.weapon.changed.dispatch();
     };
 
@@ -194,13 +138,6 @@ export function WeaponsViewModel() {
         self.weapons.remove(weapon);
         weapon.delete();
         Notifications.weapon.changed.dispatch();
-    };
-
-    self.editWeapon = function(weapon) {
-        self.editItemIndex = weapon.__id;
-        self.currentEditItem(new Weapon());
-        self.currentEditItem().importValues(weapon.exportValues());
-        self.modalOpen(true);
     };
 
     self.clear = function() {
