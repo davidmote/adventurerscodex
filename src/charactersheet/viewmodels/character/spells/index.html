@@ -58,7 +58,7 @@
       </thead>
       <tbody>
         <!-- ko foreach: filteredAndSortedSpells -->
-        <tr class="spellRow"
+        <tr 
             data-toggle="collapse"
             class="clickable spellRow"
             data-bind="css: {notCastable: !spellIsCastable()}, attr:{'data-target': `#spell_list_${__id}`, id: `#spell_row_${__id}`}">

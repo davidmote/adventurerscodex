@@ -5,6 +5,7 @@ import {
     Utility
 } from 'charactersheet/utilities';
 import { MagicItem } from 'charactersheet/models/common';
+import { MagicItemFormComponentViewModel } from './form';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { SortService } from 'charactersheet/services/common';
@@ -13,6 +14,18 @@ import template from './index.html';
 
 export function MagicItemsViewModel() {
     var self = this;
+
+    self.showAddForm = ko.observable(false);
+
+    self.toggleAddForm = () => {
+        if (self.showAddForm()) {
+            self.showAddForm(false);
+            $('#add-magic-item').collapse('hide');
+        } else {
+            self.showAddForm(true);
+            $('#add-magic-item').collapse('show');
+        }
+    };
 
     self.sorts = {
         'magicItemName asc': { field: 'magicItemName', direction: 'asc'},
@@ -27,16 +40,19 @@ export function MagicItemsViewModel() {
         'magicItemAttuned desc': { field: 'magicItemAttuned', direction: 'desc', booleanType: true}
     };
 
-    self.blankMagicItem = ko.observable(new MagicItem());
+    self.attuneItem = (data, event) => {
+        event.stopPropagation();
+        if (!self.noneAttuned() && data.magicItemRequiresAttunement()) {
+            data.magicItemAttuned(!data.magicItemAttuned());
+        }
+
+        // if(!(data.spellLevel() == 0  || data.spellAlwaysPrepared())) {
+        //     data.spellPrepared(!data.spellPrepared());
+        // }
+    };
+
     self.magicItems = ko.observableArray([]);
-    self.modalOpen = ko.observable(false);
-    self.editItemIndex = null;
-    self.currentEditItem = ko.observable();
-    self.shouldShowDisclaimer = ko.observable(false);
-    self.previewTabStatus = ko.observable('active');
-    self.editTabStatus = ko.observable('');
-    self.firstModalElementHasFocus = ko.observable(false);
-    self.editFirstModalElementHasFocus = ko.observable(false);
+
     self.magicItemIconCSS = ko.observable('');
 
     self.filter = ko.observable('');
@@ -72,13 +88,13 @@ export function MagicItemsViewModel() {
         }
     });
 
-    self.determineMagicItemIcon = ko.computed(function() {
-        if (self.currentEditItem() && self.currentEditItem().magicItemType()) {
-            var magicItemType = self.currentEditItem().magicItemType();
-            var cssClassName = magicItemType.split(' ')[0].toLowerCase() + '-magic-item-card';
-            self.magicItemIconCSS(cssClassName);
-        }
-    });
+    // self.determineMagicItemIcon = ko.computed(function() {
+    //     if (self.currentEditItem() && self.currentEditItem().magicItemType()) {
+    //         var magicItemType = self.currentEditItem().magicItemType();
+    //         var cssClassName = magicItemType.split(' ')[0].toLowerCase() + '-magic-item-card';
+    //         self.magicItemIconCSS(cssClassName);
+    //     }
+    // });
 
     self.load = function() {
         Notifications.global.save.add(self.save);
@@ -108,56 +124,28 @@ export function MagicItemsViewModel() {
         });
     };
 
-    // Prepopulate methods
 
-    self.populateMagicItems = function(label, value) {
-        var magicItems = DataRepository.magicItems[label];
 
-        self.blankMagicItem().importValues(magicItems);
-        self.shouldShowDisclaimer(true);
-    };
 
-    self.setMagicItemType = function(label, value) {
-        self.blankMagicItem().magicItemType(value);
-    };
 
-    self.setMagicItemRarity = function(label, value) {
-        self.blankMagicItem().magicItemRarity(value);
-    };
-
-    // Modal methods
-    self.modalFinishedOpening = function() {
-        self.shouldShowDisclaimer(false);
-        self.firstModalElementHasFocus(true);
-    };
-
-    self.modalFinishedClosing = function() {
-        self.previewTabStatus('active');
-        self.editTabStatus('');
-        self.previewTabStatus.valueHasMutated();
-        self.editTabStatus.valueHasMutated();
-
-        if (self.modalOpen()) {
-            Utility.array.updateElement(self.magicItems(), self.currentEditItem(), self.editItemIndex);
-        }
-
-        // Just in case data was changed.
-        self.save();
-
-        self.modalOpen(false);
-        Notifications.magicItem.changed.dispatch();
-    };
-
-    self.selectPreviewTab = function() {
-        self.previewTabStatus('active');
-        self.editTabStatus('');
-    };
-
-    self.selectEditTab = function() {
-        self.editTabStatus('active');
-        self.previewTabStatus('');
-        self.editFirstModalElementHasFocus(true);
-    };
+    //
+    // self.modalFinishedClosing = function() {
+    //     self.previewTabStatus('active');
+    //     self.editTabStatus('');
+    //     self.previewTabStatus.valueHasMutated();
+    //     self.editTabStatus.valueHasMutated();
+    //
+    //     if (self.modalOpen()) {
+    //         Utility.array.updateElement(self.magicItems(), self.currentEditItem(), self.editItemIndex);
+    //     }
+    //
+    //     // Just in case data was changed.
+    //     self.save();
+    //
+    //     self.modalOpen(false);
+    //     Notifications.magicItem.changed.dispatch();
+    // };
+    //
 
     self.filteredAndSortedMagicItems = ko.computed(function() {
         return SortService.sortAndFilter(self.magicItems(), self.sort(), null);
@@ -178,22 +166,11 @@ export function MagicItemsViewModel() {
             columnName, self.sorts));
     };
 
-    self.magicItemsPrePopFilter = function(request, response) {
-        var term = request.term.toLowerCase();
-        var keys = DataRepository.magicItems ? Object.keys(DataRepository.magicItems) : [];
-        var results = keys.filter(function(name, idx, _) {
-            return name.toLowerCase().indexOf(term) > -1;
-        });
-        response(results);
-    };
-
     //Manipulating magic items
-    self.addItem = function() {
-        var item = self.blankMagicItem();
+    self.addItem = function(item) {
         item.characterId(CharacterManager.activeCharacter().key());
         item.save();
         self.magicItems.push(item);
-        self.blankMagicItem(new MagicItem());
         Notifications.magicItem.changed.dispatch();
     };
 
@@ -201,13 +178,6 @@ export function MagicItemsViewModel() {
         self.magicItems.remove(item);
         item.delete();
         Notifications.magicItem.changed.dispatch();
-    };
-
-    self.editItem = function(item) {
-        self.editItemIndex = item.__id;
-        self.currentEditItem(new MagicItem());
-        self.currentEditItem().importValues(item.exportValues());
-        self.modalOpen(true);
     };
 
     self.clear = function() {
