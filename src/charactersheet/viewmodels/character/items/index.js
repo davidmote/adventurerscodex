@@ -10,6 +10,7 @@ import {
     SortService
 } from 'charactersheet/services/common';
 import { Item } from 'charactersheet/models/common';
+import { ItemFormComponentViewModel } from './form';
 import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 import template from './index.html';
@@ -29,18 +30,23 @@ export function ItemsViewModel() {
     };
 
     self.items = ko.observableArray([]);
-    self.blankItem = ko.observable(new Item());
-    self.modalOpen = ko.observable(false);
-    self.editItemIndex = null;
-    self.currentEditItem = ko.observable();
+
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
     self.sort = ko.observable(self.sorts['itemName asc']);
     self.filter = ko.observable('');
-    self.shouldShowDisclaimer = ko.observable(false);
-    self.previewTabStatus = ko.observable('active');
-    self.editTabStatus = ko.observable('');
-    self.firstModalElementHasFocus = ko.observable(false);
-    self.editFirstModalElementHasFocus = ko.observable(false);
+
+    self.showAddForm = ko.observable(false);
+
+    self.toggleAddForm = () => {
+        if (self.showAddForm()) {
+            self.showAddForm(false);
+            $('#add-item').collapse('hide');
+        } else {
+            self.showAddForm(true);
+            $('#add-item').collapse('show');
+        }
+    };
+
 
     self.totalItemWeight = ko.pureComputed(function() {
         var weightTotal = 0;
@@ -75,44 +81,22 @@ export function ItemsViewModel() {
         });
     };
 
-    // Prepopulate methods
-    self.setItemCurrencyDenomination = function(label, value) {
-        self.blankItem().itemCurrencyDenomination(value);
-    };
-
     // Modal methods
-    self.modalFinishedOpening = function() {
-        self.shouldShowDisclaimer(false);
-        self.firstModalElementHasFocus(true);
-    };
 
-    self.modalFinishedClosing = function() {
-        self.previewTabStatus('active');
-        self.editTabStatus('');
-        self.previewTabStatus.valueHasMutated();
-        self.editTabStatus.valueHasMutated();
-
-        if (self.modalOpen()) {
-            Utility.array.updateElement(self.items(), self.currentEditItem(), self.editItemIndex);
-        }
-
-        self.save();
-        self.modalOpen(false);
-        Notifications.item.changed.dispatch();
-    };
-
-    self.selectPreviewTab = function() {
-        self.previewTabStatus('active');
-        self.editTabStatus('');
-    };
-
-    self.selectEditTab = function() {
-        self.editTabStatus('active');
-        self.previewTabStatus('');
-        self.editFirstModalElementHasFocus(true);
-    };
-
-    /* UI Methods */
+    // self.modalFinishedClosing = function() {
+    //     self.previewTabStatus('active');
+    //     self.editTabStatus('');
+    //     self.previewTabStatus.valueHasMutated();
+    //     self.editTabStatus.valueHasMutated();
+    //
+    //     if (self.modalOpen()) {
+    //         Utility.array.updateElement(self.items(), self.currentEditItem(), self.editItemIndex);
+    //     }
+    //
+    //     self.save();
+    //     self.modalOpen(false);
+    //     Notifications.item.changed.dispatch();
+    // };
 
     /**
      * Filters and sorts the items for presentation in a table.
@@ -136,40 +120,6 @@ export function ItemsViewModel() {
             columnName, self.sorts));
     };
 
-    self.itemsPrePopFilter = function(request, response) {
-        var term = request.term.toLowerCase();
-        var keys = DataRepository.items ? Object.keys(DataRepository.items) : [];
-        var results = keys.filter(function(name, idx, _) {
-            return name.toLowerCase().indexOf(term) > -1;
-        });
-        response(results);
-    };
-
-    //Manipulating items
-    self.removeItemButton = function(item) {
-        self.removeItem(item);
-    };
-
-    self.addItemButton = function() {
-        var item = new Item();
-        item.importValues(self.blankItem().exportValues());
-        self.addItem(item);
-        self.blankItem().clear();
-    };
-
-    self.populateItem = function(label, value) {
-        var item = DataRepository.items[label];
-
-        self.blankItem().importValues(item);
-        self.shouldShowDisclaimer(true);
-    };
-
-    //Public Methods
-
-    self.addToItems = function(item) {
-        self.addItem(item);
-    };
-
     self.clear = function() {
         self.items([]);
     };
@@ -177,8 +127,8 @@ export function ItemsViewModel() {
     //Private Methods
 
     self.addItem = function(item) {
-        self.items.push(item);
         item.characterId(CharacterManager.activeCharacter().key());
+        self.items.push(item);
         item.save();
         Notifications.item.changed.dispatch();
     };
@@ -189,12 +139,6 @@ export function ItemsViewModel() {
         Notifications.item.changed.dispatch();
     };
 
-    self.editItem = function(item) {
-        self.editItemIndex = item.__id;
-        self.currentEditItem(new Item());
-        self.currentEditItem().importValues(item.exportValues());
-        self.modalOpen(true);
-    };
 }
 
 ko.components.register('items', {

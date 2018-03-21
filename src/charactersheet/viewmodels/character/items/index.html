@@ -1,348 +1,129 @@
-<div class="panel panel-default">
-  <div class="panel-body tight-inner">
-    <table class="table table-responsive table-ac-bordered table-hover" id="inventoryTable">
+<div id="item-panel">
+<div class="h4">
+  Inventory<br/>
+  <small>Don't hoard too much stuff; it's no fun to be encumbered.</small>
+</div>
+    <table id="inventoryTable" style="border-width: 0px"
+           class="table table-responsive table-ac-bordered table-hover">
+      <thead>
+    <table class="table table-responsive table-ac-bordered table-hover">
       <thead>
         <tr>
-          <th id="inventoryTableItemHeader" class="col-md-2 col-xs-4"
+          <th id="inventoryTableItemHeader" class=""
             data-bind="click: function(){sortBy('itemName');}">
             Item
             <span data-bind="css: sortArrow('itemName')"></span></th>
-          <th id="inventoryTableQuantityHeader" class="col-md-1 col-xs-2"
+          <th id="inventoryTableQuantityHeader" class=""
             data-bind="click: function(){sortBy('itemQty');}">
             Quantity
             <span data-bind="css: sortArrow('itemQty')"></span></th>
-          <th id="inventoryTableWeightHeader" class="col-md-1 col-xs-2"
+          <th id="inventoryTableWeightHeader" class=""
             data-bind="click: function(){sortBy('itemWeight');}">
             Weight
             <span data-bind="css: sortArrow('itemWeight')"></span></th>
-          <th id="inventoryTableCostHeader" class="col-md-1 hidden-xs col-sm-2"
+          <th id="inventoryTableCostHeader" class=""
             data-bind="click: function(){sortBy('itemCost');}">
             Cost
             <span data-bind="css: sortArrow('itemCost')"></span></th>
-          <th class="hidden-sm hidden-xs" class="col-md-5">
-            Description</th>
-          <th class="col-md-1 col-xs-2 text-right">
-           <a data-toggle="modal"
-            data-target="#addItem" id="inventoryAddIcon" href="#">
-              <i class="fa fa-plus fa-color"></i>
-           </a>
+          <th class=" text-right">
           </th>
         </tr>
       </thead>
       <tbody>
       <!-- ko foreach: filteredAndSortedEquipment -->
-        <tr class="clickable">
-          <td data-bind="text: itemName, click: $parent.editItem"
-                  href="#"></td>
-          <td data-bind="text: itemQty, click: $parent.editItem"
-                  href="#"></td>
-          <td data-bind="text: itemWeightLabel, click: $parent.editItem"
-                  href="#"></td>
-          <td class="hidden-xs" data-bind="text: costLabel,
-                  click: $parent.editItem" href="#"></td>
-          <td class="hidden-sm hidden-xs" data-bind="html: longDescription,
-            click: $parent.editItem" href="#"></td>
+        <tr class="clickable expandRow" data-toggle="collapse"
+              data-bind="attr:{'data-target': `#item_list_${$data.__id}`}">
+          <td><span data-bind="text: itemName"></span></td>
+          <td><span data-bind="text: itemQty"></span></td>
+          <td><span data-bind="text: itemWeightLabel"></span></td>
+          <td><span data-bind="text: costLabel"></span></td>
           <td class="text-right">
-            <a data-bind='click: $parent.removeItemButton' href="#">
-              <i class="fa fa-trash-o fa-color-hover"></i>
-            </a>
+            <span data-toggle="collapse"
+                  data-bind="attr:{'data-target': `#item_list_${$data.__id}`}"
+                  class="rotate fa fa-chevron-left"></span>
           </td>
         </tr>
-      <!-- /ko -->
-      <!-- ko if: filteredAndSortedEquipment().length == 0 -->
-        <tr class="clickable">
-          <td href="#" data-toggle="modal"
-           data-target="#addItem" colspan="6" class="text-center">
-            <i class="fa fa-plus fa-color"></i>
-            Add a new item
+        <tr>
+          <td colspan="6" style="padding: 0px; backgound-color: white !important; height: 100%">
+            <flip-card params="{
+                  dataId: $data.__id,
+                  collapsable: true,
+                  elementId: 'item_list',
+                  context: {
+                    data: $data,
+                    remove: $component.removeItem,
+                  }
+                }">
+              <div class="front">
+                <div class="row" data-bind="with: context.data">
+                  <div class="col-xs-12">
+                    <div class="h4">
+                      <span data-bind="text: itemName" class="inventoryPreviewNameLabel"></span>&nbsp;
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <table class="table table-hover table-condensed table-ac-bordered">
+                      <tbody>
+                        <tr>
+                          <th>Quantity:</th>
+                          <td><span data-bind="text: itemQty"></span></td>
+                        </tr>
+                        <tr>
+                          <th>Weight:</th>
+                          <td><span data-bind="text: itemWeightLabel"></span></td>
+                        </tr>
+                        <tr>
+                          <th>Cost:</th>
+                          <td><span data-bind="text: costLabel"></span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col-xs-9">
+                      <p style="text-align:justify"
+                           data-bind="html: itemDescriptionHTML"></p>
+                  </div>
+                </div>
+              </div>
+              <div class="back">
+                <item-form params="{
+                  data: context.data,
+                  containerId: elementId,
+                  showForm: editMode,
+                  toggle: toggleCallback,
+                  remove: context.remove }">
+                </item-form>
+
+              </div>
+            </flip-card>
           </td>
         </tr>
       <!-- /ko -->
       </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8">
+            <div style="padding: 10px" id="add-item" class="collapse">
+            <item-form params="{
+              data: null,
+              containerId: 'add-item',
+              showForm: $component.showAddForm,
+              add: $component.addItem,
+              toggle: $component.toggleAddForm }">
+            </item-form>
+          </div>
+          <!-- ko ifnot: $component.showAddForm -->
+          <center>
+            <button type="button"
+                    class="btn btn-default btn-sm btn-block"
+                    id="weaponAddButton"
+                    data-toggle="collapse"
+                    data-target="#add-item"
+                    data-bind="click: toggleAddForm"><i class="fa fa-plus"></i> Add Item</button>
+            </center>
+            <!-- /ko -->
+          </td>
+        </tr>
+      </tfoot>
     </table>
-  </div> <!-- end panel body -->
-  <div class="container-fluid panel-footer">
-     <span class="pull-right">Total weight:&nbsp;
-      <span id="inventoryTableTotalWeightSpan" data-bind="text: totalItemWeight"></span>
-    </span>
-  </div> <!-- end panel footer -->
-</div>
-
-
-<!-- Add Modal -->
-<div class="modal fade"
-  id="addItem" tabindex="-1" role="dialog" aria-labelledby="addItemLabel"
-  data-bind="modal: { onopen: modalFinishedOpening }">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">Add an Item to your Inventory.</h4>
-      </div>
-      <div class="modal-body">
-        <form class="form-horizontal">
-          <div class="form-group ui-front">
-           <label for="itemName"
-             class="col-sm-2 control-label">Name</label>
-           <div class="col-sm-10">
-             <input type="text"
-               class="form-control"
-               id="inventoryAddNameInput"
-               placeholder="Rations"
-               data-bind='textInput: blankItem().itemName,
-                 autocomplete: { source: itemsPrePopFilter, onselect: populateItem },
-                 hasFocus: firstModalElementHasFocus'>
-           </div>
-         </div>
-         <div class="form-group">
-           <label for="itemWeight"
-             class="col-sm-2 control-label">Weight</label>
-           <div class="col-sm-10">
-             <div class="input-group">
-               <input type="number"
-                      class="form-control"
-                      id="inventoryAddWeightInput"
-                      min="0"
-                      max="5000"
-                 placeholder="Item Weight"
-                 data-bind='textInput: blankItem().itemWeight'>
-                 <span class="input-group-addon">lbs.</span>
-             </div>
-           </div>
-         </div>
-         <div class="form-group">
-           <label for="itemQuantity"
-             class="col-sm-2 control-label">Quantity</label>
-           <div class="col-sm-10">
-             <input type="number"
-               class="form-control"
-               min="0"
-               max="5000"
-               id="inventoryAddQuantityInput"
-               placeholder="Item Quantity"
-               data-bind='textInput: blankItem().itemQty'>
-           </div>
-         </div>
-         <div class="form-group ui-front">
-           <label
-             class="col-sm-2 control-label">Cost</label>
-           <div class="col-sm-10">
-      		   <div class="input-group">
-      			 <input type="number"
-      			   min="0"
-      			   class="form-control input-jquery-addon"
-               id="inventoryAddCostInput"
-      			   data-bind="value: blankItem().itemCost" />
-      			 <span class="input-group-addon input-group-addon-jquery">
-               <input class="form-control"
-                      id="inventoryAddCurrencyDenominationInput"
-                      placeholder="GP"
-      						    data-bind="textInput: blankItem().itemCurrencyDenomination, autocomplete: {
-                          source: blankItem().itemCurrencyDenominationOptions,
-                          onselect: setItemCurrencyDenomination }">
-              </span>
-      		   </div>
-    	      </div>
-         </div>
-         <div class="form-group">
-           <label for="itemDescription"
-             class="col-sm-2 control-label">Description</label>
-           <div class="col-sm-10">
-             <textarea type="password"
-               class="form-control"
-               id="inventoryAddDescriptionTextarea"
-               placeholder="Rations consist of..."
-               rows="4"
-               data-bind='textInput: blankItem().itemDesc'>
-             </textarea>
-           </div>
-         </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button"
-          class="btn btn-default"
-          id="inventoryAddCancelButton"
-          data-dismiss="modal">
-          Cancel
-        </button>
-        <button type="button"
-          class="btn btn-primary"
-          id="inventoryAddAddButton"
-          data-dismiss="modal"
-          data-bind="click: addItemButton">
-          Add
-        </button>
-        <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
-          <sm><i>This data is distributed under the
-            <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
-              target='_blank'>
-              OGL</a><br/>
-              Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
-            </i><sm>
-        </p>
-      </div>
-    </div> <!-- Modal Content -->
-  </div> <!-- Modal Dialog -->
-</div> <!-- Modal Fade -->
-
-
-<!-- ViewEdit Modal -->
-<div class="modal fade"
-     data-bind="modal: {
-       open: modalOpen,
-       onopen: modalFinishedOpening,
-       onclose: modalFinishedClosing
-      }"
-     id="viewItem"
-     tabindex="-1"
-     role="dialog"
-     aria-labelledby="viewSpellLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">View an item from your inventory.</h4>
-      </div>
-      <div class="modal-body">
-        <!-- Begin Tabs -->
-        <ul class="nav nav-tabs tabs">
-          <li role="presentation" id="inventoryModalPreviewTab" data-bind="click: selectPreviewTab, css: previewTabStatus">
-            <a href="#magicItemsModalPreview" aria-controls="itemsModalPreview" role="tab" data-toggle="tab">
-                <b>Preview</b>
-            </a>
-          </li>
-          <li role="presentation" id="inventoryModalEditTab" data-bind="click: selectEditTab, css: editTabStatus">
-            <a href="#magicItemsModalEdit" aria-controls="itemsModalEdit" role="tab" data-toggle="tab">
-                <b>Edit</b>
-            </a>
-          </li>
-        </ul>
-        <div class="tab-content" data-bind="with: currentEditItem">
-          <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="itemsModalPreview">
-            <div class="h3">
-              <span data-bind="text: itemName" id="inventoryPreviewNameLabel"></span>&nbsp;
-            </div>
-            <hr />
-            <div class="row">
-              <div class="col-sm-4 col-xs-12"><b>Weight:</b>&nbsp;<span data-bind="text: itemWeightLabel" id="inventoryPreviewWeightLabel"></span></div>
-              <div class="col-sm-4 col-xs-12"><b>Quantity:</b>&nbsp;<span data-bind="text: itemQty" id="inventoryPreviewQuantityInput"></span></div>
-              <div class="col-sm-4 col-xs-12"><b>Cost:</b>&nbsp;<span data-bind="text: costLabel" id="inventoryPreviewCostInput"></span></div>
-            </div>
-            <hr />
-            <h4>Description</h4>
-            <div class="row row-padded">
-              <div class="col-xs-12 col-padded">
-                <div data-bind="html: itemDescriptionHTML"
-                     class="preview-modal-overflow"
-                     id="InventoryPreviewDescriptionTextarea">
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button"
-                      class="btn btn-primary"
-                      id="inventoryDoneButton"
-                      data-dismiss="modal">Done</button>
-            </div>
-          </div> <!-- End Preview Tab -->
-          <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="magicItemsModalEdit">
-            <form class="form-horizontal">
-              <div class="form-group">
-                <label for="itemName"
-                       class="col-sm-2 control-label">Name
-                </label>
-                <div class="col-sm-10">
-                  <input type="text"
-                         class="form-control"
-                         id="inventoryEditNameInput"
-                         placeholder="Rations"
-                         data-bind='textInput: itemName,
-                          hasFocus: $parent.editFirstModalElementHasFocus'>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="itemWeight"
-                       class="col-sm-2 control-label">Weight</label>
-                <div class="col-sm-10">
-                  <div class="input-group">
-                    <input type="number"
-                           class="form-control"
-                           id="inventoryEditWeightInput"
-                           min="0"
-                           max="5000"
-                           placeholder="Item Weight"
-                           data-bind='textInput: itemWeight'>
-                    <span class="input-group-addon">lbs.</span>
-                  </div>
-                 </div>
-              </div>
-              <div class="form-group">
-                <label for="itemQuantity"
-                       class="col-sm-2 control-label">Quantity</label>
-                <div class="col-sm-10">
-                  <input type="number"
-                         class="form-control"
-                         min="0"
-                         max="5000"
-                         id="inventoryEditQuantityInput"
-                         placeholder="Item Quantity"
-                         data-bind='textInput: itemQty'>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">Cost</label>
-                  <div class="col-sm-10">
-          		      <div class="input-group">
-          			      <input type="number"
-          			             min="0"
-          			             class="form-control input-jquery-addon"
-                             id="inventoryEditCostInput"
-          			             data-bind="value: itemCost" />
-          			      <span class="input-group-addon input-group-addon-jquery">
-                      <input class="form-control"
-                             id="inventoryEditCurrencyDenominationInput"
-          					         placeholder="GP"
-                             data-bind="textInput: itemCurrencyDenomination">
-                      </span>
-          		      </div>
-        	        </div>
-              </div>
-              <div class="form-group">
-                <label for="itemDescription"
-                       class="col-sm-2 control-label">Description</label>
-                <div class="col-sm-10">
-                  <textarea type="password"
-                            class="form-control"
-                            id="inventoryEditDescriptionTextarea"
-                            placeholder="Rations consist of..."
-                            rows="4"
-                            data-bind='textInput: itemDesc'>
-                  </textarea>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button"
-                  class="btn btn-primary"
-                  id="inventoryEditDoneButton"
-                  data-dismiss="modal">
-                  Done
-                </button>
-              </div>
-            </form>
-          </div> <!-- End Edit Tab -->
-        </div> <!-- End Content -->
-      </div> <!-- End Modal Body -->
-    </div> <!-- Modal Content -->
-  </div> <!-- Modal Dialog -->
-</div> <!-- Modal Fade -->
+  </div>
