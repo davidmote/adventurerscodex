@@ -83,19 +83,19 @@ export class WeaponFormComponentViewModel {
         }, 650);
     }
 
-
-
-        weaponsPrePopFilter = (request, response) => {
-            var term = request.term.toLowerCase();
-            let results = [];
-            if (term && term.length > 2) {
-            var keys = DataRepository.weapons ? Object.keys(DataRepository.weapons) : [];
+    weaponsPrePopFilter = (request, response) => {
+        var term = request.term.toLowerCase();
+        let results = [];
+        if (term && term.length > 2) {
+            var keys = DataRepository.weapons
+                ? Object.keys(DataRepository.weapons)
+                : [];
             results = keys.filter(function(name, idx, _) {
                 return name.toLowerCase().indexOf(term) > -1;
             });
-          }
-            response(results);
-        };
+        }
+        response(results);
+    };
 
     populateWeapon = (label, value) => {
         var weapon = DataRepository.weapons[label];

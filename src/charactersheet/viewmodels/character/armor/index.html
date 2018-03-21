@@ -1,79 +1,164 @@
-<div class="panel panel-default">
-  <div class="panel-body tight-inner">
+<div id="armor-panel">
+  <div class="h4">
+      Armor<br />
+      <small>Armor Class calculations are based on your equipped Armor, Shield, Magical Modifiers, and Dexterity.
+             Be sure to Don your armor and/or shield so your AC will be calculated.
+      </small>
+  </div>
     <table class="table table-responsive table-ac-bordered table-hover" id="armorTable">
       <thead>
         <tr>
           <th id="armorTableEquippedHeader" data-bind="click: function(){sortBy('armorEquipped');}"
-            class="col-md-1 col-xs-2">
-            <span class="glyphicon glyphicon-check"></span>
-            <span data-bind="css: sortArrow('armorEquipped')"></span>
+            class="">
+          Equipped
           </th>
           <th id="armorTableArmorHeader" data-bind="click: function(){sortBy('armorName');}"
-            class="col-md-4 col-xs-5">
+            class="">
             Armor
             <span data-bind="css: sortArrow('armorName')"></span>
           </th>
-          <th id="armorTableTypeHeader" class="hidden-sm hidden-xs col-md-2"
+          <th id="armorTableTypeHeader" class=""
             data-bind="click: function(){sortBy('armorType');}">
             Type
             <span data-bind="css: sortArrow('armorType')"></span>
           </th>
           <th id="armorTableAcHeader" data-bind="click: function(){sortBy('armorClass');}"
-            class="col-md-3 col-xs-4">
+            class="">
             Armor Class
             <span data-bind="css: sortArrow('armorClass')"></span>
           </th>
-          <th class="col-md-1 col-xs-1">
-            <a data-toggle="modal"
-               id="armorAddIcon"
-               data-target="#addArmor" href="#">
-              <i class="fa fa-plus fa-color"></i>
-            </a>
+          <th class="">
+
           </th>
         </tr>
       </thead>
       <tbody>
       <!-- ko foreach: filteredAndSortedArmors -->
-        <tr class="clickable">
-          <td data-bind="click: $parent.editArmor"
-              href="#">
-            <span data-bind="css: $parent.armorEquippedLabel($data)"></span>
-          </td>
-          <td data-bind="click: $parent.editArmor"
-              href="#">
-              <span data-bind="text: armorName"></span>&nbsp;
+        <tr class="clickable expandRow" data-toggle="collapse"
+              data-bind="attr:{'data-target': `#armor_list_${__id}`}">
+            <td data-bind="click: $component.equipArmor">
+              <div>
+                <input type='checkbox'
+                       style=""
+                       class='pseudo-checkbox sr-only'
+                       data-bind="checked: armorEquipped, attr: {id: `armorEquipped_${__id}`}"></input>
+                <label data-bind="attr: {for: `armorEquipped_${__id}`}"
+                       class='fancy-checkbox-label'>
+              </label>
+              </div>
+            </td>
+            <td><span data-bind="text: armorName"></span>&nbsp;
               <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }">
               </span></td>
-          <td class="hidden-sm hidden-xs"
-              data-bind="text: armorType, click: $parent.editArmor"
-              href="#"></td>
-          <td data-bind="text: armorClass, click: $parent.editArmor"
-              href="#"></td>
+          <td><span data-bind="text: armorType"></span></td>
+          <td><span data-bind="text: armorClass"></span></td>
           <td>
-            <a data-bind="click: $parent.removeArmor" href="#">
-              <i class="fa fa-trash-o fa-color-hover">
-              </i>
-            </a>
+            <span data-toggle="collapse"
+                  data-bind="attr:{'data-target': `#armor_list_${__id}`}"
+                  class="rotate fa fa-chevron-left"></span>
           </td>
         </tr>
-      <!-- /ko -->
-      <!-- ko if: filteredAndSortedArmors().length == 0 -->
-        <tr class="clickable">
-          <td data-toggle="modal" data-target="#addArmor" href="#"
-            colspan="5" class="text-center">
-            <i class="fa fa-plus fa-color"></i>
-            Add a new armor
+        <tr>
+          <td colspan="5" style="padding: 0px; backgound-color: white !important; height: 100%">
+            <flip-card params="{
+                  dataId: $data.__id,
+                  collapsable: true,
+                  elementId: 'armor_list',
+                  context: {
+                    data: $data,
+                    remove: $component.removeArmor,
+                  }
+                }">
+              <div class="front">
+                <div class="row" data-bind="with: context.data">
+                  <div class="col-xs-12">
+                    <div class="h4">
+                      <span data-bind="text: armorName" id="armorPreviewNameLabel"></span>&nbsp;
+                      <!-- ko if: armorEquipped() -->
+                      <small>Equipped</small>
+                      <!-- /ko -->
+                    </div>
+                  </div>
+                  <div class="col-sm-5">
+                    <table class="spellDetail table table-hover table-condensed table-ac-bordered">
+                      <tbody>
+                        <tr>
+                          <th>Armor Class:</th>
+                          <td><span data-bind="text: armorClass"></span></td>
+                        </tr>
+                        <tr>
+                          <th>Type:</th>
+                          <td><span data-bind="text: armorType"></span></td>
+                        </tr>
+                        <tr>
+                          <th>Stealth:</th>
+                          <td><span data-bind="text: armorStealth"></span></td>
+                        </tr>
+                        <tr>
+                          <th>Weight:</th>
+                          <td><span data-bind="text: armorWeightLabel"></span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col-xs-7">
+                      <p style="text-align:justify"
+                           data-bind="html: armorDescriptionHTML"></p>
+                  </div>
+              </div>
+            </div>
+              <div class="back">
+                <armor-form params="{
+                  data: context.data,
+                  containerId: elementId,
+                  showForm: editMode,
+                  toggle: toggleCallback,
+                  remove: context.remove }">
+                </armor-form>
+
+              </div>
+            </flip-card>
           </td>
         </tr>
       <!-- /ko -->
       </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8">
+            <div style="padding: 10px" id="add-armor" class="collapse">
+            <armor-form params="{
+              data: null,
+              containerId: 'add-armor',
+              showForm: $component.showAddForm,
+              add: $component.addArmor,
+              toggle: $component.toggleAddForm }">
+            </armor-form>
+          </div>
+          <!-- ko ifnot: $component.showAddForm -->
+          <center>
+            <button type="button"
+                    class="btn btn-default btn-sm btn-block"
+                    id="weaponAddButton"
+                    data-toggle="collapse"
+                    data-target="#add-armor"
+                    data-bind="click: toggleAddForm"><i class="fa fa-plus"></i> Add Armor</button>
+            </center>
+            <!-- /ko -->
+          </td>
+        </tr>
+      </tfoot>
     </table>
-    </div> <!-- end panel body -->
-    <div class="container-fluid panel-footer">
+</div>
+
+
+    <!-- <div class="container-fluid panel-footer">
       <span class="pull-right">Total weight:&nbsp;
         <span id="armorTableTotalWeightSpan" data-bind="text: totalWeight"></span>
       </span>
-    </div> <!-- end panel footer -->
+    </div>  -->
+
+
+
     <!-- Add Modal -->
     <div class="modal fade"
          id="addArmor"
