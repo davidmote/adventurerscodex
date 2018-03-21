@@ -1,82 +1,18 @@
 import ko from 'knockout';
-import { debounce } from 'lodash';
-import {
-    CharacterManager,
-    DataRepository,
-    Notifications,
-    Utility
-} from 'charactersheet/utilities';
-import { Spell } from 'charactersheet/models';
+import {debounce} from 'lodash';
+import {CharacterManager, DataRepository, Notifications, Utility} from 'charactersheet/utilities';
+import {FormComponentViewModel} from 'charactersheet/utilities';
+import {Spell} from 'charactersheet/models';
 
 import template from './form.html';
 
+export class SpellFormComponentViewModel extends FormComponentViewModel {
 
-export class SpellFormComponentViewModel {
-    constructor(params) {
-        this.data = params.data;
-        this.showForm = params.showForm;
-        this.toggle = params.toggle;
-        this.addCallback = params.add;
-        this.remove = params.remove;
+    generateBlank = () => (new Spell());
 
-        this.containerId = ko.utils.unwrapObservable(params.containerId);
-        this.currentEditItem = ko.observable();
-        this.formElementHasFocus = ko.observable(false);
-        this.addForm = ko.observable(false);
-        this.bypassUpdate = ko.observable(false);
-        this.shouldShowDisclaimer = ko.observable(false);
-
-    }
-
-    load = () => {
-        this.currentEditItem(new Spell());
-        if (this.data) {
-            this.currentEditItem().importValues(this.data.exportValues());
-        } else {
-            this.addForm(true);
-        }
-
-        this.showForm.subscribe(() => {
-            if (this.showForm()) {
-                if (this.data) {
-                    this.currentEditItem(new Spell());
-                    this.currentEditItem().importValues(this.data.exportValues());
-                }
-                this.formElementHasFocus(true);
-            } else {
-                this.formElementHasFocus(false);
-                if (this.bypassUpdate()) {
-                    this.bypassUpdate(false);
-                } else {
-                    this.update();
-                    this.currentEditItem(new Spell());
-                }
-            }
-        });
-    }
-
-    update = () => {
-        if (this.data) {
-            this.data.importValues(this.currentEditItem().exportValues());
-            this.data.save();
-        } else {
-            this.addCallback(this.currentEditItem())
-        }
-    }
-
-    save = () => {
-        this.bypassUpdate(true);
-        this.update();
-        this.toggle();
-        this.shouldShowDisclaimer(false);
-        this.currentEditItem(new Spell());
-    }
-
-    cancel = (data, event) => {
-        this.bypassUpdate(true);
-        this.toggle();
-        this.shouldShowDisclaimer(false);
-        this.currentEditItem(new Spell());
+    notify = () => {
+        // TODO: are there any spell notifications?
+        // Notifications.spells.changed.dispatch();
     }
 
     preparedRowVisibleEdit = () => {
@@ -91,7 +27,9 @@ export class SpellFormComponentViewModel {
         var term = request.term.toLowerCase();
         let results = [];
         if (term && term.length > 2) {
-            const keys = DataRepository.spells ? Object.keys(DataRepository.spells) : [];
+            const keys = DataRepository.spells
+                ? Object.keys(DataRepository.spells)
+                : [];
             results = keys.filter(function(name, idx, _) {
                 return name.toLowerCase().indexOf(term) > -1;
             });
@@ -100,7 +38,6 @@ export class SpellFormComponentViewModel {
     };
 
     delayedSpellsPrePopFilter = debounce(this.spellsPrePopFilter, 350);
-
 
     populateSpell = (label, value) => {
         var spell = DataRepository.spells[label];
@@ -136,8 +73,7 @@ export class SpellFormComponentViewModel {
         this.currentEditItem().spellDuration(value);
     }
 
-    alwaysPreparedPopoverText = () => (
-      'Always prepared spells will not count against total prepared spells.');
+    alwaysPreparedPopoverText = () => ('Always prepared spells will not count against total prepared spells.');
 }
 
 ko.components.register('spell-form', {
