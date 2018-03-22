@@ -1,0 +1,106 @@
+<form class="form-horizontal" data-bind="{submit: save}">
+  <div>
+    <table class="table table-responsive table-ac-bordered table-hover" id="savingThrowTable">
+      <thead>
+        <tr>
+          <th style="text-align: center">
+            Prof
+          </th>
+          <th style="text-align: center">
+            Ability
+          </th>
+          <th style="text-align: center">
+            Bonus
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-bind="with: findSaveByName('Strength')">
+          <td>
+            <input type='checkbox'
+                   class='pseudo-checkbox sr-only'
+                   style="height: 25px"
+                   data-bind="checked: proficiency, attr: {id: 'savingThrow_str'}"></input>
+            <label data-bind="attr: {for: 'savingThrow_str'}"
+                   class='fancy-checkbox-label'>
+          </td>
+          <td>Strength</td>
+          <td>
+            <input type="number" class="form-control ability-score-input" data-bind="value: modifier" />
+          </td>
+        </tr>
+        <tr data-bind="with: findSaveByName('Dexterity')">
+          <td>
+            <input type='checkbox'
+                   class='pseudo-checkbox sr-only'
+                   style="height: 25px"
+                   data-bind="checked: proficiency, attr: {id: 'savingThrow_dex'}"></input>
+            <label data-bind="attr: {for: 'savingThrow_dex'}"
+                   class='fancy-checkbox-label'>
+          </td>
+          <td>Dexterity</td>
+          <td>
+            <input type="number" class="form-control ability-score-input" data-bind="value: modifier" />
+          </td>
+        </tr>
+        <tr data-bind="with: findSaveByName('Constitution')">
+          <td>
+            <input type='checkbox'
+                   class='pseudo-checkbox sr-only'
+                   style="height: 25px"
+                   data-bind="checked: proficiency, attr: {id: 'savingThrow_con'}"></input>
+            <label data-bind="attr: {for: 'savingThrow_con'}"
+                   class='fancy-checkbox-label'>
+          </td>
+          <td>Constitution</td>
+          <td>
+            <input type="number" class="form-control ability-score-input" data-bind="value: modifier" />
+          </td>
+        </tr>
+        <tr data-bind="with: findSaveByName('Intelligence')">
+          <td>
+            <input type='checkbox'
+                   class='pseudo-checkbox sr-only'
+                   style="height: 25px"
+                   data-bind="checked: proficiency, attr: {id: 'savingThrow_int'}"></input>
+            <label data-bind="attr: {for: 'savingThrow_int'}"
+                   class='fancy-checkbox-label'>
+          </td>
+          <td>Intelligence</td>
+          <td>
+            <input type="number" class="form-control ability-score-input" data-bind="value: modifier" />
+          </td>
+        </tr>
+        <tr data-bind="with: findSaveByName('Wisdom')">
+          <td>
+            <input type='checkbox'
+                   class='pseudo-checkbox sr-only'
+                   style="height: 25px"
+                   data-bind="checked: proficiency, attr: {id: 'savingThrow_wis'}"></input>
+            <label data-bind="attr: {for: 'savingThrow_wis'}"
+                   class='fancy-checkbox-label'>
+          </td>
+          <td>Wisdom</td>
+          <td>
+            <input type="number" class="form-control ability-score-input" data-bind="value: modifier" />
+          </td>
+        </tr>
+        <tr data-bind="with: findSaveByName('Charisma')">
+          <td>
+            <input type='checkbox'
+                   class='pseudo-checkbox sr-only'
+                   style="height: 25px"
+                   data-bind="checked: proficiency, attr: {id: 'savingThrow_cha'}"></input>
+            <label data-bind="attr: {for: 'savingThrow_cha'}"
+                   class='fancy-checkbox-label'>
+          </td>
+          <td>Charisma</td>
+          <td>
+            <input type="number" class="form-control ability-score-input" data-bind="value: modifier" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="submit" style="display:none"></button>
+  </div>
+</form>

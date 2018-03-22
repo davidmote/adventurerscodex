@@ -8,8 +8,9 @@ import {
     CharacterManager,
     Notifications
 } from 'charactersheet/utilities';
-
+import { AbilityScoreFormComponentViewModel } from './scoreForm';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { SavingThrowFormComponentViewModel } from './savingThrowForm';
 import { SavingThrows } from 'charactersheet/models/character';
 
 import { find } from 'lodash';
@@ -22,47 +23,14 @@ export function AbilityScoresViewModel() {
     var self = this;
 
     self.abilityScores = ko.observable(new AbilityScores());
-    self.modalStatus = ko.observable(false);
-    self.editItem = ko.observable();
-    self.firstModalElementHasFocus = ko.observable(false);
-    self.editMode = ko.observable(false);
     self.showSaves = ko.observable(false);
-
-
     self.blankSavingThrow = ko.observable(new SavingThrows());
     self.savingThrows = ko.observableArray([]);
-    self.elementHeight = ko.observable('400px');
-    // self.modalOpen = ko.observable(false);
-    // self.editItemIndex = null;
-    // self.currentEditItem = ko.observable();
-
-    const PANEL_ID = '#score-panel';
-    self.setNewHeight = function () {
-        let setHeight = 0;
-        if (self.editMode()) {
-            if (self.showSaves()) {
-                setHeight = $(`${PANEL_ID} .back .inner-back`).height();
-            } else {
-                setHeight = $(`${PANEL_ID} .back .inner-front`).height();
-            }
-        } else {
-            if (self.showSaves()) {
-                setHeight = $(`${PANEL_ID} .front .inner-back`).height();
-            } else {
-                setHeight = $(`${PANEL_ID} .front .inner-front`).height();
-            }
-        }
-        if (setHeight > 0) {
-            self.elementHeight(setHeight.toString()+'px');
-        }
-    };
 
     self.toggleSaves = (newValue) => {
         self.showSaves(!self.showSaves());
-        // if (self.showSaves() !== newValue) {
-        //     self.showSaves(newValue);
-        // }
     };
+
     self._defaultSavingThrows = function() {
         var savingThrows = [
             { name: 'Strength', proficency: false, modifier: null },
@@ -80,44 +48,35 @@ export function AbilityScoresViewModel() {
         });
     };
 
-
-
     self.findSaveByName = (name) => {
         const savingThrow = find(self.savingThrows(), (savingthrow)=>{return savingthrow.name() === name;});
         return savingThrow;
     };
 
-    self.editModeIcon = ko.pureComputed(() => (
-         this.editMode() ? 'glyphicon-floppy-save' : 'glyphicon-pencil'
-    ));
-
     self.load = function() {
-
+        const key = CharacterManager.activeCharacter().key();
         Notifications.abilityScores.changed.add(self.updateSaveValues);
         Notifications.stats.changed.add(self.updateSaveValues);
         Notifications.global.save.add(self.save);
         var savingThrows = PersistenceService.findBy(SavingThrows, 'characterId',
-          CharacterManager.activeCharacter().key());
+          key);
         if (savingThrows.length > 0) {
             self.savingThrows(savingThrows);
         } else {
             self.savingThrows(self._defaultSavingThrows());
             self.savingThrows().forEach(function(e, i, _) {
-                e.characterId(CharacterManager.activeCharacter().key());
+                e.characterId(key);
             });
             self.save();
         }
 
-
-        Notifications.global.save.add(self.save);
-        var key = CharacterManager.activeCharacter().key();
         var scores = PersistenceService.findBy(AbilityScores, 'characterId', key);
         if (scores.length > 0) {
             self.abilityScores(scores[0]);
         } else {
             self.abilityScores(new AbilityScores());
         }
-        self.abilityScores().characterId(key);
+        self.abilityScores().characterId(CharacterManager.activeCharacter().key());
 
         //Subscriptions
         self.abilityScores().str.subscribe(self.dataHasChanged);
@@ -135,7 +94,6 @@ export function AbilityScoresViewModel() {
         Notifications.abilityScores.changed.remove(self.updateSaveValues);
         Notifications.stats.changed.remove(self.updateSaveValues);
         Notifications.global.save.remove(self.save);
-
     };
 
     self.save = function() {
@@ -167,49 +125,6 @@ export function AbilityScoresViewModel() {
         Notifications.abilityScores.changed.dispatch();
     };
 
-    // Modal Methods
-    self.editItem(new AbilityScores());
-
-    self.editScores = function() {
-        if (self.editMode()) {
-            self.abilityScores().importValues(self.editItem().exportValues());
-            self.editMode(false);
-            self.abilityScores().save();
-            self.savingThrows().forEach(function(e, i, _) {
-                e.save();
-            });
-        } else {
-            self.editItem().importValues(self.abilityScores().exportValues());
-            self.editMode(true);
-         // Alert the modal even if the value didn't technically change.
-            self.modalStatus.valueHasMutated();
-        }
-    };
-
-    self.editMode.subscribe(self.setNewHeight);
-    self.showSaves.subscribe(self.setNewHeight);
-
-    self.openModal = function() {
-        self.editItem(new AbilityScores());
-        self.editItem().importValues(self.abilityScores().exportValues());
-
-        self.modalStatus(true);
-         // Alert the modal even if the value didn't technically change.
-        self.modalStatus.valueHasMutated();
-    };
-
-    self.modalFinishedAnimating = function() {
-        self.firstModalElementHasFocus(true);
-        self.firstModalElementHasFocus.valueHasMutated();
-    };
-
-    self.modalFinishedClosing = function() {
-        if (self.modalStatus()) {
-            self.abilityScores().importValues(self.editItem().exportValues());
-        }
-        self.modalStatus(false);
-        self.abilityScores().save();
-    };
 }
 
 ko.components.register('ability-scores', {

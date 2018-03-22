@@ -562,6 +562,7 @@ div.h3 small {
 .ability-score-input {
   width: 65px;
   height: 30px;
+  margin: auto;
 }
 
 .modal-footer-ability-scores {
@@ -1223,6 +1224,7 @@ transition: height .35s ease;
 .back {
   transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
 }
+
 
 /* front pane, placed above back */
 .card-flip-container > .card-flipper > .front {

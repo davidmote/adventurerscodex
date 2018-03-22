@@ -1,0 +1,82 @@
+<form class="form-horizontal"
+      data-bind="submit: save">
+  <div>
+    <table class="table table-responsive table-ac-bordered table-hover"
+           id="abilityScoreTable">
+      <thead>
+        <tr>
+          <th style="text-align: center">
+            Score
+          </th>
+          <th style="text-align: center">
+            Ability
+          </th>
+        </tr>
+      </thead>
+      <tbody data-bind="{with: currentEditItem}">
+        <tr>
+          <td>
+            <input type="number"
+                   class="form-control ability-score-input"
+                   id="abilityScoresEditStrengthInput"
+                   min="0"
+                   data-bind="value: str">
+          </td>
+          <td>Strength</td>
+        </tr>
+        <tr>
+          <td>
+            <input type="number"
+                   class="form-control ability-score-input"
+                   id="abilityScoresEditDexterityInput"
+                   min="0"
+                   data-bind='value: dex'>
+          </td>
+          <td>Dexterity</td>
+        </tr>
+        <tr>
+          <td>
+            <input type="number"
+                   class="form-control ability-score-input"
+                   id="abilityScoresEditConstitutionInput"
+                   min="0"
+                   data-bind='value: con'>
+          </td>
+          <td>Constitution</td>
+        </tr>
+        <tr>
+          <td>
+            <input type="number"
+                   class="form-control ability-score-input"
+                   id="abilityScoresEditIntelligenceInput"
+                   min="0"
+                   data-bind='value: int'>
+          </td>
+          <td>Intelligence</td>
+        </tr>
+        <tr>
+          <td>
+            <input type="number"
+                   class="form-control ability-score-input"
+                   id="abilityScoresEditWisdomInput"
+                   min="0"
+                   data-bind='value: wis'>
+          </td>
+          <td>Wisdom</td>
+        </tr>
+        <tr>
+          <td>
+            <input type="number"
+                   class="form-control ability-score-input"
+                   id="abilityScoresEditCharismaTextarea"
+                   min="0"
+                   data-bind='value: cha'>
+          </td>
+          <td>Charisma</td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="submit"
+            style="display:none"></button>
+  </div>
+</form>
