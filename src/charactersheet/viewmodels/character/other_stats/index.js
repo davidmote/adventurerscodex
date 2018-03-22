@@ -29,33 +29,10 @@ export function OtherStatsViewModel() {
     self.initiativePopover = ko.observable();
     self.proficiencyPopover = ko.observable();
     self.armorClassPopover = ko.observable();
-    self.editMode = ko.observable(false);
-    self.modifierHasFocus = ko.observable(false);
-    self.elementHeight = ko.observable('400px');
 
-    const PANEL_ID = '#other-stats-panel';
 
-    self.setNewHeight = function () {
-        let setHeight = 0;
-        if (self.editMode()) {
-            setHeight = $(`${PANEL_ID} .back`).height();
-        } else {
-            setHeight = $(`${PANEL_ID} .front`).height();
-        }
-        if (setHeight > 0) {
-            self.elementHeight(setHeight.toString()+'px');
-        }
-    };
-    // Wait for page load
-    setTimeout(self.setNewHeight,0);
-
-    self.editStats = function() {
-        if (self.editMode()) {
-            self.editMode(false);
-        } else {
-            self.editMode(true);
-            self.modifierHasFocus(true);
-        }
+    self.editStats = function(toggleCallback) {
+        toggleCallback();
     };
 
     self.load = function() {
@@ -87,8 +64,6 @@ export function OtherStatsViewModel() {
         Notifications.profile.changed.add(self._dummy.valueHasMutated);
         Notifications.armorClass.changed.add(self.updateArmorClass);
         Notifications.abilityScores.dexterity.changed.add(self.calculateInitiativeLabel);
-        self.setNewHeight();
-
     };
 
     // Calculate proficiency label and popover
@@ -189,7 +164,7 @@ export function OtherStatsViewModel() {
         self.otherStats().save();
         Notifications.otherStats.proficiency.changed.dispatch();
     };
-    self.editMode.subscribe(self.setNewHeight);
+    // self.editMode.subscribe(self.setNewHeight);
 }
 
 ko.components.register('other-stats', {
