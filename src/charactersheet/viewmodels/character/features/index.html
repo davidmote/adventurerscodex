@@ -57,7 +57,7 @@
               containerId: elementId,
               showForm: editMode,
               toggle: toggleCallback,
-              resizeCallback: resizeCallback,
+              resize: resizeCallback,
               add: context.addFeature,
               remove: context.removeFeature
                }"
@@ -77,7 +77,7 @@
             containerId: 'add-feature',
             showForm:  $component.showAddForm,
             toggle: $component.toggleAddForm,
-            resizeCallback: ()=>{},
+            resize: ()=>{},
             add: $component.addFeature,
           }">
         </feature-form>

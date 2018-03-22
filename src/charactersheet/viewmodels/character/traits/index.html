@@ -58,7 +58,7 @@
               containerId: elementId,
               showForm: editMode,
               toggle: toggleCallback,
-              resizeCallback: resizeCallback,
+              resize: resizeCallback,
               add: context.addTrait,
               remove: context.removeTrait
                }"
@@ -78,7 +78,7 @@
             containerId: 'add-trait',
             showForm:  $component.showAddForm,
             toggle: $component.toggleAddForm,
-            resizeCallback: ()=>{},
+            resize: ()=>{},
             add: $component.addTrait,
           }">
         </trait-form>

@@ -52,7 +52,7 @@
               containerId: elementId,
               showForm: editMode,
               toggle: toggleCallback,
-              resizeCallback: resizeCallback,
+              resize: resizeCallback,
               add: context.addFeat,
               remove: context.removeFeat
                }"
@@ -69,10 +69,10 @@
           <div style="padding: 10px"  id="add-feat" class="collapse">
             <feat-form params="{
             data: null,
-            containerId: 'add-feature',
+            containerId: 'add-feat',
             showForm:  $component.showAddForm,
             toggle: $component.toggleAddForm,
-            resizeCallback: ()=>{},
+            resize: ()=>{},
             add: $component.addFeat,
           }">
         </feat-form>

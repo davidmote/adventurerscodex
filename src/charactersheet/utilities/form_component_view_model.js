@@ -26,6 +26,24 @@ export class FormComponentViewModel {
       throw('you must provide a notification system');
     }
 
+    subscribeToShowForm = () => {
+        if (this.showForm()) {
+            if (this.data) {
+                this.currentEditItem(this.generateBlank());
+                this.currentEditItem().importValues(this.data.exportValues());
+            }
+            this.formElementHasFocus(true);
+        } else {
+            this.formElementHasFocus(false);
+            if (this.bypassUpdate()) {
+                this.bypassUpdate(false);
+            } else {
+                this.update();
+            }
+            this.currentEditItem(this.generateBlank());
+        }
+    }
+
     load = () => {
         this.currentEditItem(this.generateBlank());
         if (this.data) {
@@ -33,24 +51,8 @@ export class FormComponentViewModel {
         } else {
             this.addForm(true);
         }
-
-        this.showForm.subscribe(() => {
-            if (this.showForm()) {
-                if (this.data) {
-                    this.currentEditItem(this.generateBlank());
-                    this.currentEditItem().importValues(this.data.exportValues());
-                }
-                this.formElementHasFocus(true);
-            } else {
-                this.formElementHasFocus(false);
-                if (this.bypassUpdate()) {
-                    this.bypassUpdate(false);
-                } else {
-                    this.update();
-                }
-                this.currentEditItem(this.generateBlank());
-            }
-        });
+        
+        this.showForm.subscribe(this.subscribeToShowForm);
         this.shouldShowDisclaimer.subscribe(()=> {
           setTimeout(this.resizeCallback, 1);
         });

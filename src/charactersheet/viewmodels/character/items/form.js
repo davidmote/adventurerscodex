@@ -1,15 +1,15 @@
 import ko from 'knockout';
 import {debounce} from 'lodash';
 import {DataRepository} from 'charactersheet/utilities';
+import { FormComponentViewModel } from 'charactersheet/utilities';
 import {Notifications} from 'charactersheet/utilities';
 import {PersistenceService} from 'charactersheet/services/common/persistence_service';
 import {Item} from 'charactersheet/models/common';
-import { FormComponentViewModel } from 'charactersheet/utilities';
 
 import template from './form.html';
 
 export class ItemFormComponentViewModel extends FormComponentViewModel {
-  
+
     generateBlank = () => (new Item());
 
     notify = () => {

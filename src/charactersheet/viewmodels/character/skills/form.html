@@ -20,7 +20,8 @@
   </thead>
    <tbody data-bind='foreach: skills'>
     <tr>
-        <td>
+        <td class="selectDropdown" >
+          <div class="selectit">
           <select class="form-control" style="width: 50px"
           data-bind="value: proficiency,
           options: $component.proficiencyOptions,
@@ -29,14 +30,15 @@
             minimumResultsForSearch: Infinity,
             templateSelection: $component.formatProficiency,
             templateResult: $component.formatProficiencyOptions,
-            dropdownAutoWidth: true
+            dropdownAutoWidth: true,
            }"></select>
+         </div>
         </td>
         <td style="text-align: left"><span data-bind="html: nameLabel"></span></td>
         <td>
           <div class="input-group">
             <input style="font-size: 15px; padding: 10px 0 10px 10px; width:45px" type="number" class="form-control" id="modifier"
-                   data-bind="value: modifier" />
+                   data-bind="value: modifier"></input>
             <span style="padding: 0px 10px; width: auto" class="input-group-addon">
               <span data-bind="text: bonus"></span>
             </span>

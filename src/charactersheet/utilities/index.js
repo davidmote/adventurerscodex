@@ -8,3 +8,4 @@ export { TabFragmentManager } from './tab_fragment_manager.js';
 export { Utility } from './convenience.js';
 export { ViewModelUtilities } from './view_model_utilities.js';
 export {FormComponentViewModel} from './form_component_view_model';
+export {TrackedFormComponentViewModel} from './tracked_form_component_view_model';
