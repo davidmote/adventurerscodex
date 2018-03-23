@@ -1080,6 +1080,32 @@ input[type='checkbox']:checked.pseudo-checkbox + label:before{/*checked icon*/
 }
 
 
+
+input[type='checkbox'].ac-checkbox + label:before,
+input[type='checkbox'].ac-checkbox + label:after{
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+input[type='checkbox'].ac-checkbox + label:before{/*unchecked icon*/
+    content: "\e157";
+}
+
+input[type='checkbox']:disabled.ac-checkbox + label:before{/*unchecked icon*/
+  color: #999;
+}
+
+input[type='checkbox']:checked.ac-checkbox + label:before{/*checked icon*/
+    content: "\e067";
+}
+
+
 input[type='checkbox'].filter-checkbox + label:before,
 input[type='checkbox'].filter-checkbox + label:after{
     position: relative;
@@ -1419,7 +1445,8 @@ fieldset.fieldset-bordered {
 }
 
 .card-title {
-
+background: linear-gradient(to bottom, #eee, #fff);
+border-radius: 4px;
   text-align: center;
   padding: 10px;
 margin: -5px;
@@ -1475,4 +1502,19 @@ margin: -5px;
 }
 .ac-number-input {
   height: 30px;
+}
+
+.ac-table-header {
+  border-bottom: 1px solid #2c3e50;
+}
+
+.score-save-table {
+  margin-top: 15px;
+}
+
+.score-save-table > thead > tr > th,
+.score-save-table > tbody > tr > td,
+.score-save-table > tbody > tr > td input
+ {
+  text-align: center;
 }
