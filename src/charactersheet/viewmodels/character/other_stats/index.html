@@ -1,10 +1,5 @@
 <!--AC, Initiative, Speed-->
 <div id="other-stats-panel">
-  <div class="h4"
-       style="padding-left:15px; padding-right: 15px;">
-    Stats <br />
-    <small>Hover over the (i) icon to learn about these stats.</small>
-  </div>
   <flip-card params="{
         dataId: '1',
         collapsable: false,
@@ -14,7 +9,12 @@
         }
       }">
     <div class="front">
-      <table style="text-align:left; vertical-align: middle"
+      <div class="h4"
+           style="padding-left:15px; padding-right: 15px;">
+        Stats <br />
+        <small>Hover over the (i) icon to learn about these stats.</small>
+      </div>
+      <table style="text-align:left; vertical-align: middle; border-width: 0px;"
              class="table table-responsive table-ac-bordered table-hover"
              data-bind="with: context.data"
              id="statTable">
@@ -106,6 +106,11 @@
       </table>
     </div>
     <div class="back">
+      <div class="h4"
+           style="padding-left:15px; padding-right: 15px;">
+        Stats <br />
+        <small>Hover over the (i) icon to learn about these stats.</small>
+      </div>
       <form data-bind="{submit: () => {context.data.editStats(toggleCallback)}}">
         <table data-bind="with: context.data"
                style="border-width: 0px"
