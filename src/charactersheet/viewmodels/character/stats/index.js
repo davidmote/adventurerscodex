@@ -28,7 +28,6 @@ export function StatsViewModel() {
     self.deathSaveFailureList = ko.observableArray([]);
     self.deathSaveFailureVisible = ko.observable(true);
 
-    self.editMode = ko.observable(false);
     self._dummy = ko.observable();
 
     self.elementHeight = ko.observable('400px');
@@ -36,9 +35,7 @@ export function StatsViewModel() {
     const PANEL_ID = '#health-panel';
     self.setNewHeight = function () {
         let setHeight = 0;
-        if (self.editMode()) {
-            setHeight =  $(`${PANEL_ID} .back`).height();
-        } else if (self.deathSavesVisible()) {
+        if (self.deathSavesVisible()) {
             setHeight = $(`${PANEL_ID} .inner-back`).outerHeight();
         } else {
             const heights = [
@@ -52,7 +49,6 @@ export function StatsViewModel() {
         }
     };
     // Wait for page load
-    setTimeout(self.setNewHeight,500);
 
     self.getHealthColor = () => {
         if (self.health().isDangerous()) {
@@ -205,7 +201,6 @@ export function StatsViewModel() {
             save.deathSaveSuccess.subscribe(self.deathSaveSuccessDataHasChanged);
         });
         self.deathSavesVisible.subscribe(self.setNewHeight);
-        self.editMode.subscribe(self.setNewHeight);
 
         Notifications.events.longRest.add(self.resetOnLongRest);
         Notifications.profile.level.changed.add(self.calculateHitDice);
@@ -238,16 +233,6 @@ export function StatsViewModel() {
             e.clear();
         });
         self.hitDiceList([]);
-    };
-
-    self.editHealth = function() {
-        if (self.editMode()) {
-            self.hitDiceTypeDataHasChanged();
-            self.healthDataHasChange();
-            self.editMode(false);
-        } else {
-            self.editMode(true);
-        }
     };
 
     self.calculateHitDice = function() {
