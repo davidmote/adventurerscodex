@@ -49,6 +49,8 @@ export class FlipCardComponentViewModel {
         this.paramElementId = ko.utils.unwrapObservable(params.elementId);
         // unique identifier for this card
         this.elementId = `${this.paramElementId}_${this.dataId}`
+
+        this.tabId = ko.utils.unwrapObservable(params.tabId);
         // Whether or not to trigger animations on collapse
         this.collapsable = ko.observable(ko.utils.unwrapObservable(params.collapsable) || false);
 
@@ -63,19 +65,27 @@ export class FlipCardComponentViewModel {
           this.editMode = params.editMode;
           this.showEditModeButton(false);
         }
+        if (params.bubbleHeight) {
+          this.bubbleHeight = params.bubbleHeight;
+        }
         // calculated element height
         this.elementHeight = ko.observable(ko.utils.unwrapObservable(params.defaultHeight) || 'auto');
     }
 
     load = () => {
       $(window).on('load', debounce(this.setNewHeight, 50));
+      $(window).on('ready', debounce(this.setNewHeight, 50));
       $(window).on('resize', debounce(this.setNewHeight, 150));
+      if (this.tabId) {
+          $(`.nav-tabs a[href="#${this.tabId}"]`).on('shown.bs.tab', this.setNewHeight);
+      }
+
+        this.editMode.subscribe(this.setNewHeight);
     }
 
     shownCallback = () => {
       if(this.collapsable()){
         this.editMode(false);
-        this.setNewHeight();
       }
     }
 
@@ -95,21 +105,27 @@ export class FlipCardComponentViewModel {
         toggleTo = false;
       }
       this.editMode(toggleTo);
-      this.setNewHeight();
     }
 
-    setNewHeight = () => {
+    setNewHeight = (initialSetHeight) => {
         let setHeight = 0;
         if (this.editMode()) {
             setHeight = $(`#${this.elementId}_card > .back`).height();
         } else {
             setHeight = $(`#${this.elementId}_card > .front`).height();
         }
+
         if (setHeight && setHeight > 1) {
           setTimeout(()=>{
             this.elementHeight(setHeight.toString()+'px');
           },0);
+          if (this.bubbleHeight) {
+            setTimeout(this.bubbleHeight, 350);
+          }
+        } else if (initialSetHeight) {
+          this.elementHeight(initialSetHeight);
         }
+
     }
 }
 

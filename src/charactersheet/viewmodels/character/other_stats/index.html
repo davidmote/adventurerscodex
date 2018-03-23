@@ -1,103 +1,95 @@
 <!--AC, Initiative, Speed-->
-<div id="other-stats-panel">
+<div id="other-stats-pane">
   <flip-card params="{
         dataId: '1',
         collapsable: false,
         elementId: 'other_stats',
+        tabId: tabId,
         context: {
           data: $data,
         }
       }">
     <div class="front">
-      <div class="h4"
-           style="padding-left:15px; padding-right: 15px;">
+      <div class="h4 card-title">
         Stats <br />
         <small>Hover over the (i) icon to learn about these stats.</small>
       </div>
-      <table style="text-align:left; vertical-align: middle; border-width: 0px;"
-             class="table table-responsive table-ac-bordered table-hover"
+      <table class="table table-responsive table-ac-bordered table-hover"
              data-bind="with: context.data"
              id="statTable">
         <tbody>
-          <th style="vertical-align: middle">
-            <span style="display: inline-block">
-              <span class="h4">Armor Class</span>&nbsp;<span class="fa fa-info-circle"
-                  id="otherStatsAcPopoverIconSpan"
-                  style="cursor:pointer; display: inline; float: right;"
-                  data-bind="popover: { content: armorClassPopover }"></span>
-            </span>
+          <th>
+              <span class="h4">Armor Class</span>&nbsp;<span
+                        class="fa fa-info-circle statsPopover"
+                        id="otherStatsAcPopoverIconSpan"
+                        data-bind="popover: { content: armorClassPopover }">
+              </span>
           </th>
-          <td>
+          <td class="ac-table-data-cell">
             <div id="ArmorClassShield">
-              <span style="font-size: 1.4em;"
-                    data-bind="text: armorClass"></span>
+              <span data-bind="text: armorClass"></span>
             </div>
           </td>
           </tr>
-          <tr>
             <tr>
-              <th style="vertical-align: middle">
-                <span style="display: inline-block">Proficiency Bonus&nbsp;<span
-                  class="fa fa-info-circle"
+              <th>
+                Proficiency Bonus&nbsp;<span
+                  class="fa fa-info-circle statsPopover"
                   id="otherStatsProficiencyPopoverIconSpan"
-                  style="cursor:pointer; display: inline; float: right;"
-                  data-bind="popover: { content: proficiencyPopover }"></span>
+                  data-bind="popover: { content: proficiencyPopover }">
                 </span>
               </th>
-              <td>
-                <span style="padding: 5px; display: inline-block">+<span
+              <td class="ac-table-data-cell">
+                +<span
                   data-bind="text: calculatedProficiencyLabel"></span>
-                </span>
               </td>
             </tr>
-
             <tr>
-              <th style="vertical-align: middle">
-                <span style="display: inline-block">Initiative&nbsp;<span
-                  class="fa fa-info-circle"
+              <th>
+                Initiative&nbsp;<span
+                  class="fa fa-info-circle statsPopover"
                   id="otherStatsInitiativePopoverIconSpan"
-                  style="cursor:pointer; display: inline; float: right;"
-                  data-bind="popover: { content: initiativePopover }"></span>
+                  data-bind="popover: { content: initiativePopover }">
                 </span>
-                </td>
-                <th>
-                  <span style=" padding: 5px; display: inline-block"><span
+              </th>
+                <td class="ac-table-data-cell">
+                  <span
                     data-bind="text: parseInt(initiativeLabel) < 0 ? '' : '+'"></span>
-                  <span data-bind="text: initiativeLabel"></span></span>
+                  <span data-bind="text: initiativeLabel"></span>
                   </td>
             </tr>
             <tr>
-              <th style="vertical-align: middle">
-                <span style="display: inline-block">Movement</span>
-                </td>
-                <th>
-                  <span style=" padding: 5px; display: inline-block"><span
-                    data-bind="text: otherStats().speed"></span></span>
+              <th>
+              Movement
+              </th>
+                <td class="ac-table-data-cell">
+                  <span
+                    data-bind="text: otherStats().speed"></span>
                   </td>
             </tr>
             <tr>
-              <th style="vertical-align: middle">
-                <span style="display: inline-block">Level</span>
+              <th>
+                Level
               </th>
-              <td>
-                <span style=" padding: 5px; display: inline-block"><span
-                  data-bind="text: level" ></span></span>
+              <td class="ac-table-data-cell">
+                <span
+                  data-bind="text: level" ></span>
               </td>
             </tr>
             <tr>
-              <th style="vertical-align: middle">
-                <span style="display: inline-block">Experience</span>
+              <th>
+              Experience
               </th>
-              <td>
-                <span style=" padding: 5px; display: inline-block"><span
-                  data-bind="text: experience"></span></span>
+              <td class="ac-table-data-cell">
+                <span
+                  data-bind="text: experience"></span>
               </td>
             </tr>
             <tr>
-              <th style="vertical-align: middle">
-                <span style="display: inline-block">Inspiration&nbsp;</span>
+              <th>
+                Inspiration
               </th>
-              <td>
+              <td class="ac-table-data-cell">
                 <span data-bind="text: otherStats().inspiration"></span>
               </td>
             </tr>
@@ -105,21 +97,18 @@
       </table>
     </div>
     <div class="back">
-      <div class="h4"
-           style="padding-left:15px; padding-right: 15px;">
+      <div class="h4 card-title">
         Stats <br />
         <small>Hover over the (i) icon to learn about these stats.</small>
       </div>
-      <form data-bind="{submit: () => {context.data.editStats(toggleCallback)}}">
+      <form class="other-stats-form" data-bind="{submit: () => {context.data.editStats(toggleCallback)}}">
         <table data-bind="with: context.data"
-               style="border-width: 0px"
-               class="table table-responsive table-ac-bordered table-hover"
-               id="savingThrowTable">
+               class="table table-responsive table-ac-bordered table-hover">
           <thead>
             <tr>
               <th style="width:65%">
               </th>
-              <th>Modify</th>
+              <th class="ac-table-data-cell">Modify</th>
             </tr>
           </thead>
           <tbody>
@@ -127,11 +116,10 @@
               <td>
                 Armor Class
               </td>
-              <td>
-                <input style="height: 30px;"
-                       type="number"
-                       class="form-control"
-                       id="otherStatsAcModifierInput"
+              <td class="ac-table-data-cell">
+                <input type="number"
+                       class="form-control ac-number-input"
+                       name="armorClassModifier"
                        aria-describedby="basic-addon2"
                        data-bind="value: otherStats().armorClassModifier">
               </td>
@@ -140,24 +128,22 @@
               <td>
                 Proficiency Bonus
               </td>
-              <td>
-                <input style="height: 30px;"
-                       type="number"
-                       class="form-control"
-                       id="otherStatsProficiencyBonusModifierInput"
+              <td class="ac-table-data-cell">
+                <input type="number"
+                       class="form-control ac-number-input"
+                       name="proficiency"
                        aria-describedby="basic-addon2"
                        data-bind="value: otherStats().proficiency">
               </td>
             </tr>
             <tr>
-              <td>
+              <td >
                 Initiative
               </td>
-              <td>
-                <input style="height: 30px;"
-                       type="number"
-                       class="form-control"
-                       id="otherStatsInitiativeModiferInput"
+              <td  class="ac-table-data-cell">
+                <input type="number"
+                       class="form-control ac-number-input"
+                       name="initiative"
                        aria-describedby="basic-addon2"
                        data-bind="value: otherStats().initiative">
               </td>
@@ -166,11 +152,10 @@
               <td>
                 Movement
               </td>
-              <td>
-                <input style="height: 30px;"
-                       type="number"
-                       class="form-control"
-                       id="otherStatsSpeedInput"
+              <td  class="ac-table-data-cell">
+                <input type="number"
+                       class="form-control ac-number-input"
+                       name="speed"
                        aria-describedby="basic-addon2"
                        data-bind="value: otherStats().speed"
                        min="0">
@@ -180,11 +165,10 @@
               <td>
                 Level
               </td>
-              <td>
-                <input style="height: 30px;"
-                       type="number"
-                       class="form-control"
-                       id="otherStatsLevelInput"
+              <td  class="ac-table-data-cell">
+                <input type="number"
+                       class="form-control ac-number-input"
+                       name="level"
                        aria-describedby="basic-addon2"
                        data-bind="value: level"
                        min="0">
@@ -194,11 +178,10 @@
               <td>
                 Experience
               </td>
-              <td>
-                <input style="height: 30px;"
-                       type="number"
-                       class="form-control"
-                       id="otherStatsExperienceInput"
+              <td  class="ac-table-data-cell">
+                <input type="number"
+                       class="form-control ac-number-input"
+                       name="experience"
                        aria-describedby="basic-addon2"
                        data-bind="value: experience"
                        min="0">
@@ -208,11 +191,10 @@
               <td>
                 Inspiration
               </td>
-              <td>
-                <input style="height: 30px;"
-                       type="number"
-                       class="form-control"
-                       id="otherStatsInspirationInput"
+              <td  class="ac-table-data-cell">
+                <input type="number"
+                       class="form-control ac-number-input"
+                       name="inspiration"
                        aria-describedby="basic-addon2"
                        data-bind="value: otherStats().inspiration"
                        min="0">

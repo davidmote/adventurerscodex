@@ -8,17 +8,17 @@ import {
 } from 'charactersheet/models/character';
 import { ArmorClassService } from 'charactersheet/services';
 import { CharacterManager } from 'charactersheet/utilities';
+import { HealthFormComponentViewModel } from './form';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import icon from 'images/nested-hearts.svg';
 import ko from 'knockout';
 import template from './index.html';
 
-import {HealthFormComponentViewModel} from './form';
 
-export function StatsViewModel() {
+export function StatsViewModel(params) {
     var self = this;
-
+    self.tabId = params.tabId;
     self.health = ko.observable(new Health());
 
     self.hitDiceList = ko.observableArray([]);
@@ -181,7 +181,7 @@ export function StatsViewModel() {
             save.deathSaveSuccess.subscribe(self._alertPlayerIsStable);
             save.deathSaveSuccess.subscribe(self.deathSaveSuccessDataHasChanged);
         });
-        // self.deathSavesVisible.subscribe(self.setNewHeight);
+        self.deathSavesVisible.subscribe(self.toggleMode);
 
         Notifications.events.longRest.add(self.resetOnLongRest);
         Notifications.profile.level.changed.add(self.calculateHitDice);
@@ -308,7 +308,9 @@ export function StatsViewModel() {
         });
     });
 
-
+    self.toggleMode = () => {
+        return self.deathSavesVisible();
+    };
     /* Utility Methods */
 
 

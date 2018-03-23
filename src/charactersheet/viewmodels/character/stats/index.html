@@ -4,22 +4,25 @@
         dataId: '1',
         collapsable: false,
         elementId: 'health-panel-card',
+        tabId: tabId,
         context: {
           data: $data,
+          tabId: tabId,
         }
       }">
       <div class="front">
-        <div class="h4" style="padding-left:15px; padding-right: 15px; text-align:center">
+        <div class="h4 card-title">
           Health <br />
-          <small class="h5">Click on the health wheel to change max hit points or temporary hit points.</small>
+          <small>Click on the health wheel to change max hit points or temporary hit points.</small>
         </div>
-        <div>
           <flip-card params="{
                 dataId: '1',
                 collapsable: false,
                 elementId: 'healthContainer',
+                tabId: context.tabId,
                 editMode: context.data.deathSavesVisible(),
-                defaultHeight: '275px',
+                defaultHeight: '450px',
+                bubbleHeight: resizeCallback,
                 context: {
                   data: context.data,
                   outerToggleCallback: toggleCallback,
@@ -27,27 +30,26 @@
               }">
             <div class="front">
               <div class="row" data-bind="with: context.data">
-                <div class="col-xs-6">
-                <h4 style="text-align: center">Hit Points</h4>
-                <div class="clickable" style="width: 200px; height: 200px; position: relative; margin: auto;" data-bind="click: $component.context.outerToggleCallback">
-                <div style="padding: 10px; position: absolute; top:0px;" data-bind="circleProgress: hpChart()"> </div>
+                <div class="col-sm-8">
+                <h4>Hit Points</h4>
+                <div class="clickable" id="health-chart" data-bind="click: $component.context.outerToggleCallback">
+                <div class="hp-circle" data-bind="circleProgress: hpChart()"> </div>
                 <!-- ko if: health().tempHitpointsRemaining() -->
-                <div style="position: absolute; top:0px;" data-bind="circleProgress: tempHpChart()"> </div>
+                <div class="hp-circle tempHp" data-bind="circleProgress: tempHpChart()"> </div>
                 <!-- /ko -->
                 </div>
                 <div id="health-buttons">
                 <mini-plus-minus params="value: damageHandler,
                           max: health().totalHitpoints, hideUp: true">
                 </mini-plus-minus>
-
                 <mini-plus-minus params="value: damageHandler,
                           max: health().totalHitpoints, hideDown: true">
                 </mini-plus-minus>
               </div>
 
                 </div>
-                <div class="col-xs-6">
-                  <h4 style="text-align: center">Hit Die</h4>
+                <div class="col-sm-4">
+                  <h4>Hit Die</h4>
                   <div class="form-control hit-dice-list">
                     <!-- ko foreach: hitDiceList -->
                       <span data-bind="attr: { id: $index, name: $index },
@@ -62,7 +64,7 @@
               </div>
             </div>
             <div class="back">
-              <div class="row" style="text-align: center" data-bind="with: context.data">
+              <div class="row" data-bind="with: context.data">
                 <div class="col-xs-12">
                   <h4><center>
                     <!-- ko if: rip()-->
@@ -74,20 +76,20 @@
                   </center></h4>
                 </div>
                 <div class="col-xs-6">
-                    <h4 style="text-align: center">Death Save Successes</h4>
+                    <h4>Death Save Successes</h4>
                   <div class="death-save-panel form-control hit-dice-list" data-bind="foreach: deathSaveSuccessList">
                     <span data-bind="attr: { id: $index, name: $index }, click: deathSaveSuccessHandler,
                   css: deathSaveSuccessIcon"></span>
                   </div>
                 </div>
                 <div class="col-xs-6">
-                    <h4 style="text-align: center">Death Save Failures</h4>
+                    <h4>Death Save Failures</h4>
                   <div class="death-save-panel form-control hit-dice-list" data-bind="foreach: deathSaveFailureList">
                     <span data-bind="attr: { id: $index, name: $index }, click: deathSaveFailureHandler,
                   css: deathSaveFailureIcon"></span>
                   </div>
                 </div>
-                <div class="col-xs-12" style="margin-top: 20px">
+                <div class="col-xs-12" id="stabilize">
                   <button type="button" class="btn btn-block" data-bind="{click: stabilize, css: rip() ? 'btn-danger' : 'btn-info'}">
                     <!-- ko if: rip() -->
                     Revive
@@ -100,10 +102,7 @@
               </div>
             </div>
           </flip-card>
-          <!-- </div>
-        </div> -->
-      </div>
-    </div>
+     </div>
       <div class="back">
         <div style="position: relative; height: 100%" id="health-panel-form">
         <div class="h4" style="padding-left:15px; padding-right: 15px;">

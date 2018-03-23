@@ -16,9 +16,9 @@ import { getModifier } from 'charactersheet/models/character/ability_scores';
 import ko from 'knockout';
 import template from './index.html';
 
-export function OtherStatsViewModel() {
+export function OtherStatsViewModel(params) {
     var self = this;
-
+    self.tabId = params.tabId;
     self.otherStats = ko.observable(new OtherStats());
     self.armorClass = ko.observable();
     self.level = ko.observable('');

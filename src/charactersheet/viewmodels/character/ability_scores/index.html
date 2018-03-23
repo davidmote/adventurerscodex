@@ -1,8 +1,9 @@
-<div id="score-panel" style="min-width: 315px;">
+<div id="score-panel">
   <flip-card params="{
               dataId: '1',
               collapsable: false,
               elementId: 'ability_and_saves',
+              tabId: tabId,
               editMode: showSaves,
               defaultHeight: '400px',
               context: {
@@ -11,11 +12,11 @@
                 toggleSaves: toggleSaves,
                 showSaves: showSaves,
                 findSaveByName: findSaveByName,
+                tabId: tabId,
               }
             }">
     <div class="front">
-      <div class="h4"
-           style="padding-left:15px; padding-right: 15px;">
+      <div class="h4 card-title">
         Ability Scores<br />
         <small>Click on your Ability Scores to add or edit them.</small>
       </div>
@@ -39,6 +40,7 @@
                     dataId: '1',
                     collapsable: false,
                     elementId: 'ability_scores',
+                    tabId: context.tabId,
                     defaultHeight: '265px',
                     context: {
                       data: context.abilityScores,
@@ -133,6 +135,7 @@
                     dataId: '1',
                     collapsable: false,
                     elementId: 'saving_throws',
+                    tabId: context.tabId,
                     defaultHeight: '265px',
                     context: {
                       data: context.savingThrows,

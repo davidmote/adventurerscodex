@@ -1334,6 +1334,19 @@ transition: height .35s ease;
   margin-bottom: 0px;
 }
 
+.table-ac-bordered {
+  vertical-align: middle;
+  border-style: none;
+}
+.table.table-ac-bordered>thead>tr>th,
+.table.table-ac-bordered>tbody>tr>th,
+.table.table-ac-bordered>tfoot>tr>th,
+.table.table-ac-bordered>thead>tr>td,
+.table.table-ac-bordered>tbody>tr>td,
+.table,table-ac-bordered>tfoot>tr>td {
+  vertical-align: middle;
+}
+
 .table-ac-bordered tr:last-child {
   border-bottom: none;
 }
@@ -1350,7 +1363,11 @@ transition: height .35s ease;
    height: 6ex;
    color: white;
    padding: 5px;
-   padding-top: 2px;
+   padding-top: 3px;
+  }
+
+  #ArmorClassShield > * {
+    font-size: 1.4em;
   }
 
 .form-control {
@@ -1399,4 +1416,63 @@ fieldset.fieldset-bordered {
   font-size: 2em;
   content: "\e005";
   margin: 5%;
+}
+
+.card-title {
+
+  text-align: center;
+  padding: 10px;
+margin: -5px;
+}
+
+@media screen and (max-width: 769px){
+    .nav-tabs > li{
+    display:block;
+    width:100%;
+    }
+    .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+    color: #2c3e50;
+    background-color: #ecf0f1;
+    border: 0px;
+  }
+}
+
+#health-pane {
+    text-align: center;
+}
+
+#health-chart {
+  width: 200px;
+  height: 200px;
+  position:
+  relative;
+  margin: auto;
+}
+
+#health-chart .hp-circle.tempHp {
+  padding: 0px;
+}
+#health-chart .hp-circle {
+   padding: 10px;
+   position: absolute;
+   top:0px;
+}
+
+#stabilize {
+  margin-top: 20px;
+}
+
+.statsPopover {
+  cursor:pointer;
+  display: inline;
+}
+
+.ac-table-data-cell {
+  text-align: center;
+}
+.ac-table-data-cell input {
+  text-align: center;
+}
+.ac-number-input {
+  height: 30px;
 }

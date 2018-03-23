@@ -19,8 +19,9 @@ import ko from 'knockout';
 import template from './index.html';
 
 
-export function AbilityScoresViewModel() {
+export function AbilityScoresViewModel(params) {
     var self = this;
+    self.tabId = params.tabId;
 
     self.abilityScores = ko.observable(new AbilityScores());
     self.showSaves = ko.observable(false);
