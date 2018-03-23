@@ -53,6 +53,7 @@ export class FormComponentViewModel {
         }
 
         this.showForm.subscribe(this.subscribeToShowForm);
+
         this.shouldShowDisclaimer.subscribe(()=> {
           setTimeout(this.resizeCallback, 1);
         });

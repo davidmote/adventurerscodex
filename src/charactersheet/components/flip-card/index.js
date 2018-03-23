@@ -60,6 +60,12 @@ export class FlipCardComponentViewModel {
         // calculated element height
         this.elementHeight = ko.observable(ko.utils.unwrapObservable(params.defaultHeight) || 'auto');
 
+        this.showEditModeButton = ko.observable(true);
+
+        if (params.editMode !== undefined) {
+          this.editMode = params.editMode;
+          this.showEditModeButton(false);
+        }
     }
 
     load = () => {
@@ -96,12 +102,14 @@ export class FlipCardComponentViewModel {
     setNewHeight = () => {
         let setHeight = 0;
         if (this.editMode()) {
-            setHeight = $(`#${this.elementId} .back`).height();
+            setHeight = $(`#${this.elementId}_card > .back`).height();
         } else {
-            setHeight = $(`#${this.elementId} .front`).height();
+            setHeight = $(`#${this.elementId}_card > .front`).height();
         }
         if (setHeight && setHeight > 1) {
+          setTimeout(()=>{
             this.elementHeight(setHeight.toString()+'px');
+          },0);
         }
     }
 }

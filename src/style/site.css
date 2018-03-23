@@ -1186,6 +1186,7 @@ transition: height .35s ease;
   -webkit-perspective-origin: 0;
   padding-top: 0px;
   transition: all 0.6s ease;
+  width: 100%;
 }
 
 .card-flip-container.flipped > .card-flipper {
@@ -1200,14 +1201,27 @@ transition: height .35s ease;
 	position: relative;
 }
 
-.card-flip-container > .card-flipper > .front,
-.card-flip-container > .card-flipper > .back {
+ .front,
+ .back {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   visibility: visible;
 	position: absolute;
 	top: 0;
 	left: 0;
+  width: 100%;
+}
+
+.card-flip-container,
+ .front, .back,
+.inner-flip-container, .inner-front, .inner-back,
+.flip-container {
+  width: 100%;
+}
+
+.inner-back,
+.back {
+  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
 }
 
 /* front pane, placed above back */
@@ -1216,52 +1230,58 @@ transition: height .35s ease;
   transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
 }
 
-.card-flip-container.flipped > .card-flipper > .back {
+.card-flip-container.flipped > .card-flipper > .front {
+  z-index: 1;
+  transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
+}
+
+/* front pane, placed above back */
+.card-flip-container > .card-flipper > .back {
   transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
 }
 
 .card-flip-container.flipped > .card-flipper > .back {
-  z-index: 3;
+  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+  z-index: 2;
 }
 
 .card-flip-container.flipped > .card-flipper > .back .card-flip-container.flipped > .card-flipper > .back {
   transform: rotate3d(0, 1, 0, 180deg) translateZ(-50px);
-
 }
 
 
-.inner-flip-container, .flip-container {
+/* .inner-flip-container, .flip-container {
 	perspective: 0px;
   -webkit-perspective-origin: 0;
   padding-top: 0px;
   transition: all 0.6s ease;
-}
+} */
 
 
 /* flip the pane when hovered */
-.inner-flip-container.innerFlipped .inner-flipper,
+
+/* .inner-flip-container.innerFlipped .inner-flipper,
 .flip-container.flipped .flipper {
   transform: rotate3d(0, 1, 0, 180deg) translate3d(0,0,-50px);
+} */
+
+.inner-back {
+  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
 }
 
-
-.inner-flip-container, .inner-front, .inner-back,
-.flip-container, .front, .back {
-  width: 100%;
-  text-align: center;
-}
 
 /* flip speed goes here */
-.inner-flipper, .flipper {
+/* .card-flipper, .inner-flipper, .flipper {
 	transition: 0.6s;
 	transform-style: preserve-3d;
   -webkit-transition: 0.6s;
   -webkit-transform-style: preserve-3d;
 	position: relative;
-}
+} */
 
 /* hide back of pane during swap */
-.inner-front, .inner-back,
+
+/* .inner-front, .inner-back,
 .front, .back  {
 	backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -1269,28 +1289,24 @@ transition: height .35s ease;
 	position: absolute;
 	top: 0;
 	left: 0;
-}
+} */
 
 /* front pane, placed above back */
-.inner-front, .front {
+
+/* .inner-front, .front {
 	z-index: 2;
   transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
-}
+} */
 
-.innerFlipped .inner-back,
+/* .innerFlipped .inner-back,
 .flipped .back {
   z-index: 3;
-}
+} */
 /* back, initially hidden pane */
-.inner-back,
-.back {
-  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
-}
 
-.flipped .back .innerFlipped .inner-back {
+/* .flipped .back .innerFlipped .inner-back {
   transform: rotate3d(0, 1, 0, 180deg) translateZ(-50px);
-}
-
+} */
 
 .edit-btn {
   position: absolute;
@@ -1315,11 +1331,6 @@ transition: height .35s ease;
 .table-ac-bordered tr:last-child {
   border-bottom: none;
 }
-  /* overflow: hidden;
-  -moz-transition: all 0.3s linear;
-  -webkit-transition: all 0.3s linear;
-  transition: all 0.3s linear !important;
-} */
 
 @-moz-document url-prefix() {
   fieldset { display: table-cell; }
@@ -1358,4 +1369,21 @@ fieldset.fieldset-bordered {
 
 .front .collapsing, .back .collapsing  {
   visibility: hidden;
+}
+
+#health-buttons {
+  text-align: center;
+}
+
+#health-buttons .glyphicon-menu-down:before {
+  font-size: 2em;
+  content: "\e143";
+  color: #e74c3c;
+  margin: 5%;
+}
+
+#health-buttons .glyphicon-menu-up:before {
+  font-size: 2em;
+  content: "\e005";
+  margin: 5%;
 }
