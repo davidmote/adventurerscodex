@@ -80,13 +80,6 @@
             <!-- /ko -->
           </td>
           <td>
-            <!-- <i class="glyphicon"
-               style="display: inline-block;
-            text-align: center;
-            word-wrap: break-word;
-            width: 18px;
-            height: 18px;"
-               data-bind="css: spellSchool().toLowerCase()"></i> -->
             <span data-bind="text: spellName"></span>
             <!-- ko if: isConcentration -->
             <span style="color: #18bc9c"
@@ -111,9 +104,10 @@
                   class="rotate fa fa-chevron-left"></span>
           </td>
         </tr>
-        <tr style="backgound-color: white !important;">
+        <tr style="backgound-color: white !important; height: 100%">
           <td colspan="8"
-              style="padding: 0px; height: 100%">
+              style="position: relative; padding: 0px; height: 100%">
+
             <flip-card params="{
                   dataId: $data.__id,
                   collapsable: true,
@@ -125,8 +119,7 @@
                 }">
               <div class="front">
                 <div data-bind="with: context.data, css: context.data.spellSchool().toLowerCase()">
-                  <div class="h3"
-                       style="text-align: left">
+                  <div class="h4" style="text-align: left">
                     <span data-bind="text: spellNameLabel"></span>&nbsp;
                     <small data-bind="text: spellSummaryLabel"></small>
                   </div>
@@ -170,14 +163,11 @@
                     </div>
                     <div class="col-sm-9">
                       <div class="col-xs-12 col-padded">
-                        <div style="text-align:justify"
-                             data-bind="html: spellDescriptionHTML"></div>
+                        <div style="text-align:justify" data-bind="html: spellDescriptionHTML"></div>
                       </div>
                     </div>
                   </div>
                 </div>
-
-                <!--  data-bind="with: spell, css: spell.spellSchool().toLowerCase()" -->
               </div>
               <div class="back">
                 <div data-bind="css: context.data.spellSchool().toLowerCase()">
@@ -190,6 +180,7 @@
                     }"></spell-form>
                   </div>
               </div>
+            </flip-card>
           </td>
         </tr>
         <!-- /ko -->

@@ -9,7 +9,7 @@
         }
       }">
       <div class="front">
-        <div class="h4" style="padding-left:15px; padding-right: 15px;">
+        <div class="h4" style="padding-left:15px; padding-right: 15px; text-align:center">
           Health <br />
           <small class="h5">Click on the health wheel to change max hit points or temporary hit points.</small>
         </div>
@@ -29,7 +29,7 @@
               <div class="row" data-bind="with: context.data">
                 <div class="col-xs-6">
                 <h4 style="text-align: center">Hit Points</h4>
-                <div class="clickable" style="width: 200px; height: 200px; position: relative; margin: auto" data-bind="click: $component.context.outerToggleCallback">
+                <div class="clickable" style="width: 200px; height: 200px; position: relative; margin: auto;" data-bind="click: $component.context.outerToggleCallback">
                 <div style="padding: 10px; position: absolute; top:0px;" data-bind="circleProgress: hpChart()"> </div>
                 <!-- ko if: health().tempHitpointsRemaining() -->
                 <div style="position: absolute; top:0px;" data-bind="circleProgress: tempHpChart()"> </div>
@@ -62,7 +62,7 @@
               </div>
             </div>
             <div class="back">
-              <div class="row" data-bind="with: context.data">
+              <div class="row" style="text-align: center" data-bind="with: context.data">
                 <div class="col-xs-12">
                   <h4><center>
                     <!-- ko if: rip()-->

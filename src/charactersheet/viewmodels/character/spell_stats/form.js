@@ -16,6 +16,11 @@ export class SpellStatsFormViewModel extends FormComponentViewModel {
     notify = () => {
       Notifications.spellStats.changed.dispatch();
     }
+
+    setSpellCastingAbility = (label, value) => {
+    this.currentEditItem().spellcastingAbility(label);
+};
+
 }
 
 ko.components.register('spell-stats-form', {

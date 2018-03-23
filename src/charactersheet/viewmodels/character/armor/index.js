@@ -147,7 +147,6 @@ export function ArmorViewModel() {
         armor.save();
         self.equipArmorHandler(armor);
         self.armors.push(armor);
-        self.blankArmor(new Armor());
     };
 
     self.removeArmor = function(armor) {

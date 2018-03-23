@@ -265,6 +265,7 @@ div.hr {
   height:24px;
   display: inline-block;
   padding: 0 0 0 0px;
+  margin: 5px;
 }
 
 .ds-failure-empty {
@@ -274,6 +275,7 @@ div.hr {
   height:24px;
   display: inline-block;
   padding: 0 0 0 0px;
+  margin: 5px;
 }
 
 .ds-success-full {
@@ -283,6 +285,7 @@ div.hr {
   height:24px;
   display: inline-block;
   padding: 0 0 0 0px;
+  margin: 5px;
 }
 
 .ds-success-empty {
@@ -292,6 +295,7 @@ div.hr {
   height:24px;
   display: inline-block;
   padding: 0 0 0 0px;
+  margin: 5px;
 }
 
 .circular-profile {
@@ -1338,9 +1342,15 @@ transition: height .35s ease;
   fieldset { display: table-cell; }
 }
 
-#ac {
+#ArmorClassShield {
   background:url('../images/shield.svg') no-repeat;
    background-size: 100% 100%;
+   text-align: center;
+   vertical-align: middle;
+   height: 6ex;
+   color: white;
+   padding: 5px;
+   padding-top: 2px;
   }
 
 .form-control {
@@ -1349,6 +1359,7 @@ transition: height .35s ease;
 
 .form-control.hit-dice-list {
   height: 100%;
+  text-align: center;
 }
 
 fieldset.fieldset-bordered {
