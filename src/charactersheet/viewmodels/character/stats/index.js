@@ -14,22 +14,23 @@ import icon from 'images/nested-hearts.svg';
 import ko from 'knockout';
 import template from './index.html';
 
+import {HealthFormComponentViewModel} from './form';
+
 export function StatsViewModel() {
     var self = this;
 
     self.health = ko.observable(new Health());
-    self.blankHitDice = ko.observable(new HitDice());
+
     self.hitDiceList = ko.observableArray([]);
     self.hitDiceType = ko.observable(new HitDiceType());
     self.deathSaveSuccessList = ko.observableArray([]);
     self.deathSaveSuccessVisible = ko.observable(true);
     self.deathSaveFailureList = ko.observableArray([]);
     self.deathSaveFailureVisible = ko.observable(true);
-    self.editHealthItem = ko.observable();
-    self.editHitDiceItem = ko.observable();
+
     self.editMode = ko.observable(false);
     self._dummy = ko.observable();
-    self.modifierHasFocus = ko.observable(false);
+
     self.elementHeight = ko.observable('400px');
 
     const PANEL_ID = '#health-panel';
@@ -239,20 +240,13 @@ export function StatsViewModel() {
         self.hitDiceList([]);
     };
 
-    self.editHealthItem(new Health());
-    self.editHitDiceItem(new HitDiceType());
     self.editHealth = function() {
         if (self.editMode()) {
-            self.health().importValues(self.editHealthItem().exportValues());
-            self.hitDiceType().importValues(self.editHitDiceItem().exportValues());
             self.hitDiceTypeDataHasChanged();
             self.healthDataHasChange();
             self.editMode(false);
         } else {
-            self.editHealthItem().importValues(self.health().exportValues());
-            self.editHitDiceItem().importValues(self.hitDiceType().exportValues());
             self.editMode(true);
-            self.modifierHasFocus(true);
         }
     };
 
@@ -348,10 +342,6 @@ export function StatsViewModel() {
         });
     });
 
-    // Prepopulate methods
-    self.setHitDiceType = function(label, value) {
-        self.editHitDiceItem().hitDiceType(value);
-    };
 
     /* Utility Methods */
 
