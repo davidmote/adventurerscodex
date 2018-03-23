@@ -9,10 +9,9 @@ import meditationWhite from 'images/meditation.svg';
 import campingTentWhite from 'images/camping-tent.svg';
 import uuid from 'node-uuid';
 
-
 export class TrackedFormComponentViewModel extends FormComponentViewModel {
     constructor(params) {
-      super(params);
+        super(params);
 
         this.currentEditTrackedItem = ko.observable();
         this.meditationWhite = meditationWhite;
@@ -31,40 +30,45 @@ export class TrackedFormComponentViewModel extends FormComponentViewModel {
         throw('you must provide a Tracked Type');
     }
 
+    subscribeToShowForm = () => {
+        if (this.showForm()) {
+            if (this.data) {
+                this.reset();
+                this.currentEditItem().importValues(this.data.exportValues());
+                if (this.data.isTracked()) {
+                    const tracked = PersistenceService.findFirstBy(Tracked, 'trackedId', this.data.trackedId());
+                    this.currentEditTrackedItem().importValues(tracked.exportValues());
+                }
+            }
+            this.formElementHasFocus(true);
+        } else {
+            this.formElementHasFocus(false);
+            if (this.bypassUpdate()) {
+                this.bypassUpdate(false);
+            } else {
+                this.update();
+            }
+            this.reset();
+        }
+    }
+
     load = () => {
-        this.currentEditItem(this.generateBlank());
-        this.currentEditTrackedItem(new Tracked());
+        this.reset();
         if (this.data) {
             this.currentEditItem().importValues(this.data.exportValues());
         } else {
             this.addForm(true);
         }
 
-        this.showForm.subscribe(() => {
-            if (this.showForm()) {
-                if (this.data) {
-                    this.currentEditItem(this.generateBlank());
-                    this.currentEditItem().importValues(this.data.exportValues());
-                    if (this.data.isTracked()) {
-                        const tracked = PersistenceService.findFirstBy(Tracked, 'trackedId', this.data.trackedId());
-                        this.currentEditTrackedItem().importValues(tracked.exportValues());
-                    }
-                }
-                this.formElementHasFocus(true);
-            } else {
-                this.formElementHasFocus(false);
-                if (this.bypassUpdate()) {
-                    this.bypassUpdate(false);
-                } else {
-                    this.update();
-                }
-                this.currentEditItem(this.generateBlank());
-                this.currentEditTrackedItem(new Tracked());
-            }
-        });
+        this.showForm.subscribe(this.subscribeToShowForm);
+
         ko.computed(() => this.currentEditItem().isTracked()).subscribe(() => {
             setTimeout(this.resizeCallback, 1);
-        })
+        });
+
+        this.shouldShowDisclaimer.subscribe(() => {
+            setTimeout(this.resizeCallback, 1);
+        });
     }
 
     update = () => {
@@ -110,18 +114,7 @@ export class TrackedFormComponentViewModel extends FormComponentViewModel {
         return newTracked;
     };
 
-    save = () => {
-        this.bypassUpdate(true);
-        this.update();
-        this.toggle();
-        this.shouldShowDisclaimer(false);
-        this.currentEditItem(this.generateBlank());
-        this.currentEditTrackedItem(new Tracked());
-    }
-
-    cancel = (data, event) => {
-        this.bypassUpdate(true);
-        this.toggle();
+    reset = () => {
         this.shouldShowDisclaimer(false);
         this.currentEditItem(this.generateBlank());
         this.currentEditTrackedItem(new Tracked());

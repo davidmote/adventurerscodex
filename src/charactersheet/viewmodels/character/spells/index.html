@@ -58,7 +58,7 @@
       </thead>
       <tbody>
         <!-- ko foreach: filteredAndSortedSpells -->
-        <tr 
+        <tr
             data-toggle="collapse"
             class="clickable spellRow"
             data-bind="css: {notCastable: !spellIsCastable()}, attr:{'data-target': `#spell_list_${__id}`, id: `#spell_row_${__id}`}">
@@ -190,17 +190,6 @@
                     }"></spell-form>
                   </div>
               </div>
-          </td>
-        </tr>
-        <!-- /ko -->
-        <!-- ko if: spellbook().length == 0 -->
-        <tr class="clickable">
-          <td href="#"
-              data-toggle="collapse"
-              data-target="#add-spell"
-              colspan="8"
-              class="text-center">
-            <i class="fa fa-plus fa-color"></i> Add a new spell
           </td>
         </tr>
         <!-- /ko -->

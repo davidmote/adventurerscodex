@@ -29,7 +29,7 @@ export class FormComponentViewModel {
     subscribeToShowForm = () => {
         if (this.showForm()) {
             if (this.data) {
-                this.currentEditItem(this.generateBlank());
+                this.reset();
                 this.currentEditItem().importValues(this.data.exportValues());
             }
             this.formElementHasFocus(true);
@@ -40,18 +40,18 @@ export class FormComponentViewModel {
             } else {
                 this.update();
             }
-            this.currentEditItem(this.generateBlank());
+            this.reset();
         }
     }
 
     load = () => {
-        this.currentEditItem(this.generateBlank());
+        this.reset();
         if (this.data) {
             this.currentEditItem().importValues(this.data.exportValues());
         } else {
             this.addForm(true);
         }
-        
+
         this.showForm.subscribe(this.subscribeToShowForm);
         this.shouldShowDisclaimer.subscribe(()=> {
           setTimeout(this.resizeCallback, 1);
@@ -72,15 +72,18 @@ export class FormComponentViewModel {
         this.bypassUpdate(true);
         this.update();
         this.toggle();
-        this.shouldShowDisclaimer(false);
-        this.currentEditItem(this.generateBlank());
+        this.reset();
     }
 
     cancel = (data, event) => {
         this.bypassUpdate(true);
         this.toggle();
-        this.shouldShowDisclaimer(false);
-        this.currentEditItem(this.generateBlank());
+        this.reset();
+    }
+
+    reset = () => {
+      this.shouldShowDisclaimer(false);
+      this.currentEditItem(this.generateBlank());
     }
 
     remove = () => {
