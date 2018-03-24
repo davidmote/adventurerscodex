@@ -1191,10 +1191,10 @@ tr.expandRow[aria-expanded="true"]:hover {
 position: relative;
 height: 0px;
 overflow: hidden;
--webkit-transition: height .35s ease;
--moz-transition: height .35s ease;
--o-transition: height .35s ease;
-transition: height .35s ease;
+-webkit-transition: all .35s ease;
+-moz-transition: all .35s ease;
+-o-transition: all .35s ease;
+transition: all .35s ease;
 }
 
 
@@ -1549,4 +1549,17 @@ margin: -5px;
 .score-save-table > tbody > tr > td input
  {
   text-align: center;
+}
+
+.table>thead>tr.collapseRow>th,
+.table>tbody>tr.collapseRow>th,
+.table>tfoot>tr.collapseRow>th,
+.table>thead>tr.collapseRow>td,
+.table>tbody>tr.collapseRow>td,
+.table>tfoot>tr.collapseRow>td {
+  padding: 0px;
+}
+
+.card-description {
+  text-align: justify;
 }

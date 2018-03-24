@@ -1,9 +1,9 @@
 <div id="tracker-panel">
-	<div class="h4">
+	<div class="h4 card-title">
 		Tracked Features, Feats, and Traits<br />
 		<small>Configure to reset on a short or long rest.</small>
 	</div>
-	<table class="table table-responsive" style="border-width:0px">
+	<table class="table table-responsive table-ac-bordered">
 		<thead>
 			<tr>
 				<th>Name
@@ -11,7 +11,7 @@
 				<th colspan="3">Resets&nbsp;on
 				</th>
 				<th></th>
-				<th>Used</th>
+				<th class="hidden-xs">Used</th>
 				<th>
 					<a href="#" class="" data-bind="{click: collapseAll}">
               <span class="fa fa-minus"></span></a>
@@ -21,7 +21,7 @@
 		<tbody>
 			<!-- ko foreach: filteredAndSortedTrackables, as: trackable -->
 			<tr data-bind="with: $data.tracked()">
-				<td style="padding: 4px;"><span data-bind="html: $component.shortName($parent.name)"></span>
+				<td><span data-bind="html: $component.shortName($parent.name)"></span>
 				</td>
 				<td style="padding: 4px;">
 					<!-- ko if: $component.needsResetsOnImg($data) -->
@@ -43,14 +43,14 @@
 					<div style="padding: 10px" data-bind="barProgress: $component.mapToChart($data)"> </div>
 				</td>
 
-				<td style="padding: 4px;">
+				<td style="padding: 4px;"  class="hidden-xs">
 					<span data-bind="text: parseInt(maxUses()) - parseInt(used())"></span>&nbsp;/&nbsp;<span data-bind=" text: maxUses"></span>
 				</td>
 				<td style="padding: 4px;">
 					<span data-toggle="collapse" data-bind="attr:{'data-target': `#tracked_${__id}`}" class="rotate fa fa-chevron-left"></span>
 				</td>
 			</tr>
-			<tr>
+			<tr class="collapseRow">
 				<td colspan="8">
 				<flip-card params="{
 					    dataId: $data.tracked().__id,
@@ -62,14 +62,14 @@
 							}
 						}">
 					<div class="front">
-						<div class="h4" style="text-align: left">
+						<div class="h4">
 							<span data-bind="text: context.viewData.name"></span>
 							<small data-bind="text: context.nameMeta(context.viewData)"></small>
 						</div>
-						<p style="text-align:justify" data-bind="markdownPreview: context.viewData.description"></p>
+						<p class="card-description" data-bind="markdownPreview: context.viewData.description"></p>
 					</div>
-					<div class="back" >
-							<div class="h4" style="text-align: left">
+					<div class="back">
+							<div class="h4">
 								<span data-bind="text: context.viewData.name"></span>
 								<small data-bind="text: context.nameMeta(context.viewData)"></small>
 							</div>
@@ -85,7 +85,7 @@
 			</tr>
 			<!-- /ko -->
 			<!-- ko if: filteredAndSortedTrackables().length == 0 -->
-			<tr class="clickable">
+			<tr>
 				<td colspan="12" class="text-center well">
 					No Tracked Features, Feats, or Traits to display.
 				</td>
