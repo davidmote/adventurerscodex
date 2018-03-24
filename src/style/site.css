@@ -69,6 +69,10 @@ a.navbar-brand.navbar-divider:after {
 
 .main {
   padding-bottom:150px;
+  /* since the contents of the site are within their own padded containers
+  remove this padding to keep the size reasonable */
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
@@ -1213,15 +1217,21 @@ transition: height .35s ease;
 
 /* entire container, keeps perspective */
 .card-flip-container {
-  perspective: 0px;
   -webkit-perspective-origin: 0;
+  perspective: 0px;
   padding-top: 0px;
+  -webkit-transition: all 0.6s ease;
+  -moz-transition: all 0.6s ease;
+  -o-transition: all 0.6s ease;
   transition: all 0.6s ease;
   width: 100%;
 }
 
 .card-flip-container.flipped > .card-flipper {
+  -webkit-transform: rotate3d(0, 1, 0, 180deg) translate3d(0,0,-50px);
   transform: rotate3d(0, 1, 0, 180deg) translate3d(0,0,-50px);
+  -webkit-transition-property: -webkit-transform;
+
 }
 
 .card-flip-container > .card-flipper {
@@ -1252,33 +1262,51 @@ transition: height .35s ease;
 
 .inner-back,
 .back {
+  -webkit-transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
   transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+  -webkit-transition-property: -webkit-transform;
+
 }
 
 
 /* front pane, placed above back */
 .card-flip-container > .card-flipper > .front {
   z-index: 2;
+  -webkit-transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
   transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
+  -webkit-transition-property: -webkit-transform;
+
 }
 
 .card-flip-container.flipped > .card-flipper > .front {
   z-index: 1;
+  -webkit-transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
   transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
+  -webkit-transition-property: -webkit-transform;
+
 }
 
 /* front pane, placed above back */
 .card-flip-container > .card-flipper > .back {
+  -webkit-transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
   transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+  -webkit-transition-property: -webkit-transform;
+
 }
 
 .card-flip-container.flipped > .card-flipper > .back {
+  -webkit-transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
   transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+  -webkit-transition-property: -webkit-transform;
+
   z-index: 2;
 }
 
 .card-flip-container.flipped > .card-flipper > .back .card-flip-container.flipped > .card-flipper > .back {
+  -webkit-transform: rotate3d(0, 1, 0, 180deg) translateZ(-50px);
   transform: rotate3d(0, 1, 0, 180deg) translateZ(-50px);
+  -webkit-transition-property: -webkit-transform;
+
 }
 
 
@@ -1445,14 +1473,18 @@ fieldset.fieldset-bordered {
 }
 
 .card-title {
-background: linear-gradient(to bottom, #eee, #fff);
+background: linear-gradient(to bottom, rgba(200, 200, 200, 0.25), rgba(255, 255, 255, 0.0));
 border-radius: 4px;
   text-align: center;
   padding: 10px;
 margin: -5px;
 }
 
-@media screen and (max-width: 769px){
+.card-title small {
+  color: #2c3e50;
+}
+
+@media screen and (max-width: 767px){
     .nav-tabs > li{
     display:block;
     width:100%;

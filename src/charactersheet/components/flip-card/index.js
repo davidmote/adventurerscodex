@@ -80,12 +80,16 @@ export class FlipCardComponentViewModel {
           $(`.nav-tabs a[href="#${this.tabId}"]`).on('shown.bs.tab', this.setNewHeight);
       }
 
-        this.editMode.subscribe(this.setNewHeight);
+      if (this.showEditModeButton() === false) {
+      // trigger the new height on edit mode directly;
+        // this.editMode.subscribe(this.setNewHeight);
+      }
     }
 
     shownCallback = () => {
       if(this.collapsable()){
         this.editMode(false);
+       this.setNewHeight();
       }
     }
 
@@ -105,6 +109,7 @@ export class FlipCardComponentViewModel {
         toggleTo = false;
       }
       this.editMode(toggleTo);
+      this.setNewHeight();
     }
 
     setNewHeight = (initialSetHeight) => {
