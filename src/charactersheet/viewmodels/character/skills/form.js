@@ -5,6 +5,8 @@ import { CharacterManager } from 'charactersheet/utilities';
 
 import { ProficiencyTypeComponentViewModel } from 'charactersheet/components/proficiency-marker';
 import { Skill } from 'charactersheet/models/character';
+import { SkillsAddFormViewModel } from './addForm';
+
 import { SortService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import template from './form.html';
@@ -18,7 +20,21 @@ export class SkillsFormViewModel {
       this.removeSkill = params.removeSkill;
       this.toggle = params.toggle;
       this.resize = params.resize;
+      this.showAddForm = ko.observable(false);
+      this.addCallback = params.addCallback;
     }
+
+    toggleAddForm = () => {
+        if (this.showAddForm()) {
+            this.showAddForm(false);
+            $('#add-skill').collapse('hide');
+            setTimeout(this.resize, 350);
+        } else {
+            this.showAddForm(true);
+            $('#add-skill').collapse('show');
+            setTimeout(this.resize, 350);
+        }
+    };
 
     proficiencyOptions = [
         'not',

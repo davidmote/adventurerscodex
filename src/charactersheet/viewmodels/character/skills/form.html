@@ -1,6 +1,6 @@
 <div>
 <form class="form-horizontal" data-bind="{submit: submitSkills}">
-<table style="border-width: 0px" class="table table-responsive table-ac-bordered table-hover">
+<table class="table table-responsive table-ac-bordered table-hover">
   <thead>
     <tr>
       <th data-bind="click: ()=>{sortBy('proficiency');}">
@@ -11,10 +11,8 @@
         Skill
         <span data-bind="css: sortArrow('name')"></span>
       </th>
-      <th>
-        Bonus
-      </th>
-      <th>
+      <th colspan="2">
+        Modifier (Bonus)
       </th>
     </tr>
   </thead>
@@ -34,12 +32,12 @@
            }"></select>
          </div>
         </td>
-        <td style="text-align: left"><span data-bind="html: nameLabel"></span></td>
+        <td><span data-bind="html: nameLabel"></span></td>
         <td>
-          <div class="input-group">
-            <input style="font-size: 15px; padding: 10px 0 10px 10px; width:45px" type="number" class="form-control" id="modifier"
+          <div class="input-group skill-modifier-input">
+            <input type="number" class="form-control" id="modifier"
                    data-bind="value: modifier"></input>
-            <span style="padding: 0px 10px; width: auto" class="input-group-addon">
+            <span class="input-group-addon">
               <span data-bind="text: bonus"></span>
             </span>
           </div>
@@ -51,18 +49,25 @@
         </td>
     </tr>
   </tbody>
-  <tfoot>
-    <tr>
-      <td colspan="4">
-        <center>
-          <!-- <button type="button" class="btn btn-primary btn-sm btn-block" id="skillAddButton" data-toggle="collapse" data-target="#add-skill">Add Skill</button>
-          <button type="button" class="btn btn-default btn-sm" id="skillAddCancelButton" data-toggle="collapse" data-target="#add-skill" data-bind='click: cancelAddSkill'>Cancel</button>
-          <button type="submit" class="btn btn-primary btn-sm" id="skillAddAddButton" data-toggle="collapse" data-target="#add-skill">Add</button> -->
-          <button style="visibility: hidden" type="submit"></button>
-        </center>
-    </td>
-    </tr>
-  </tfoot>
 </table>
+<button style="visibility: hidden" type="submit"></button>
 </form>
+<div id="add-skill"
+     class="collapse panel-body">
+  <add-skills-form params="{
+  data: null,
+  containerId: 'add-skill',
+  showForm: $component.showAddForm,
+  add: $component.addCallback,
+  toggle: $component.toggleAddForm }">
+  </add-skills-form>
+</div>
+<!-- ko ifnot: $component.showAddForm -->
+<button type="button"
+        class="btn btn-link btn-sm btn-block"
+        id="skillAddButton"
+        data-toggle="collapse"
+        data-target="#add-skill"
+        data-bind="click: $component.toggleAddForm"><i class="fa fa-plus"></i> Add Skill</button>
+<!-- /ko -->
 </div>

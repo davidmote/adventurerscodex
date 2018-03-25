@@ -1401,9 +1401,14 @@ transition: all .35s ease;
   vertical-align: middle;
 }
 
-.table-ac-bordered tr:last-child {
+.table-ac-bordered > tbody > tr:last-of-type {
   border-bottom: none;
 }
+
+.table-ac-bordered > tfoot > tr:last-of-type {
+  border-bottom: none;
+}
+
 
 @-moz-document url-prefix() {
   fieldset { display: table-cell; }
@@ -1558,8 +1563,39 @@ margin: -5px;
 .table>tbody>tr.collapseRow>td,
 .table>tfoot>tr.collapseRow>td {
   padding: 0px;
+  height: 100%;
+  background-color: transparent;
 }
 
 .card-description {
   text-align: justify;
+}
+
+.safari-card-fix {
+  opacity: 0.99;
+}
+
+.add-card {
+  padding: 10px
+}
+
+.skill-modifier-input input {
+  font-size: 15px;
+  padding: 10px 0 10px 10px;
+  width:45px
+}
+
+.skill-modifier-input .input-group-addon {
+  padding: 0px 10px;
+  width: auto;
+}
+
+.ac-pane {
+  background-color: white;
+  margin-bottom: 10px;
+}
+
+.ogl-disclaimer {
+  display: block;
+  clear: both
 }

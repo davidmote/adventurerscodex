@@ -1,39 +1,43 @@
-<div id="skill-panel" style="min-width: 280px; position:relative">
-<div class="h4" style="margin-bottom: -10px">
-Skills<br />
-<small>Your Skills take into account your Ability Score modifiers
-and Proficiency Bonus.</small>
-</div>
+<div id="skill-pane"
+     class="ac-pane">
   <flip-card params="{
         dataId: '1',
         collapsable: false,
         elementId: 'skills-list',
+        tabId: $component.tabId,
         defaultHeight: '750px',
         context: {
           filteredAndSortedSkills: $component.filteredAndSortedSkills,
           sortBy: $component.sortBy,
           sortArrow: $component.sortArrow,
           removeSkill: $component.removeSkill,
-          addSkill: $component.addSkill
+          addSkill: $component.addSkill,
+          toggleAddForm: $component.toggleAddForm,
+          showAddForm: $component.showAddForm
         }
       }">
-    <div style="margin-top: 10px" class="front">
-      <table style="border-width: 0px" class="table table-responsive table-ac-bordered table-hover">
-        <thead>
+    <div class="front">
+      <div class="h4 card-title">
+        Skills<br />
+        <small>Your Skills take into account your Ability Score modifiers
+      and Proficiency Bonus.</small>
+      </div>
+      <table class="table table-responsive table-ac-bordered table-hover">
+        <thead class="ac-table-header">
           <tr>
-            <th data-bind="click: ()=> {context.sortBy('proficiency');}"  style="min-width: 40px">
+            <th data-bind="click: ()=> {context.sortBy('proficiency');}"
+                style="min-width: 40px">
               <span class="glyphicon glyphicon-ok"></span>
               <span data-bind="css: context.sortArrow('proficiency')"></span>
             </th>
-            <th data-bind="click: () => {context.sortBy('name');}"
-              class="">
+            <th data-bind="click: () => {context.sortBy('name');}">
               Skill
               <span data-bind="css: context.sortArrow('name')"></span>
             </th>
-            <th>
+            <th class="ac-table-data-cell">
               Modifier
             </th>
-            <th>
+            <th class="ac-table-data-cell">
               Passive
             </th>
           </tr>
@@ -43,16 +47,20 @@ and Proficiency Bonus.</small>
             <td>
               <prof-marker params="proficiency: proficiency"></prof-marker>
             </td>
-            <td style="text-align: left"><span data-bind="text: name"></span></td>
-            <td><span data-bind="html: bonusLabel"></span></td>
-            <td><span data-bind="text: passiveBonus"></span></td>
+            <td><span data-bind="text: name"></span></td>
+            <td class="ac-table-data-cell"><span data-bind="html: bonusLabel"></span></td>
+            <td class="ac-table-data-cell"><span data-bind="text: passiveBonus"></span></td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div style="margin-top: 10px" class="back">
-      <skills-form
-      params="{
+    <div class="back">
+      <div class="h4 card-title">
+        Skills<br />
+        <small>Your Skills take into account your Ability Score modifiers
+      and Proficiency Bonus.</small>
+      </div>
+      <skills-form params="{
         skills: context.filteredAndSortedSkills,
         sortBy: context.sortBy,
         sortArrow: context.sortArrow,
@@ -60,15 +68,7 @@ and Proficiency Bonus.</small>
         toggle: toggleCallback,
         resize: resizeCallback,
         addCallback: context.addSkill
-      }"
-      ></skills-form>
-      <!-- <add-skills-form
-      params="{
-        addCallback: context.addSkill,
-        resize: resizeCallback
-      }"></add-skills-form> -->
+      }"></skills-form>
     </div>
-
   </flip-card>
-
 </div>

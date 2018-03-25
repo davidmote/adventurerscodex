@@ -42,7 +42,7 @@ export function ProficienciesViewModel() {
 
 
     self.collapseAll = () => {
-        $('#proficiency-panel .collapse.in').collapse('hide');
+        $('#proficiency-pane .collapse.in').collapse('hide');
     };
         // Wait for page load
     self.load = function() {

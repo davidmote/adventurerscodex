@@ -10,7 +10,6 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import { ProficiencyTypeComponentViewModel } from 'charactersheet/components/proficiency-marker';
 
 import { Skill } from 'charactersheet/models/character';
-import { SkillsAddFormViewModel } from './addForm';
 
 import { SkillsFormViewModel } from './form';
 
@@ -18,8 +17,9 @@ import { SortService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import template from './index.html';
 
-export function SkillsViewModel() {
+export function SkillsViewModel(params) {
     var self = this;
+    self.tabId = params.tabId;
 
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc'},
@@ -141,10 +141,11 @@ export function SkillsViewModel() {
 
     // Edit Modal Methods
 
-
     //Manipulating skills
 
     self.addSkill = function(skill) {
+        skill.characterId(CharacterManager.activeCharacter().key());
+        skill.save();
         self.addNotifiers(skill);
         self.skills.push(skill);
     };

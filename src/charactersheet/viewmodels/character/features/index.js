@@ -42,7 +42,7 @@ export function FeaturesViewModel() {
     };
 
     self.collapseAll = () => {
-        $('#feature-panel .collapse.in').collapse('hide');
+        $('#feature-pane .collapse.in').collapse('hide');
     };
 
     self.features = ko.observableArray([]);

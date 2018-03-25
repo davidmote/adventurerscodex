@@ -1,4 +1,4 @@
-<form style="padding: 10px; text-align: left" data-bind="submit: $component.save">
+<form data-bind="submit: $component.save">
   <div data-bind="with: currentEditItem">
     <div class="form-group">
       <label for="name"
@@ -34,22 +34,12 @@
                 data-bind='value: description, markdownEditor: true'></textarea>
     </div>
   </div>
-  <p class="text-muted text-left" style="padding: 10px;"
-     data-bind='visible: shouldShowDisclaimer'>
-    <sm><i>This data is distributed under the
-            <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
-              target='_blank'>
-              OGL</a><br/>
-              Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
-            </i>
-      <sm>
-  </p>
   <!-- ko ifnot: addForm -->
   <div>
     <button class="btn btn-sm btn-danger"
             type="button"
             data-bind="click: $component.remove">Delete</button>
-    <div style="float: right">
+    <div class="pull-right">
       <button class="btn btn-sm btn-default"
               type="button"
               data-bind="click: $component.cancel">Cancel</button>
@@ -60,8 +50,7 @@
   <!-- /ko -->
   <!-- ko if: addForm -->
   <div>
-    <center>
-      <div style="float: right">
+      <div class="pull-right">
       <button type="button"
               class="btn btn-default btn-sm"
               id="proficiencyAddCancelButton"
@@ -70,8 +59,17 @@
               class="btn btn-primary btn-sm"
               id="proficiencyAddAddButton"
             >Add Proficiency</button>
-            </div>
-    </center>
+      </div>
   </div>
   <!-- /ko -->
+  <p class="text-muted text-left ogl-disclaimer"
+     data-bind='visible: shouldShowDisclaimer'>
+    <sm><i>This data is distributed under the
+            <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
+              target='_blank'>
+              OGL</a><br/>
+              Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
+            </i>
+      <sm>
+  </p>
 </form>

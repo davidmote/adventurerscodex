@@ -11,12 +11,12 @@ ko.bindingHandlers.collapseCard = {
         var shownCallback = ko.utils.unwrapObservable(value.shownCallback);
         if (shownCallback) {
              // Register callbacks.
-             $(element).on('show.bs.collapse', debounce(shownCallback, 0));
-             // $(element).on('shown.bs.collapse', debounce(shownCallback, 150));
+             $(element).on('show.bs.collapse', debounce(shownCallback, 50));
+             $(element).on('shown.bs.collapse', debounce(shownCallback, 50));
         }
         if (hiddenCallback) {
              // Register callbacks.
-            $(element).on('hidden.bs.collapse', debounce(hiddenCallback, 0));
+            $(element).on('hidden.bs.collapse', debounce(hiddenCallback, 50));
         }
     },
     update:  function(element, valueAccessor, allBindingsAccessor) {
@@ -122,9 +122,9 @@ export class FlipCardComponentViewModel {
         }
 
         if (setHeight && setHeight > 1) {
-          // setTimeout(()=>{
+           setTimeout(()=>{
             this.elementHeight(setHeight.toString()+'px');
-          // },0);
+          }, 0);
           if (this.bubbleHeight) {
             setTimeout(this.bubbleHeight, 350);
           }

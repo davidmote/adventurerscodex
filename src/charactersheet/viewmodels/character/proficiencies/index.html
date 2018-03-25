@@ -1,10 +1,9 @@
-<div id="proficiency-panel">
-  <div class="h4">
+<div id="proficiency-pane" class="ac-pane panel-body">
+  <div class="h4 card-title">
     Proficiencies
   </div>
-  <table style="border-width: 0px"
-         class="table table-responsive table-ac-bordered table-hover">
-    <thead>
+  <table class="table table-responsive table-ac-bordered table-hover">
+    <thead class="ac-table-header">
       <tr>
         <th data-bind="click: function(){sortBy('name');}">
           Proficiency
@@ -25,7 +24,7 @@
       <tr data-toggle="collapse"
           class="clickable expandRow"
           data-bind="attr:{'data-target': `#proficiency_list_${__id}`, id: `#proficiency_row_${__id}`}">
-        <td style="text-align: left"><span data-bind="text: name"></span></td>
+        <td><span data-bind="text: name"></span></td>
         <td><span data-bind="text: type"></span></td>
         <td>
           <span data-toggle="collapse"
@@ -33,9 +32,8 @@
                 class="rotate fa fa-chevron-left"></span>
         </td>
       </tr>
-      <tr style="backgound-color: white !important; height: 100%">
-        <td colspan="3"
-            style="padding: 0px; height: 100%">
+      <tr class="collapseRow">
+        <td colspan="3">
           <flip-card params="{
                 dataId: $data.__id,
                 collapsable: true,
@@ -48,7 +46,7 @@
             <div class="front"
                  data-bind="with: context.data">
               <!-- ko if: description -->
-              <p style="text-align: justify; padding: 10px; padding-top: 15px"
+              <p class="card-description"
                  data-bind="markdownPreview: description "></p>
               <!-- /ko -->
               <!-- ko ifnot: description -->
@@ -72,7 +70,7 @@
     <tfoot>
       <tr>
         <td colspan="4">
-          <div style="padding: 10px" id="add-proficiency" class="collapse">
+          <div id="add-proficiency" class="collapse add-card">
           <proficiency-form params="{
             data: null,
             containerId: 'add-proficiency',
@@ -82,14 +80,12 @@
           </proficiency-form>
         </div>
         <!-- ko ifnot: $component.showAddForm -->
-        <center>
           <button type="button"
-                  class="btn btn-default btn-sm btn-block"
+                  class="btn btn-link btn-sm btn-block"
                   id="proficiencyAddButton"
                   data-toggle="collapse"
                   data-target="#add-proficiency"
                   data-bind="click: toggleAddForm"><i class="fa fa-plus"></i> Add Proficiency</button>
-          </center>
           <!-- /ko -->
         </td>
       </tr>

@@ -108,7 +108,7 @@ export function TrackerViewModel() {
     };
 
     self.collapseAll = () => {
-        $('#tracker-panel .collapse.in').collapse('hide');
+        $('#tracker-pane .collapse.in').collapse('hide');
     };
 
     self.load = function() {

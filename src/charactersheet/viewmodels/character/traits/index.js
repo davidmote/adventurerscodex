@@ -44,7 +44,7 @@ export function TraitsViewModel() {
     };
 
     self.collapseAll = () => {
-        $('#trait-panel .collapse.in').collapse('hide');
+        $('#trait-pane .collapse.in').collapse('hide');
     };
 
     self.shortName = function(string) {

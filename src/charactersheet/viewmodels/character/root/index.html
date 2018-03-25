@@ -317,26 +317,26 @@
        id="skills"
        data-bind="css: skillsTabStatus">
     <div class="row">
-          <div class="">
+          <div class="" style="position:relative; z-index: 9">
             <tracker params="{tabId: 'skills'}"></tracker>
           </div>
-          <div class="">
+          <div class="" style="position:relative; z-index: 8">
             <features params="{tabId: 'skills'}"></features>
-
           </div>
-          <div class="">
-            <traits params="{tabId: 'skills'}"></traits>
+          <div class="" style="position:relative; z-index: 7">
+            <skills params="{tabId: 'skills'}"></skills>
           </div>
-          <div class="">
+          <div class="" style="position:relative; z-index: 6">
             <feats params="{tabId: 'skills'}"></feats>
           </div>
-          <div class="">
+          <div class=""  style="position:relative; z-index: 5">
+            <traits params="{tabId: 'skills'}"></traits>
+          </div>
+          <div class=""  style="position:relative; z-index: 4">
             <proficiencies params="{tabId: 'skills'}"></proficiencies>
           </div>
 
-          <div class="col-sm-5 col-md-4">
-            <skills params="{tabId: 'skills'}"></skills>
-          </div>
+
     </div>
   </div>
   <!-- End Skills Tab -->

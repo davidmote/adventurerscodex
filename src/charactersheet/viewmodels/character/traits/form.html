@@ -1,5 +1,4 @@
-<form style="padding: 10px; text-align: left"
-      data-bind="submit: $component.save">
+<form data-bind="submit: $component.save">
   <div data-bind="with: currentEditItem">
     <div class="form-group">
       <label for="name"
@@ -11,7 +10,7 @@
              hasFocus: $component.formElementHasFocus,
              autocomplete: {
                source: $component.traitsPrePopFilter,
-               onselect: $component.populateTrait }" >
+               onselect: $component.populateTrait }">
     </div>
 
     <div class="form-group">
@@ -23,7 +22,7 @@
              data-bind="textInput: race,
              autocomplete: {
                source: $component.raceOptions,
-               onselect: $component.populateRace }" >
+               onselect: $component.populateRace }">
     </div>
     <div class="form-group">
       <label for="npcDescription"
@@ -34,28 +33,33 @@
                 id="traitEditDescriptionTextarea"
                 data-bind='value: description, markdownEditor: true'></textarea>
     </div>
-  <div class="form-group">
-    <input type='checkbox' style="" class='pseudo-checkbox sr-only' data-bind="checked: isTracked, attr: {id: `${$component.containerId}_tracked`}"></input>
-    <label data-bind="attr: {for: `${$component.containerId}_tracked`}" class='fancy-checkbox-label'>Tracked?
-    </label>&nbsp;<span class="fa fa-info-circle" style="cursor:pointer;"
-                  data-bind="popover: { content: $component.popoverText }"></span>
+    <div class="form-group">
+      <input type='checkbox'
+             style=""
+             class='pseudo-checkbox sr-only'
+             data-bind="checked: isTracked, attr: {id: `${$component.containerId}_tracked`}"></input>
+      <label data-bind="attr: {for: `${$component.containerId}_tracked`}"
+             class='fancy-checkbox-label'>Tracked?
+    </label>&nbsp;<span class="fa fa-info-circle"
+            style="cursor:pointer;"
+            data-bind="popover: { content: $component.popoverText }"></span>
+    </div>
   </div>
-</div>
   <!-- ko if: currentEditItem().isTracked() -->
   <div data-bind="with: $component.currentEditTrackedItem">
     <fieldset class="fieldset-bordered">
       <legend>Tracked</legend>
-    <div class="form-group">
-      <label for="bonus"
-             class="control-label">Max</label>
+      <div class="form-group">
+        <label for="bonus"
+               class="control-label">Max</label>
         <input type="number"
                class="form-control"
                id="max"
                min="1"
                data-bind='textInput: maxUses'>
-    </div>
-    <div class="form-group">
-      <label class="control-label">Resets on...</label>
+      </div>
+      <div class="form-group">
+        <label class="control-label">Resets on...</label>
         <div class="btn-group btn-group-justified btn-group-sm"
              role="group">
           <label class="btn btn-default btn-sm"
@@ -72,47 +76,47 @@
           <img class="action-bar-icon" data-bind="attr: { src: $component.campingTentWhite }"></img>
           &nbsp;&nbsp;&nbsp;Long Rest
         </label>
-    </div>
+        </div>
 
-  </fieldset>
-  </div>
-  <!-- /ko -->
-  <!-- ko ifnot: addForm -->
-  <div>
-    <button class="btn btn-sm btn-danger"
-            type="button"
-            data-bind="click: $component.remove">Delete</button>
-    <div style="float: right">
-      <button class="btn btn-sm btn-default"
-              type="button"
-              data-bind="click: $component.cancel">Cancel</button>
-      <button class="btn btn-sm btn-primary"
-              type="submit">Save</button>
+    </fieldset>
     </div>
-  </div>
-  <!-- /ko -->
-  <!-- ko if: addForm -->
-  <div>
-    <center>
+    <!-- /ko -->
+    <!-- ko ifnot: addForm -->
+    <div>
+      <button class="btn btn-sm btn-danger"
+              type="button"
+              data-bind="click: $component.remove">Delete</button>
       <div style="float: right">
-      <button type="button"
-              class="btn btn-default btn-sm"
-              id="proficiencyAddCancelButton"
-              data-bind="click: $component.cancel">Cancel</button>
-      <button type="submit"
-              class="btn btn-primary btn-sm"
-            >Add Feature</button>
-            </div>
-    </center>
-  </div>
-  <!-- /ko -->
-  <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
-    <sm><i>This data is distributed under the
+        <button class="btn btn-sm btn-default"
+                type="button"
+                data-bind="click: $component.cancel">Cancel</button>
+        <button class="btn btn-sm btn-primary"
+                type="submit">Save</button>
+      </div>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: addForm -->
+    <div>
+      <center>
+        <div style="float: right">
+          <button type="button"
+                  class="btn btn-default btn-sm"
+                  id="proficiencyAddCancelButton"
+                  data-bind="click: $component.cancel">Cancel</button>
+          <button type="submit"
+                  class="btn btn-primary btn-sm">Add Feature</button>
+        </div>
+      </center>
+    </div>
+    <!-- /ko -->
+    <p class="text-muted text-left ogl-disclaimer"
+       data-bind='visible: shouldShowDisclaimer'>
+      <sm><i>This data is distributed under the
             <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
               target='_blank'>
               OGL</a><br/>
               Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
             </i>
-      <sm>
-  </p>
+        <sm>
+    </p>
 </form>

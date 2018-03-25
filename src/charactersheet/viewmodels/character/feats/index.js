@@ -43,7 +43,7 @@ export function FeatsViewModel() {
     };
 
     self.collapseAll = () => {
-        $('#feat-panel .collapse.in').collapse('hide');
+        $('#feat-pane .collapse.in').collapse('hide');
     };
 
     self.load = function() {
