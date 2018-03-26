@@ -299,13 +299,16 @@
        id="stats"
        data-bind="css: statsTabStatus">
     <div class="row">
-      <div class="col-sm-12 col-md-4 col-md-push-4 col-lg-6 col-lg-push-3" style="position:relative; z-index: 6">
+      <div class="col-sm-12 col-md-4 col-md-push-4 col-lg-6 col-lg-push-3"
+           style="position:relative; z-index: 6">
         <stats params="{tabId: 'stats'}"></stats>
       </div>
-      <div class="col-sm-6 col-md-4 col-md-pull-4 col-lg-3 col-lg-pull-6" style="position:relative; z-index: 5">
+      <div class="col-sm-6 col-md-4 col-md-pull-4 col-lg-3 col-lg-pull-6"
+           style="position:relative; z-index: 5">
         <other-stats params="{tabId: 'stats'}"></other-stats>
       </div>
-      <div class="col-sm-6 col-md-4 col-lg-3" style="position:relative; z-index: 4">
+      <div class="col-sm-6 col-md-4 col-lg-3"
+           style="position:relative; z-index: 4">
         <ability-scores params="{tabId: 'stats'}"></ability-scores>
       </div>
     </div>
@@ -317,30 +320,36 @@
        id="skills"
        data-bind="css: skillsTabStatus">
     <div class="row">
-          <div class="col-xs-12 col-lg-8" style="position:relative; z-index: 9">
-            <tracker params="{tabId: 'skills'}"></tracker>
+      <div class="col-xs-12 col-lg-8"
+           style="position:relative; z-index: 9">
+        <tracker params="{tabId: 'skills'}"></tracker>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4"
+           style="position:relative; z-index: 7; float:right">
+        <skills params="{tabId: 'skills'}"></skills>
+      </div>
+      <!-- <div class="clearfix visible-xs"></div> -->
+      <div class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
+        <div class="row">
+          <div class="col-sm-12 col-lg-6"
+               style="position:relative; z-index: 8">
+            <features params="{tabId: 'skills'}"></features>
           </div>
-          <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4" style="position:relative; z-index: 7; float:right">
-            <skills params="{tabId: 'skills'}"></skills>
-          </div>
-          <!-- <div class="clearfix visible-xs"></div> -->
-          <div class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
-            <div class="row">
-              <div class="col-sm-12 col-lg-6" style="position:relative; z-index: 8">
-                <features params="{tabId: 'skills'}"></features>
-              </div>
 
-              <div class="col-sm-12 col-lg-6" style="position:relative; z-index: 6">
-                <feats params="{tabId: 'skills'}"></feats>
-              </div>
-              <div class="col-sm-12 col-lg-6"  style="position:relative; z-index: 5">
-                <traits params="{tabId: 'skills'}"></traits>
-              </div>
-              <div class="col-sm-12 col-lg-6" style="position:relative; z-index: 4">
-                <proficiencies params="{tabId: 'skills'}"></proficiencies>
-              </div>
-            </div>
+          <div class="col-sm-12 col-lg-6"
+               style="position:relative; z-index: 6">
+            <feats params="{tabId: 'skills'}"></feats>
           </div>
+          <div class="col-sm-12 col-lg-6"
+               style="position:relative; z-index: 5">
+            <traits params="{tabId: 'skills'}"></traits>
+          </div>
+          <div class="col-sm-12 col-lg-6"
+               style="position:relative; z-index: 4">
+            <proficiencies params="{tabId: 'skills'}"></proficiencies>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <!-- End Skills Tab -->
@@ -350,16 +359,14 @@
        id="spells"
        data-bind="css: spellsTabStatus">
     <div class="row">
-      <div class="col-sm-7 col-md-8">
-        <spell-slots params="{tabId: 'spells'}"></spell-slots>
-      </div>
-      <div class="col-sm-5 col-md-4">
+      <div class="">
         <spell-stats params="{tabId: 'spells'}"></spell-stats>
       </div>
-    </div>
+      <div class="">
+        <spell-slots params="{tabId: 'spells'}"></spell-slots>
+      </div>
 
-    <div class="row">
-      <div class="col-md-12 col-sm-12 col-padded">
+      <div class="">
         <spells params="{tabId: 'spells'}"></spells>
       </div>
     </div>

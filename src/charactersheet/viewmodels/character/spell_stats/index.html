@@ -1,4 +1,4 @@
-<div id="spell-stats-panel">
+<div id="spell-stats-pane" class="ac-pane">
   <flip-card params="{
         dataId: '1',
         collapsable: false,
@@ -10,85 +10,66 @@
         }
       }">
       <div class="front">
-        <div class="h4" style="text-align: left">
+        <div class="h4 card-title">
           Spell Stats<br />
           <small>These stats help you cast spells</small>
         </div>
-        <table data-bind="{with: context.spellStats}" style="text-align:left; border-width:0px" class="table table-responsive table-ac-bordered table-hover" id="spellStatsTable">
+        <table data-bind="{with: context.spellStats}" class="table table-responsive table-ac-bordered table-hover" id="spellStatsTable">
           <tbody>
               <tr>
-                <td>
+                <th>
                   <span class="h4" style="display: inline-block">Spell Attack Bonus</span>
-                </td>
-                <td>
-                  <span style=" padding: 5px; display: inline-block">
+                </th>
+                <td class="ac-table-data-cell">
                     <strong>+<span data-bind="text: spellAttackBonus"></span></strong>
-                  </span>
                 </td>
               </tr>
               <tr>
-                <td>
+                <th>
                   <span class="h4" style="display: inline-block">Spell Save DC</span>
-                </td>
-                <td>
-                  <span style=" padding: 5px; display: inline-block">
+                </th>
+                <td class="ac-table-data-cell">
                     <strong data-bind="text: spellSaveDc"></strong>
-                  </span>
                 </td>
               </tr>
               <tr>
-                <td>
-                  <span style="display: inline-block">Spell Casting Ability</span>
-                </td>
-                <td>
-                  <span style=" padding: 5px; display: inline-block">
+                <th>Spell Casting Ability
+                </th>
+                <td class="ac-table-data-cell">
                     <span data-bind="text: spellcastingAbility"></span>
-                  </span>
                 </td>
               </tr>
               <tr>
-                <td>
-                  <span style="display: inline-block">Cantrips Known</span>
-                </td>
-                <td>
-                  <span style=" padding: 5px; display: inline-block">
+                <th>Cantrips Known
+                </th>
+                <td class="ac-table-data-cell">
                     <span data-bind="text: spellsCantripsKnown"></span>
-                  </span>
                 </td>
               </tr>
               <!-- ko if: spellsKnown -->
               <tr>
-                <td>
-                  <span style="display: inline-block">Spells Known</span>
-                </td>
-                <td>
-                  <span style=" padding: 5px; display: inline-block">
+                <th>Spells Known
+                </th>
+                <td class="ac-table-data-cell">
                     <span data-bind="text: spellsKnown"></span>
-                  </span>
                 </td>
               </tr>
               <!-- /ko -->
               <!-- ko if: spellsMaxPrepared  -->
               <tr>
-                <td>
-                  <span style="display: inline-block">Max Prepared</span>
-                </td>
-                <td>
-                  <span style=" padding: 5px; display: inline-block">
+                <th>Max Prepared
+                </th>
+                <td class="ac-table-data-cell">
                     <span data-bind="text: spellsMaxPrepared"></span>
-                  </span>
                 </td>
               </tr>
               <!-- /ko -->
               <!-- ko if: spellsInvocationsKnown  -->
               <tr>
-                <td>
-                  <span style="display: inline-block">Invocations Known</span>
-                </td>
-                <td>
-                  <span style=" padding: 5px; display: inline-block">
+                <th>Invocations Known
+                </th>
+                <td class="ac-table-data-cell">
                     <span data-bind="text: spellsInvocationsKnown"></span>
-                  </span>
                 </td>
               </tr>
               <!-- /ko -->
@@ -96,7 +77,7 @@
         </table>
       </div>
       <div class="back">
-        <div class="h4" style="text-align: left">
+        <div class="h4 card-title">
           Spell Stats<br />
           <small>These stats help you cast spells</small>
         </div>

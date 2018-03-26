@@ -1,6 +1,5 @@
-<div class="row" id="spells-panel">
-  <div class="col-xs-12">
-    <div class="h4">
+<div id="spells-pane" class="ac-pane panel-body">
+    <div class="h4 card-title">
       Spells<br/>
       <small>You can sort your spells by clicking on the headers. View the
     bottom of the list for a count of your prepared spells.</small>
@@ -16,43 +15,43 @@
                    data-bind="checked: filteredByCastable"></input>
             <label for="filterByCastable"
                    class='fancy-checkbox-label'>
-        <small>Memorized</small>
-        </label>
+                   <small class="hidden-xs">Memorized</small>
+           </label>
           </th>
           <th id="spellsTableSpellHeader"
               data-bind="click: function(){sortBy('spellName');}">
             Spell
             <span data-bind="css: sortArrow('spellName')"></span>
           </th>
-          <th id="spellsTableLevelHeader"
+          <th id="spellsTableLevelHeader" class="ac-table-data-cell"
               data-bind="click: function(){sortBy('spellLevel');}">
             Level
             <span data-bind="css: sortArrow('spellLevel')"></span>
           </th>
-          <th id="spellsTableTypeHeader"
+          <th id="spellsTableTypeHeader" class="hidden-xs"
               data-bind="click: function(){sortBy('spellTypeLabel');}">
             Type
             <span data-bind="css: sortArrow('spellTypeLabel')"></span>
           </th>
-          <th id="spellsTableDamageHeader"
+          <th id="spellsTableDamageHeader" class="hidden-xs"
               data-bind="click: function(){sortBy('spellDmg');}">
             Damage
             <span data-bind="css: sortArrow('spellDmg')"></span>
           </th>
-          <th id="spellsTableCastingHeader"
+          <th id="spellsTableCastingHeader"  class="hidden-xs"
               data-bind="click: function(){sortBy('spellCastingTime');}">
             Casting Time
             <span data-bind="css: sortArrow('spellCastingTime')"></span>
           </th>
-          <th id="spellsTableRangeHeader"
+          <th id="spellsTableRangeHeader"  class="hidden-xs"
               data-bind="click: function(){sortBy('spellRange');}">
             Range
             <span data-bind="css: sortArrow('spellRange')"></span>
           </th>
-          <th>
-            <button class="btn btn-link"
-                    data-bind="{click: collapseAll}">
-        <span class="fa fa-minus"></span></button>
+          <th style="width: 5%" class="toggle-collapse-col">
+            <a href="#" data-bind="{click: collapseAll}">
+                  <span class="fa fa-minus"></span>
+                </a>
           </th>
         </tr>
       </thead>
@@ -68,11 +67,9 @@
             <div>
               <input type='checkbox'
                      style=""
-                     class='pseudo-checkbox sr-only'
+                     class='ac-checkbox sr-only'
                      data-bind="checked: spellPrepared, attr: {id: `spell_memorize_${__id}`}"></input>
-              <label data-bind="attr: {for: `spell_memorize_${__id}`}"
-                     class='fancy-checkbox-label'>
-            </label>
+              <label data-bind="attr: {for: `spell_memorize_${__id}`}"></label>
             </div>
             <!-- /ko -->
             <!-- ko if: spellLevel() == 0  || spellAlwaysPrepared -->
@@ -86,28 +83,33 @@
                   class="glyphicon glyphicon-copyright-mark"></span>
             <!-- /ko -->
           </td>
-          <td>
+          <td class="ac-table-data-cell">
             <span data-bind="text: spellLevelLabel"></span>
           </td>
-          <td><span data-bind="text: spellTypeLabel"></span></td>
-          <td><span data-bind="text: spellDamageLabel"></span></td>
-          <td><span data-bind="text: spellCastingTime"></span>
+          <td class="hidden-xs">
+            <span data-bind="text: spellTypeLabel"></span>
+          </td>
+          <td class="hidden-xs">
+            <span data-bind="text: spellDamageLabel"></span>
+          </td>
+          <td class="hidden-xs">
+            <span data-bind="text: spellCastingTime"></span>
             <!-- ko if: isRitual -->
             <span style="color: #18bc9c"
                   class="glyphicon glyphicon-registration-mark"></span>
             <!-- /ko -->
           </td>
-          <td><span data-bind="text: $component.trunc(spellRange, 10)"></span></td>
-          <td>
+          <td class="hidden-xs">
+            <span data-bind="text: $component.trunc(spellRange, 10)"></span>
+          </td>
+          <td style="width: 5%" class="toggle-collapse-col">
             <span data-toggle="collapse"
                   data-bind="attr:{'data-target': `#spell_list_${__id}`}"
                   class="rotate fa fa-chevron-left"></span>
           </td>
         </tr>
-        <tr style="opacity: 0.99; backgound-color: rgba(255,255,255,0); height: 100%">
-          <td colspan="8"
-              style="position: relative; padding: 0px; height: 100%">
-
+        <tr class="collapseRow safari-card-fix">
+          <td colspan="8">
             <flip-card params="{
                   dataId: $data.__id,
                   collapsable: true,
@@ -119,7 +121,7 @@
                 }">
               <div class="front">
                 <div data-bind="with: context.data, css: context.data.spellSchool().toLowerCase()">
-                  <div class="h4" style="text-align: left">
+                  <div class="h4">
                     <span data-bind="text: spellNameLabel"></span>&nbsp;
                     <small data-bind="text: spellSummaryLabel"></small>
                   </div>
@@ -162,9 +164,7 @@
                       </table>
                     </div>
                     <div class="col-sm-9">
-                      <div class="col-xs-12 col-padded">
-                        <div style="text-align:justify" data-bind="html: spellDescriptionHTML"></div>
-                      </div>
+                        <div class="card-description" data-bind="html: spellDescriptionHTML"></div>
                     </div>
                   </div>
                 </div>
@@ -232,5 +232,4 @@
         </tr>
       </tfoot>
     </table>
-  </div>
 </div>

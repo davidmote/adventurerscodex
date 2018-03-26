@@ -1541,6 +1541,11 @@ margin: -5px;
   height: 30px;
 }
 
+.score-save-table .ac-number-input {
+  width: 65px;
+  margin: auto;
+}
+
 .ac-table-header {
   border-bottom: 1px solid #2c3e50;
 }
@@ -1598,4 +1603,8 @@ margin: -5px;
 .ogl-disclaimer {
   display: block;
   clear: both
+}
+
+.toggle-collapse-col {
+  width: 40px
 }

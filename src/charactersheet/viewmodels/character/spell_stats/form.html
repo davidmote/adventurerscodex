@@ -1,72 +1,102 @@
-<form data-bind="{submit: save}" class="form-horizontal">
-  <div data-bind="{with: currentEditItem}">
-  <div class="form-group">
-    <label class="col-xs-7 pull-left">Spell Attack Bonus</label>
-    <div class="col-xs-5">
-      <input type="number"
-             class="form-control ability-score-input"
-             id="spellStatsEditSpellAttackBonusInput"
-             data-bind='textInput: spellAttackBonus,
-              hasFocus: $component.firstModalElementHasFocus'>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-xs-7 pull-left">Spell Save DC</label>
-    <div class="col-xs-5">
-      <input type="number"
-             class="form-control ability-score-input"
-             id="spellStatsEditSpellSaveDcInput"
-             data-bind='textInput: spellSaveDc'>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-xs-7 pull-left">Spell Casting Ability</label>
-    <div class="col-xs-5">
-      <input type="text"
-             class="form-control ability-score-input"
-             id="spellStatsEditSpellCastingAbilityInput"
-             data-bind='value: spellcastingAbility,
-                autocomplete: { source: spellcastingAbilityOptions,
-                onselect: $component.setSpellCastingAbility }'>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-xs-7 pull-left">Cantrips Known</label>
-    <div class="col-xs-5">
-      <input type="number"
-             class="form-control ability-score-input"
-             id="spellStatsEditCantripKnownInput"
-             data-bind='textInput: spellsCantripsKnown'>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-xs-7 pull-left">Spells Known</label>
-    <div class="col-xs-5">
-      <input type="number"
-             class="form-control ability-score-input"
-             id="spellStatsEditSpellKnownInput"
-             data-bind='textInput: spellsKnown'>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-xs-7 pull-left">Max Prepared</label>
-    <div class="col-xs-5">
-      <input type="number"
-             class="form-control ability-score-input"
-             id="spellStatsEditMaxPrepareInput"
-             data-bind='textInput: spellsMaxPrepared'>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-xs-7 pull-left">Invocations Known</label>
-    <div class="col-xs-5">
-      <input type="number"
-             class="form-control ability-score-input"
-             id= "spellStatsEditInvocationsKnownInput"
-             data-bind='textInput: spellsInvocationsKnown'>
-    </div>
-  </div>
-</div>
+<form data-bind="{submit: save}">
+  <table data-bind="with: currentEditItem"
+         class="table table-responsive table-ac-bordered table-hover score-save-table">
+    <tbody>
+      <tr>
+        <th>
+          Spell Attack Bonus
+        </th>
+        <td class="ac-table-data-cell">
+          <input type="number"
+                 class="form-control ac-number-input"
+                 id="spellStatsEditSpellAttackBonusInput"
+                 name="spellAttackBonus"
+                 data-bind='textInput: spellAttackBonus,
+                    hasFocus: $component.formElementHasFocus'>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          Spell Save DC
+        </th>
+        <td class="ac-table-data-cell">
+          <input type="number"
+                 name="spellSaveDc"
+                 class="form-control ac-number-input"
+                 id="spellStatsEditSpellSaveDcInput"
+                 data-bind='textInput: spellSaveDc'>
+        </td>
+      </tr>
 
-  <button type="submit" style="visibility:hidden"></button>
+      <tr>
+        <th>
+          Spell Casting Ability
+        </th>
+        <td class="ac-table-data-cell">
+          <input type="text"
+                 class="form-control ac-number-input"
+                 name="spellcastingAbility"
+                 id="spellStatsEditSpellCastingAbilityInput"
+                 data-bind='value: spellcastingAbility,
+                      autocomplete: { source: spellcastingAbilityOptions,
+                      onselect: $component.setSpellCastingAbility }'>
+        </td>
+      </tr>
+
+      <tr>
+        <th>
+          Cantrips Known
+        </th>
+        <td class="ac-table-data-cell">
+          <input type="text"
+                 class="form-control ac-number-input"
+                 name="spellsCantripsKnown"
+                 id="spellStatsEditCantripKnownInput"
+                 data-bind='textInput: spellsCantripsKnown'>
+        </td>
+      </tr>
+
+      <tr>
+        <th>
+          Spells Known
+        </th>
+        <td class="ac-table-data-cell">
+          <input type="text"
+                 class="form-control ac-number-input"
+                 name="spellsKnown"
+                 id="spellStatsEditSpellKnownInput"
+                 data-bind='textInput: spellsKnown'>
+        </td>
+      </tr>
+
+      <tr>
+        <th>
+          Max Prepared
+        </th>
+        <td class="ac-table-data-cell">
+          <input type="text"
+                 class="form-control ac-number-input"
+                 name="spellsMaxPrepared"
+                 id="spellStatsEditMaxPrepareInput"
+                 data-bind='textInput: spellsMaxPrepared'>
+        </td>
+      </tr>
+
+      <tr>
+        <th>
+          Invocations Known
+        </th>
+        <td class="ac-table-data-cell">
+          <input type="text"
+                 class="form-control ac-number-input"
+                 name="spellsInvocationsKnown"
+                 id="spellStatsEditInvocationsKnownInput"
+                 data-bind='textInput: spellsInvocationsKnown'>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button type="submit"
+          style="visibility:hidden"
+          value="submit"></button>
 </form>

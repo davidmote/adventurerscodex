@@ -1,7 +1,6 @@
 <form class="form-horizontal"
       data-bind="submit: save">
-  <div>
-    <table class="table table-responsive table-ac-bordered table-hover  score-save-table"
+    <table class="table table-responsive table-ac-bordered table-hover score-save-table"
            id="abilityScoreTable">
       <thead class="ac-table-header">
         <tr>
@@ -15,9 +14,9 @@
       </thead>
       <tbody data-bind="{with: currentEditItem}">
         <tr>
-          <td>
+          <td  class="ac-table-data-cell">
             <input type="number"
-                   class="form-control ability-score-input"
+                   class="form-control ac-number-input"
                    id="abilityScoresEditStrengthInput"
                    min="0"
                    data-bind="value: str">
@@ -25,9 +24,9 @@
           <td>Strength</td>
         </tr>
         <tr>
-          <td>
+          <td  class="ac-table-data-cell">
             <input type="number"
-                   class="form-control ability-score-input"
+                   class="form-control ac-number-input"
                    id="abilityScoresEditDexterityInput"
                    min="0"
                    data-bind='value: dex'>
@@ -35,9 +34,9 @@
           <td>Dexterity</td>
         </tr>
         <tr>
-          <td>
+          <td class="ac-table-data-cell">
             <input type="number"
-                   class="form-control ability-score-input"
+                   class="form-control ac-number-input"
                    id="abilityScoresEditConstitutionInput"
                    min="0"
                    data-bind='value: con'>
@@ -45,9 +44,9 @@
           <td>Constitution</td>
         </tr>
         <tr>
-          <td>
+          <td class="ac-table-data-cell">
             <input type="number"
-                   class="form-control ability-score-input"
+                   class="form-control ac-number-input"
                    id="abilityScoresEditIntelligenceInput"
                    min="0"
                    data-bind='value: int'>
@@ -55,9 +54,9 @@
           <td>Intelligence</td>
         </tr>
         <tr>
-          <td>
+          <td class="ac-table-data-cell">
             <input type="number"
-                   class="form-control ability-score-input"
+                   class="form-control ac-number-input"
                    id="abilityScoresEditWisdomInput"
                    min="0"
                    data-bind='value: wis'>
@@ -65,9 +64,9 @@
           <td>Wisdom</td>
         </tr>
         <tr>
-          <td>
+          <td class="ac-table-data-cell">
             <input type="number"
-                   class="form-control ability-score-input"
+                   class="form-control ac-number-input"
                    id="abilityScoresEditCharismaTextarea"
                    min="0"
                    data-bind='value: cha'>
@@ -79,5 +78,4 @@
     <button type="submit"
             style="visibility:hidden"
             value="submit"></button>
-  </div>
 </form>

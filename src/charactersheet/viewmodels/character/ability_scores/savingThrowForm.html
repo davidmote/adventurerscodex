@@ -1,5 +1,4 @@
 <form class="form-horizontal" data-bind="{submit: save}">
-  <div>
     <table class="table table-responsive table-ac-bordered table-hover score-save-table">
       <thead class="ac-table-header">
         <tr>
@@ -24,7 +23,7 @@
           </td>
           <td>Strength</td>
           <td>
-            <input type="number" class="form-control ability-score-input" data-bind="value: modifier" />
+            <input type="number" class="form-control ac-number-input" data-bind="value: modifier" />
           </td>
         </tr>
         <tr data-bind="with: findSaveByName('Dexterity')">
@@ -36,7 +35,7 @@
           </td>
           <td>Dexterity</td>
           <td>
-            <input type="number" class="form-control ability-score-input" data-bind="value: modifier" />
+            <input type="number" class="form-control ac-number-input" data-bind="value: modifier" />
           </td>
         </tr>
         <tr data-bind="with: findSaveByName('Constitution')">
@@ -48,7 +47,7 @@
           </td>
           <td>Constitution</td>
           <td>
-            <input type="number" class="form-control ability-score-input" data-bind="value: modifier" />
+            <input type="number" class="form-control ac-number-input" data-bind="value: modifier" />
           </td>
         </tr>
         <tr data-bind="with: findSaveByName('Intelligence')">
@@ -60,7 +59,7 @@
           </td>
           <td>Intelligence</td>
           <td>
-            <input type="number" class="form-control ability-score-input" data-bind="value: modifier" />
+            <input type="number" class="form-control ac-number-input" data-bind="value: modifier" />
           </td>
         </tr>
         <tr data-bind="with: findSaveByName('Wisdom')">
@@ -73,7 +72,7 @@
           </td>
           <td>Wisdom</td>
           <td>
-            <input type="number" class="form-control ability-score-input" data-bind="value: modifier" />
+            <input type="number" class="form-control ac-number-input" data-bind="value: modifier" />
           </td>
         </tr>
         <tr data-bind="with: findSaveByName('Charisma')">
@@ -86,11 +85,10 @@
           </td>
           <td>Charisma</td>
           <td>
-            <input type="number" class="form-control ability-score-input" data-bind="value: modifier" />
+            <input type="number" class="form-control ac-number-input" data-bind="value: modifier" />
           </td>
         </tr>
       </tbody>
     </table>
     <button type="submit" style="visibility:hidden" value="submit"></button>
-  </div>
 </form>
