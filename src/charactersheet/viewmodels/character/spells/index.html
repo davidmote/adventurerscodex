@@ -125,7 +125,7 @@
                     <small data-bind="text: spellSummaryLabel"></small>
                   </div>
                   <div class="row">
-                    <div class="col-sm-5">
+                    <div class="col-sm-5 col-md-4">
                       <table class="spellDetail table table-hover table-condensed table-ac-bordered">
                         <tbody>
                           <tr>
@@ -162,7 +162,7 @@
                         </tbody>
                       </table>
                     </div>
-                    <div class="col-sm-7">
+                    <div class="col-sm-7 col-md-8">
                         <div class="card-description" data-bind="html: spellDescriptionHTML"></div>
                     </div>
                   </div>
@@ -210,11 +210,12 @@
             <div class="row">
             <div class="col-xs-4 text-muted">
               <small class="table-foot-content visible-xs">Prepared: <span data-bind="text: $component.numberOfPrepared"></span></small>
+              <span class="table-foot-content hidden-xs">Prepared: <span data-bind="text: $component.numberOfPrepared"></span></span>
             </div>
             <div class="col-xs-4">
               <!-- ko ifnot: $component.showAddForm -->
             <button type="button"
-                    class="btn btn-link btn-sm"
+                    class="btn btn-link btn-block btn-sm"
                     id="spellAddButton"
                     data-toggle="collapse"
                     data-target="#add-spell"
@@ -222,7 +223,8 @@
               <!-- /ko -->
             </div>
               <div class="col-xs-4 text-muted">
-                <small class="table-foot-content pull-right visible-xs">Spells: <span data-bind="text: $component.numberOfSpells"></span>
+                <small class="table-foot-content pull-right visible-xs">Spells: <span data-bind="text: $component.numberOfSpells"></span></small>
+                <span class="table-foot-content pull-right hidden-xs">Total Spells: <span data-bind="text: $component.numberOfSpells"></span></span>
               </div>
             </div>
           </td>
