@@ -13,9 +13,8 @@
                    type='checkbox'
                    class='filter-checkbox sr-only'
                    data-bind="checked: filteredByCastable"></input>
-            <label for="filterByCastable"
-                   class='fancy-checkbox-label'>
-                   <small class="hidden-xs">Memorized</small>
+            <label for="filterByCastable">
+                   <!-- <small class="hidden-xs">Memorized</small> -->
            </label>
           </th>
           <th id="spellsTableSpellHeader"
@@ -33,7 +32,7 @@
             Type
             <span data-bind="css: sortArrow('spellTypeLabel')"></span>
           </th>
-          <th id="spellsTableDamageHeader" class="hidden-xs"
+          <th id="spellsTableDamageHeader" class="hidden-xs hidden-sm"
               data-bind="click: function(){sortBy('spellDmg');}">
             Damage
             <span data-bind="css: sortArrow('spellDmg')"></span>
@@ -43,7 +42,7 @@
             Casting Time
             <span data-bind="css: sortArrow('spellCastingTime')"></span>
           </th>
-          <th id="spellsTableRangeHeader"  class="hidden-xs"
+          <th id="spellsTableRangeHeader"  class="hidden-xs hidden-sm"
               data-bind="click: function(){sortBy('spellRange');}">
             Range
             <span data-bind="css: sortArrow('spellRange')"></span>
@@ -89,7 +88,7 @@
           <td class="hidden-xs">
             <span data-bind="text: spellTypeLabel"></span>
           </td>
-          <td class="hidden-xs">
+          <td class="hidden-xs  hidden-sm">
             <span data-bind="text: spellDamageLabel"></span>
           </td>
           <td class="hidden-xs">
@@ -99,7 +98,7 @@
                   class="glyphicon glyphicon-registration-mark"></span>
             <!-- /ko -->
           </td>
-          <td class="hidden-xs">
+          <td class="hidden-xs hidden-sm">
             <span data-bind="text: $component.trunc(spellRange, 10)"></span>
           </td>
           <td style="width: 5%" class="toggle-collapse-col">
@@ -126,7 +125,7 @@
                     <small data-bind="text: spellSummaryLabel"></small>
                   </div>
                   <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-sm-5">
                       <table class="spellDetail table table-hover table-condensed table-ac-bordered">
                         <tbody>
                           <tr>
@@ -163,7 +162,7 @@
                         </tbody>
                       </table>
                     </div>
-                    <div class="col-sm-9">
+                    <div class="col-sm-7">
                         <div class="card-description" data-bind="html: spellDescriptionHTML"></div>
                     </div>
                   </div>
