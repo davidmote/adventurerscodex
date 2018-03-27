@@ -208,26 +208,24 @@
       <tfoot>
         <tr>
           <td colspan="8">
-                <div class="panel-footer"
-                     style="position: relative">
-                  <div style="left: 10px; top: 10px; position: absolute"
-                       class="pull-left">Spells prepared:&nbsp;
-                    <span data-bind="text: $component.numberOfPrepared"></span>
-                  </div>
-                  <center>
-                    <button type="button"
-                            class="btn btn-primary btn-sm"
-                            id="spellsAddButton"
-
-                            data-bind="click: $component.toggleAddForm, disable: $component.showAddForm">Add Spell</button>
-                  </center>
-                  <div style="right: 10px; top: 10px; position:absolute"
-                       class="pull-right">Total Spells:&nbsp;
-                    <span data-bind="text: $component.numberOfSpells"></span>
-                  </div>
-                </div>
+            <div class="row">
+            <div class="col-xs-4 text-muted">
+              <small class="table-foot-content visible-xs">Prepared: <span data-bind="text: $component.numberOfPrepared"></span></small>
+            </div>
+            <div class="col-xs-4">
+              <!-- ko ifnot: $component.showAddForm -->
+            <button type="button"
+                    class="btn btn-link btn-sm"
+                    id="spellAddButton"
+                    data-toggle="collapse"
+                    data-target="#add-spell"
+                    data-bind="click: toggleAddForm"><i class="fa fa-plus"></i> Add Spell</button>
+              <!-- /ko -->
+            </div>
+              <div class="col-xs-4 text-muted">
+                <small class="table-foot-content pull-right visible-xs">Spells: <span data-bind="text: $component.numberOfSpells"></span>
               </div>
-            </form>
+            </div>
           </td>
         </tr>
       </tfoot>

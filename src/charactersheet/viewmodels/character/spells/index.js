@@ -78,7 +78,7 @@ export function SpellbookViewModel() {
     };
 
     self.collapseAll = () => {
-        $('#spells-panel .collapse.in').collapse('hide');
+        $('#spells-pane .collapse.in').collapse('hide');
     };
 
     self.memorizeSpell = (data, event) => {

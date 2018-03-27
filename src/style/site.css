@@ -1608,3 +1608,9 @@ margin: -5px;
 .toggle-collapse-col {
   width: 40px
 }
+
+.table-foot-content {
+  display:block;
+  line-height: 1.5;
+  padding: 6px 9px;
+}
