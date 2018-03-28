@@ -12,7 +12,7 @@
   </div>
   <form data-bind="submit: $component.save">
     <div data-bind="with: currentEditItem">
-      <div class="form-group col-sm-4">
+      <div class="form-group col-sm-4 col-md-6 col-lg-4">
         <label for="armorName"
                class="control-label">Name</label>
         <input type="text"
@@ -24,7 +24,7 @@
               autocomplete: { source: $component.armorsPrePopFilter,
                  onselect: $component.populateArmor }'>
       </div>
-      <div class="form-group col-sm-4">
+      <div class="form-group col-sm-4 col-md-6 col-lg-4">
         <label for="armorType"
                class="control-label">Type</label>
         <input class="form-control"
@@ -34,7 +34,7 @@
              autocomplete: { source: armorTypeOptions,
              onselect: $component.setArmorType }">
       </div>
-      <div class="form-group col-sm-4">
+      <div class="form-group col-sm-4 col-md-6 col-lg-4">
         <label for="armorEditMagicalModifierInput"
                class="control-label">Magical Modifier</label>
         <input type="number"
@@ -42,7 +42,7 @@
                id="armorEditMagicalModifierInput"
                data-bind='textInput: armorMagicalModifier'>
       </div>
-      <div class="form-group col-sm-4">
+      <div class="form-group col-sm-4 col-md-6 col-lg-4">
         <label for="armorWeight"
                class="control-label">Weight</label>
         <input type="number"
@@ -51,7 +51,7 @@
                placeholder="6"
                data-bind='textInput: armorWeight'>
       </div>
-      <div class="form-group col-sm-4">
+      <div class="form-group col-sm-4 col-md-6 col-lg-4">
         <label for="armorClass"
                class="control-label">Armor Class</label>
         <input type="text"
@@ -60,7 +60,7 @@
                placeholder="3"
                data-bind='textInput: armorClass'>
       </div>
-      <div class="form-group col-sm-4">
+      <div class="form-group col-sm-4 col-md-6 col-lg-4">
         <label for="armorSize"
                class="control-label">Stealth</label>
         <input class="form-control"
@@ -70,7 +70,7 @@
              autocomplete: { source: armorStealthOptions,
              onselect: $component.setArmorStealth }">
       </div>
-      <div class="form-group col-sm-6">
+      <div class="form-group col-sm-6 col-md-12 col-lg-6">
         <label for="armorPrice"
                class="control-label">Price</label>
         <div class="input-group">
@@ -89,7 +89,7 @@
         </span>
         </div>
       </div>
-      <div class="form-group col-sm-6">
+      <div class="form-group col-sm-6 col-md-12 col-lg-6">
         <label class="control-label">Equipped</label>
         <div class="btn-group btn-group-justified"
              role="group">

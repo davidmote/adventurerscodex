@@ -14,8 +14,9 @@ import { TraitFormComponentViewModel } from './form';
 import ko from 'knockout';
 import template from './index.html';
 
-export function TraitsViewModel() {
+export function TraitsViewModel(params) {
     var self = this;
+    self.tabId = params.tabId;
 
     self.DESCRIPTION_MAX_LENGTH = 45;
 

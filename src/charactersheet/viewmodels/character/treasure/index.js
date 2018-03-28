@@ -10,8 +10,9 @@ import ppCoins from 'images/pp-coin.svg';
 import spCoins from 'images/sp-coin.svg';
 import template from './index.html';
 
-export function TreasureViewModel() {
+export function TreasureViewModel(params) {
     var self = this;
+    self.tabId = params.tabId;
 
     self.ppCoins = ppCoins;
     self.gpCoins = gpCoins;

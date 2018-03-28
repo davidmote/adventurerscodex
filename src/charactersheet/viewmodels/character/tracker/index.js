@@ -21,8 +21,9 @@ import meditation from 'images/meditation-blue.svg';
 import template from './index.html';
 
 
-export function TrackerViewModel() {
+export function TrackerViewModel(params) {
     var self = this;
+    self.tabId = params.tabId;
 
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc'},

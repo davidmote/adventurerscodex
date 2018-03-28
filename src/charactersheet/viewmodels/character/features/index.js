@@ -17,8 +17,9 @@ import { Utility } from 'charactersheet/utilities';
 import ko from 'knockout';
 import template from './index.html';
 
-export function FeaturesViewModel() {
+export function FeaturesViewModel(params) {
     var self = this;
+    self.tabId = params.tabId;
 
     self.DESCRIPTION_MAX_LENGTH = 45;
 

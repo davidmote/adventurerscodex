@@ -17,8 +17,9 @@ import { maxBy } from 'lodash';
 import meditation from 'images/meditation-blue.svg';
 import template from './index.html';
 
-export function SpellSlotsViewModel() {
+export function SpellSlotsViewModel(params) {
     var self = this;
+    self.tabId = params.tabId;
 
     self.sorts = {
         'level asc': { field: 'level', direction: 'asc', numeric: true},

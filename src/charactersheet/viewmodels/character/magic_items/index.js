@@ -12,8 +12,9 @@ import { SortService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import template from './index.html';
 
-export function MagicItemsViewModel() {
+export function MagicItemsViewModel(params) {
     var self = this;
+    self.tabId = params.tabId;
 
     self.showAddForm = ko.observable(false);
 

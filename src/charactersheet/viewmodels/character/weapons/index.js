@@ -13,8 +13,9 @@ import { WeaponFormComponentViewModel } from './form';
 import ko from 'knockout';
 import template from './index.html';
 
-export function WeaponsViewModel() {
+export function WeaponsViewModel(params) {
     var self = this;
+    self.tabId = params.tabId;
 
     self.weapons = ko.observableArray([]);
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);

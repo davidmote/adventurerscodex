@@ -9,7 +9,7 @@
   </div>
 <form data-bind="submit: $component.save">
   <div  data-bind="with: currentEditItem">
-  <div class="form-group col-sm-8 col-md-6">
+  <div class="form-group col-sm-8 col-md-12 col-lg-8">
     <label for="magicItemName"
            class="control-label">Item</label>
       <input type="text"
@@ -21,7 +21,7 @@
                         autocomplete: { source: $component.magicItemsPrePopFilter,
                         onselect: $component.populateMagicItems }">
   </div>
-  <div class="form-group col-sm-4 col-md-3">
+  <div class="form-group col-sm-4 col-md-6 col-lg-4">
     <label for="magicItemType"
            class="control-label">Type</label>
       <input class="form-control"
@@ -31,7 +31,7 @@
              autocomplete: { source: magicItemTypeOptions,
                              onselect: $component.setMagicItemType }">
   </div>
-  <div class="form-group col-sm-4 col-md-3 col-lg-3">
+  <div class="form-group col-sm-4 col-md-6 col-lg-4">
     <label for="magicItemType"
            class="control-label">Rarity</label>
       <input class="form-control"
@@ -41,7 +41,7 @@
              autocomplete: { source: magicItemRarityOptions,
                              onselect: $component.setMagicItemRarity }">
   </div>
-  <div class="form-group col-sm-4 col-md-3">
+  <div class="form-group col-sm-4 col-md-4 col-lg-4">
     <label for="magicItemMaxCharges"
            class="control-label">Max Charges</label>
       <input type="number"
@@ -53,7 +53,7 @@
              data-bind='textInput: magicItemMaxCharges'>
     </div>
   <div data-bind="visible: magicItemMaxCharges() != 0">
-    <div class="form-group col-sm-4 col-md-3">
+    <div class="form-group col-sm-4 col-md-4 col-lg-4">
       <label for="magicItemCharges"
              class="control-label">Charges</label>
         <input type="number"
@@ -63,9 +63,9 @@
                min="0"
                max="100"
                data-bind='textInput: magicItemCharges'>
-      </div>
     </div>
-  <div class="form-group col-sm-4 col-md-3">
+  </div>
+  <div class="form-group col-sm-4 col-md-4 col-lg-4">
     <label for="magicItemWeight"
            class="control-label">Weight</label>
       <input type="number"
@@ -76,28 +76,28 @@
              max="1000"
              data-bind='textInput: magicItemWeight'>
     </div>
-  <div class="form-group col-sm-6 col-md-6">
+  <div class="form-group col-sm-6 col-md-12 col-lg-8">
     <div class="row" style="padding-top: 3ex">
       <div class="col-sm-7">
       <input type='checkbox'
              class='pseudo-checkbox sr-only'
              data-bind="checked: magicItemRequiresAttunement, attr: {id: `${$component.containerId}_requiresAttunement`}"></input>
       <label data-bind="attr: {for: `${$component.containerId}_requiresAttunement`}"
-             class='fancy-checkbox-label'>Requires Attunement
+             class='fancy-checkbox-label'> Requires Attunement
       </label>
-    </div>
-    <div class="col-sm-5">
-    <div data-bind="visible: magicItemRequiresAttunement() == true">
-      <input type='checkbox'
-             class='pseudo-checkbox sr-only'
-             data-bind="checked: magicItemAttuned, attr: {id: `${$component.containerId}_magicItemAttuned`}"></input>
-      <label data-bind="attr: {for: `${$component.containerId}_magicItemAttuned`}"
-             class='fancy-checkbox-label'>Attuned
-        </label>
+      </div>
+      <div class="col-sm-5">
+      <div data-bind="visible: magicItemRequiresAttunement() == true">
+        <input type='checkbox'
+               class='pseudo-checkbox sr-only'
+               data-bind="checked: magicItemAttuned, attr: {id: `${$component.containerId}_magicItemAttuned`}"></input>
+        <label data-bind="attr: {for: `${$component.containerId}_magicItemAttuned`}"
+               class='fancy-checkbox-label'> Attuned
+          </label>
+        </div>
       </div>
     </div>
   </div>
-</div>
   <div class="form-group col-xs-12">
     <label for="magicItemDescription"
            class="control-label">Description</label>

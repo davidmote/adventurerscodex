@@ -10,8 +10,9 @@ import { SortService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import template from './index.html';
 
-export function SavingThrowsViewModel() {
+export function SavingThrowsViewModel(params) {
     var self = this;
+    self.tabId = params.tabId;
 
     self.blankSavingThrow = ko.observable(new SavingThrows());
     self.savingThrows = ko.observableArray([]);

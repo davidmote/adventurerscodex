@@ -17,8 +17,9 @@ import ko from 'knockout';
 import template from './index.html';
 import uuid from 'node-uuid';
 
-export function FeatsViewModel() {
+export function FeatsViewModel(params) {
     var self = this;
+    self.tabId = params.tabId;
 
     self.DESCRIPTION_MAX_LENGTH = 45;
 

@@ -15,8 +15,10 @@ import { ArmorFormComponentViewModel } from './form';
 import ko from 'knockout';
 import template from './index.html';
 
-export function ArmorViewModel() {
+export function ArmorViewModel(params) {
     var self = this;
+
+    self.tabId = params.tabId;
 
     self.armors = ko.observableArray([]);
 

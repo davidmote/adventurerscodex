@@ -15,8 +15,9 @@ import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 import template from './index.html';
 
-export function ItemsViewModel() {
+export function ItemsViewModel(params) {
     var self = this;
+    self.tabId = params.tabId;
 
     self.sorts = {
         'itemName asc': { field: 'itemName', direction: 'asc'},

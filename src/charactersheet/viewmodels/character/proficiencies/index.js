@@ -12,8 +12,9 @@ import { SortService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import template from './index.html';
 
-export function ProficienciesViewModel() {
+export function ProficienciesViewModel(params) {
     var self = this;
+    self.tabId = params.tabId;
 
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc'},

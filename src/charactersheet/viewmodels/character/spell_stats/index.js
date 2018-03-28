@@ -9,8 +9,9 @@ import { SpellStatsFormViewModel} from './form';
 import ko from 'knockout';
 import template from './index.html';
 
-export function SpellStatsViewModel() {
+export function SpellStatsViewModel(params) {
     var self = this;
+    self.tabId = params.tabId;
 
     self.spellStats = ko.observable(new SpellStats());
 

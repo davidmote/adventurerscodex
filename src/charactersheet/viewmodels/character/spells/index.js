@@ -15,8 +15,9 @@ import { debounce } from 'lodash';
 import ko from 'knockout';
 import template from './index.html';
 
-export function SpellbookViewModel() {
+export function SpellbookViewModel(params) {
     var self = this;
+    self.tabId = params.tabId;
 
     self.sorts = {
         'spellName asc': { field: 'spellName', direction: 'asc'},
