@@ -9,14 +9,17 @@ ko.bindingHandlers.collapseCard = {
         var value = valueAccessor();
         var hiddenCallback = ko.utils.unwrapObservable(value.hiddenCallback);
         var shownCallback = ko.utils.unwrapObservable(value.shownCallback);
+        const debounceShown = debounce(shownCallback, 50);
+        const debounceHidden = debounce(hiddenCallback, 50);
+
         if (shownCallback) {
              // Register callbacks.
-             $(element).on('show.bs.collapse', debounce(shownCallback, 50));
-             $(element).on('shown.bs.collapse', debounce(shownCallback, 50));
+             $(element).on('show.bs.collapse', debounceShown);
+             $(element).on('shown.bs.collapse', debounceShown);
         }
         if (hiddenCallback) {
              // Register callbacks.
-            $(element).on('hidden.bs.collapse', debounce(hiddenCallback, 50));
+            $(element).on('hidden.bs.collapse', debounceHidden);
         }
     },
     update:  function(element, valueAccessor, allBindingsAccessor) {
@@ -70,13 +73,26 @@ export class FlipCardComponentViewModel {
           this.bubbleHeight = params.bubbleHeight;
         }
         // calculated element height
-        this.elementHeight = ko.observable(ko.utils.unwrapObservable(params.defaultHeight) || 'auto');
+        this.elementMeasure = ko.observable(0);
+        if (params.defaultHeight) {
+            const paramHeight = parseInt(ko.utils.unwrapObservable(params.defaultHeight));
+            if (!Number.isNaN(paramHeight)) {
+              this.elementMeasure(paramHeight);
+            }
+        }
+        this.elementHeight = ko.computed(()=> {
+          console.log(this.elementMeasure())
+          return `${this.elementMeasure()}px`;
+        });
+        // this.elementMeasure = ko.observable(parseInt(ko.utils.unwrapObservable(params.defaultHeight)));
     }
 
     load = () => {
-      $(window).on('load', debounce(this.setNewHeight, 50));
-      $(window).on('ready', debounce(this.setNewHeight, 50));
-      $(window).on('resize', debounce(this.setNewHeight, 150));
+      const debounceHeight = debounce(this.setNewHeight, 50);
+      $(window).on('load', debounceHeight);
+      $(window).on('ready', debounceHeight);
+      $(document).on('ready', debounceHeight);
+      $(window).on('resize', debounceHeight);
       if (this.tabId) {
           $(`.nav-tabs a[href="#${this.tabId}"]`).on('shown.bs.tab', this.setNewHeight);
       }
@@ -86,6 +102,8 @@ export class FlipCardComponentViewModel {
         // this.editMode.subscribe(this.setNewHeight);
       }
     }
+
+
 
     shownCallback = () => {
       if(this.collapsable()){
@@ -97,7 +115,7 @@ export class FlipCardComponentViewModel {
     hiddenCallback = () => {
       if(this.collapsable()){
         this.editMode(false);
-        this.elementHeight('auto');
+        this.elementMeasure(0);
       }
     }
 
@@ -122,9 +140,9 @@ export class FlipCardComponentViewModel {
         }
 
         if (setHeight && setHeight > 1) {
-           setTimeout(()=>{
-            this.elementHeight(setHeight.toString()+'px');
-          }, 0);
+           // setTimeout(()=>{
+            this.elementMeasure(setHeight);
+          // }, 0);
           if (this.bubbleHeight) {
             setTimeout(this.bubbleHeight, 350);
           }

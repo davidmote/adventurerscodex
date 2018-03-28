@@ -32,6 +32,10 @@ export function ArmorViewModel() {
         }
     };
 
+    self.collapseAll = () => {
+        $('#armor-pane .collapse.in').collapse('hide');
+    };
+
     self.equipArmor = (data, event) => {
         event.stopPropagation();
         data.armorEquipped(!data.armorEquipped());

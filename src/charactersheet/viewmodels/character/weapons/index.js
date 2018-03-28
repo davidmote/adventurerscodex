@@ -31,6 +31,9 @@ export function WeaponsViewModel() {
         }
     };
 
+    self.collapseAll = () => {
+        $('#weapon-pane .collapse.in').collapse('hide');
+    };
 
     self.sorts = {
         'weaponName asc': { field: 'weaponName', direction: 'asc'},

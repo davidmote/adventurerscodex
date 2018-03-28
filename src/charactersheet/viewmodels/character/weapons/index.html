@@ -1,106 +1,105 @@
-<div>
-  <div class="h4">
+<div id="weapon-pane"
+     class="ac-pane panel-body">
+  <div class="h4 card-title">
     Weapons<br />
     <small>A weapon's To Hit bonus is automatically calculated based on
        your Strength or Dexterity, proficiency bonus, magical modifier,
        and property. Use the To Hit Modifier to adjust for features, feats,
        or special cases.</small>
   </div>
-  <div>
-    <table class="table table-responsive table-ac-bordered table-hover"
-           id="weaponTable">
-      <thead>
-        <tr>
-          <th id="weaponTableWeaponHeader"
-              data-bind="click: function(){sortBy('weaponName');}">
-            Weapon
-            <span data-bind="css: sortArrow('weaponName')"></span>
-          </th>
-          <th id="weaponTableToHitHeader"
-              data-bind="click: function(){sortBy('totalBonus');}">
-            To Hit
-            <span data-bind="css: sortArrow('totalBonus')"></span>
-          </th>
-          <th id="weaponTableDamageHeader"
-              data-bind="click: function(){sortBy('weaponDmg');}">
-            Damage
-            <span data-bind="css: sortArrow('weaponDmg')"></span>
-          </th>
-          <th id="weaponTableDamageTypeHeader"
-              data-bind="click: function(){sortBy('weaponDamageType');}">
-              <!-- class="hidden-sm hidden-xs hidden-md" -->
-            Damage Type
-            <span data-bind="css: sortArrow('weaponDamageType')"></span>
-          </th>
-          <th id="weaponTableRangeHeader"
-              data-bind="click: function(){sortBy('weaponRange');}">
-              <!-- class="hidden-sm hidden-xs" -->
-            Range
-            <span data-bind="css: sortArrow('weaponRange')"></span>
-          </th>
-          <th id="weaponTablePropertyHeader"
-              data-bind="click: function(){sortBy('weaponProperty');}">
-              <!-- class="hidden-sm hidden-xs hidden-md" -->
-            Property
-            <span data-bind="css: sortArrow('weaponProperty')"></span>
-          </th>
-          <th id="weaponTableQuantityHeader"
-              data-bind="click: function(){sortBy('weaponQuantity');}">
-              <!-- class="hidden-sm hidden-xs" -->
-            Quantity
-            <span data-bind="css: sortArrow('weaponQuantity')"></span>
-          </th>
-          <th>
-            <!-- <a data-toggle="modal"
-               data-target="#addWeapon"
-               href="#"
-               id="weaponAddIcon">
-              <i class="fa fa-plus fa-color"></i>
-            </a> -->
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- ko foreach: filteredAndSortedWeapons -->
-        <tr class="clickable expandRow"
-            data-toggle="collapse"
-            data-bind="attr:{'data-target': `#weapon_list_${__id}`}">
-          <td data-bind=""
-              href="#">
-            <span data-bind="text: weaponName">
+  <table class="table table-responsive table-ac-bordered table-hover"
+         id="weaponTable">
+    <thead >
+      <tr class="ac-table-header">
+        <th id="weaponTableWeaponHeader"
+            data-bind="click: function(){sortBy('weaponName');}">
+          Weapon
+          <span data-bind="css: sortArrow('weaponName')"></span>
+        </th>
+        <th id="weaponTableToHitHeader"
+            data-bind="click: function(){sortBy('totalBonus');}">
+          To Hit
+          <span data-bind="css: sortArrow('totalBonus')"></span>
+        </th>
+        <th id="weaponTableDamageHeader"
+            data-bind="click: function(){sortBy('weaponDmg');}">
+          Damage
+          <span data-bind="css: sortArrow('weaponDmg')"></span>
+        </th>
+        <th id="weaponTableDamageTypeHeader"
+            class="hidden-xs"
+            data-bind="click: function(){sortBy('weaponDamageType');}">
+          <!-- class="hidden-sm hidden-xs hidden-md" -->
+          Damage Type
+          <span data-bind="css: sortArrow('weaponDamageType')"></span>
+        </th>
+        <th id="weaponTableRangeHeader"
+            class="hidden-xs"
+            data-bind="click: function(){sortBy('weaponRange');}">
+          <!-- class="hidden-sm hidden-xs" -->
+          Range
+          <span data-bind="css: sortArrow('weaponRange')"></span>
+        </th>
+        <th id="weaponTablePropertyHeader"
+            class="hidden-xs  hidden-sm"
+            data-bind="click: function(){sortBy('weaponProperty');}">
+          <!-- class="hidden-sm hidden-xs hidden-md" -->
+          Property
+          <span data-bind="css: sortArrow('weaponProperty')"></span>
+        </th>
+        <th id="weaponTableQuantityHeader"
+            class="hidden-xs"
+            data-bind="click: function(){sortBy('weaponQuantity');}">
+          <!-- class="hidden-sm hidden-xs" -->
+          Quantity
+          <span data-bind="css: sortArrow('weaponQuantity')"></span>
+        </th>
+        <th>
+          <a href="#"
+             data-bind="{click: collapseAll}">
+                  <span class="fa fa-minus"></span>
+                </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- ko foreach: filteredAndSortedWeapons -->
+      <tr class="clickable expandRow"
+          data-toggle="collapse"
+          data-bind="attr:{'data-target': `#weapon_list_${__id}`}">
+        <td>
+          <span data-bind="text: weaponName">
               </span>&nbsp;
-            <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }">
+          <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }">
               </span>
-          </td>
-          <td data-bind="text: hitBonusLabel"
-              href="#"></td>
-          <td data-bind="text: weaponDmg"
-              href="#"></td>
-          <!-- <td class="hidden-sm hidden-xs hidden-md" -->
-          <td class=""
-              data-bind="text: weaponDamageType"
-              href="#"></td>
-          <!-- <td class="hidden-sm hidden-xs" -->
-          <td class=""
-              data-bind="text: weaponRangeLabel"
-              href="#"></td>
-          <!-- <td class="hidden-sm hidden-xs hidden-md" -->
-          <td class=""
-              data-bind="text: weaponProperty"
-              href="#"></td>
-          <!-- <td class="hidden-sm hidden-xs" -->
-          <td class=""
-              data-bind="text: weaponQuantity"
-              href="#"></td>
-          <td>
-            <span data-toggle="collapse"
-                  data-bind="attr:{'data-target': `#weapon_list_${__id}`}"
-                  class="rotate fa fa-chevron-left"></span>
-          </td>
-        </tr>
-        <tr style="backgound-color: white !important; height: 100%">
-          <td colspan="8" style="padding: 0px; height:100%">
-            <flip-card params="{
+        </td>
+        <td>
+          <span data-bind="text: hitBonusLabel"></span>
+        </td>
+        <td><span data-bind="text: weaponDmg"
+                href="#"></span>
+        </td>
+        <td class="hidden-xs">
+          <span data-bind="text: weaponDamageType"></span>
+        </td>
+        <td class="hidden-xs">
+          <span data-bind="text: weaponRangeLabel"></span>
+        </td>
+        <td class="hidden-xs  hidden-sm">
+          <span data-bind="text: weaponProperty"></span>
+        </td>
+        <td class="hidden-xs">
+          <span data-bind="text: weaponQuantity"></span>
+        </td>
+        <td>
+          <span data-toggle="collapse"
+                data-bind="attr:{'data-target': `#weapon_list_${__id}`}"
+                class="rotate fa fa-chevron-left"></span>
+        </td>
+      </tr>
+      <tr class="collapseRow">
+        <td colspan="8">
+          <flip-card params="{
                   dataId: $data.__id,
                   collapsable: true,
                   elementId: 'weapon_list',
@@ -109,98 +108,91 @@
                     remove: $component.removeWeapon
                   }
                 }">
-                <div class="front">
-            <div class="row" data-bind="with: context.data">
-              <div class="col-xs-12">
-                <div class="h4">
-                  <span data-bind="text: weaponName"
-                        class="weaponPreviewNameLabel"></span>
-                  <small data-bind="text: magicalModifierLabel"
-                         class="weaponPreviewMagicalModifierLabel"></small>
+            <div class="front">
+              <div class="h4">
+                <span data-bind="text: context.data.weaponName"
+                      class="weaponPreviewNameLabel"></span>
+                <small data-bind="text: context.data.magicalModifierLabel"
+                       class="weaponPreviewMagicalModifierLabel"></small>
+              </div>
+              <div class="row" data-bind="with: context.data">
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                  <table class="spellDetail table table-hover table-condensed table-ac-bordered">
+                    <tbody>
+                      <tr>
+                        <th style="width: 40%">To Hit:</th>
+                        <td ><strong data-bind="text: hitBonusLabel"></strong><span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }"></span> </td>
+                      </tr>
+                      <tr>
+                        <th style="width: 40%">Damage:</th>
+                        <td ><strong data-bind="text: weaponDmg"></strong></td>
+                      </tr>
+                      <tr>
+                        <th style="width: 40%">Damage Type:</th>
+                        <td ><span data-bind="text: weaponDamageType"></span></td>
+                      </tr>
+                      <tr>
+                        <th style="width: 40%">Type:</th>
+                        <td ><span data-bind="text: weaponType"></span></td>
+                      </tr>
+                      <tr>
+                        <th style="width: 40%">Range:</th>
+                        <td ><span data-bind="text: weaponRangeLabel"></span></td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-              </div>
+                <div class="col-sm-6 col-md-4 col-md-push-4 col-lg-3 col-lg-push-6">
+                  <table class="spellDetail table table-hover table-condensed table-ac-bordered">
+                    <tbody>
+                      <tr>
+                        <th style="width: 40%">Quantity:</th>
+                        <td ><span data-bind="text: weaponQuantity"></span></td>
+                      </tr>
+                      <tr>
+                        <th style="width: 40%">Handedness:</th>
+                        <td ><span data-bind="text: weaponHandedness"></span></td>
+                      </tr>
+                      <tr>
+                        <th style="width: 40%">Property:</th>
+                        <td ><span data-bind="text: weaponProperty"></span></td>
+                      </tr>
+                      <tr>
+                        <th style="width: 40%">Proficiency:</th>
+                        <td ><span data-bind="text: weaponProficiency"></span></td>
+                      </tr>
+                      <tr>
+                        <th style="width: 40%">Weight:</th>
+                        <td ><span data-bind="text: weaponWeightLabel"></span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-xs-12 col-md-4 col-md-pull-4 col-lg-6 col-lg-pull-3">
+                  <p data-bind="html: weaponDescriptionHTML"
+                     id="weaponPreviewDescriptionTextarea"
+                     class="card-description" style="text-align: center">
+                  </p>
+                </div>
 
-              <div class="col-sm-4">
-                <table class="spellDetail table table-hover table-condensed table-ac-bordered">
-                  <tbody>
-                    <tr>
-                      <th>To Hit:</th>
-                      <td><span data-bind="text: hitBonusLabel"></span><span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }"></span> </td>
-                    </tr>
-                    <tr>
-                      <th>Damage:</th>
-                      <td><span data-bind="text: weaponDmg"></span></td>
-                    </tr>
-                    <tr>
-                      <th>Damage Type:</th>
-                      <td><span data-bind="text: weaponDamageType"></span></td>
-                    </tr>
-                    <tr>
-                      <th>Type:</th>
-                      <td><span data-bind="text: weaponType"></span></td>
-                    </tr>
-                    <tr>
-                      <th>Range:</th>
-                      <td><span data-bind="text: weaponRangeLabel"></span></td>
-                    </tr>
-                  </tbody>
-                </table>
               </div>
-              <div class="col-sm-4 col-sm-push-4">
-                <table class="spellDetail table table-hover table-condensed table-ac-bordered">
-                  <tbody>
-                    <tr>
-                      <th>Quantity:</th>
-                      <td><span data-bind="text: weaponQuantity"></span></td>
-                    </tr>
-                    <tr>
-                      <th>Handedness:</th>
-                      <td><span data-bind="text: weaponHandedness"></span></td>
-                    </tr>
-                    <tr>
-                      <th>Property:</th>
-                      <td><span data-bind="text: weaponProperty"></span></td>
-                    </tr>
-                    <tr>
-                      <th>Proficiency:</th>
-                      <td><span data-bind="text: weaponProficiency"></span></td>
-                    </tr>
-                    <tr>
-                      <th>Weight:</th>
-                      <td><span data-bind="text: weaponWeightLabel"></span></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="col-sm-4 col-sm-pull-4">
-                <h4>Description</h4>
-                <p data-bind="html: weaponDescriptionHTML"
-                   id="weaponPreviewDescriptionTextarea"
-                   class="preview-modal-overflow">
-                </p>
-              </div>
-
             </div>
-          </div>
-          <div class="back">
-            <weapon-form params="{
+            <div class="back">
+              <weapon-form params="{
               data: context.data,
               containerId: elementId,
               showForm: editMode,
               toggle: toggleCallback,
               remove: context.remove }">
-            </weapon-form>
-
-          </div>
+              </weapon-form>
+            </div>
           </flip-card>
-          </td>
-        </tr>
-        <!-- /ko -->
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="8">
-            <div style="padding: 10px" id="add-weapon" class="collapse">
+        </td>
+      </tr>
+      <!-- /ko -->
+      <tr class="collapseRow">
+        <td colspan="8">
+          <div id="add-weapon" class="collapse add-card">
             <weapon-form params="{
               data: null,
               containerId: 'add-weapon',
@@ -209,19 +201,32 @@
               toggle: $component.toggleAddForm }">
             </weapon-form>
           </div>
-          <!-- ko ifnot: $component.showAddForm -->
-          <center>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="8">
+          <div class="row">
+          <div class="col-xs-4 text-muted">
+            <small class="table-foot-content visible-xs"><span id="weaponTableTotalWeightSpan" data-bind="text: totalWeight"></span></small>
+            <span class="table-foot-content hidden-xs">Weight: <span id="weaponTableTotalWeightSpan" data-bind="text: totalWeight"></span></span>
+          </div>
+          <div class="col-xs-4">
+            <!-- ko ifnot: $component.showAddForm -->
             <button type="button"
-                    class="btn btn-default btn-sm btn-block"
+                    class="btn btn-link btn-sm btn-block"
                     id="weaponAddButton"
                     data-toggle="collapse"
                     data-target="#add-weapon"
                     data-bind="click: toggleAddForm"><i class="fa fa-plus"></i> Add Weapon</button>
-            </center>
             <!-- /ko -->
-          </td>
-        </tr>
-      </tfoot>
-    </table>
-  </div>
+          </div>
+            <div class="col-xs-4 text-muted">
+          <!-- this space for value -->
+          </div>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
 </div>

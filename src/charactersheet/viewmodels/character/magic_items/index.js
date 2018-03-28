@@ -27,6 +27,10 @@ export function MagicItemsViewModel() {
         }
     };
 
+    self.collapseAll = () => {
+        $('#magic-item-pane .collapse.in').collapse('hide');
+    };
+
     self.sorts = {
         'magicItemName asc': { field: 'magicItemName', direction: 'asc'},
         'magicItemName desc': { field: 'magicItemName', direction: 'desc'},

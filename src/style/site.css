@@ -961,8 +961,8 @@ div.toggle-arrow-container {
  */
 .input-group-addon-jquery {
   min-width: 125px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 .ui-autocomplete {
@@ -1546,7 +1546,9 @@ margin: -5px;
   margin: auto;
 }
 
-.ac-table-header {
+.table-ac-bordered tr.ac-table-header,
+tr.ac-table-header,
+thead.ac-table-header tr  {
   border-bottom: 1px solid #2c3e50;
 }
 
@@ -1559,6 +1561,11 @@ margin: -5px;
 .score-save-table > tbody > tr > td input
  {
   text-align: center;
+}
+
+.table-hover>tbody>tr.collapseRow:hover,
+.table-hover>thead>tr.collapseRow:hover {
+  background-color: transparent;
 }
 
 .table>thead>tr.collapseRow>th,
@@ -1613,4 +1620,24 @@ margin: -5px;
   display:block;
   line-height: 1.5;
   padding: 6px 9px;
+}
+
+.front>.row,
+.back>.row  {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.add-form {
+  padding: 10px;
+}
+
+.collapsing {
+visibility: visible;
+opacity: 0;
+transition:opacity 0.3s linear;
+-webkit-transition:opacity 0.3s linear;
+-moz-transition:opacity 0.3s linear;
+-o-transition:opacity 0.3s linear;
+
 }
