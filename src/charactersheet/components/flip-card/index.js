@@ -10,7 +10,6 @@ ko.bindingHandlers.collapseCard = {
         var hiddenCallback = ko.utils.unwrapObservable(value.hiddenCallback);
         var shownCallback = ko.utils.unwrapObservable(value.shownCallback);
 
-
         if (shownCallback) {
              // Register callbacks.
              $(element).on('show.bs.collapse', shownCallback);
@@ -80,10 +79,8 @@ export class FlipCardComponentViewModel {
             }
         }
         this.elementHeight = ko.computed(()=> {
-          console.log(this.elementMeasure())
           return `${this.elementMeasure()}px`;
         });
-        // this.elementMeasure = ko.observable(parseInt(ko.utils.unwrapObservable(params.defaultHeight)));
     }
 
     load = () => {
@@ -92,6 +89,8 @@ export class FlipCardComponentViewModel {
       $(window).on('ready', this.setNewHeight);
       $(document).on('ready', this.setNewHeight);
       $(window).on('resize', this.setNewHeight);
+      // Listen to tab changes as the window may have resized when the component
+      // was off screen
       if (this.tabId) {
           $(`.nav-tabs a[href="#${this.tabId}"]`).on('shown.bs.tab', this.setNewHeight);
       }
@@ -131,6 +130,7 @@ export class FlipCardComponentViewModel {
     }
 
     setNewHeight = (initialSetHeight) => {
+        const HEIGHT_MOD = 25;
         let setHeight = 0;
         if (this.editMode()) {
             setHeight = $(`#${this.elementId}_card > .back`).outerHeight();
@@ -138,16 +138,13 @@ export class FlipCardComponentViewModel {
             setHeight = $(`#${this.elementId}_card > .front`).outerHeight();
         }
 
-        if (setHeight && setHeight > 1) {
+        if (setHeight && setHeight > 1 && setHeight !== this.elementMeasure()-HEIGHT_MOD ) {
            // Add 25 to adjust for where in the dom the height has to be set to work with
            // collapse
-            this.elementMeasure(setHeight+25);
+            this.elementMeasure(setHeight+HEIGHT_MOD);
           if (this.bubbleHeight) {
             setTimeout(this.bubbleHeight, 350);
           }
-        // } else if (initialSetHeight && initialSetHeight !== 0 && initialSetHeight !== '0') {
-        //   console.log('resizing to initial', this.elementId, setHeight);
-        //   this.elementHeight(initialSetHeight);
         }
 
     }

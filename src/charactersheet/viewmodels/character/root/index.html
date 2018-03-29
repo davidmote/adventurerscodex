@@ -30,14 +30,14 @@
      id="descriptionTab">
   <ul class="nav nav-tabs tabs">
     <li role="presentation"
-        id="tabStatsLink"
-        data-bind=" click: activateStatsTab, css: statsTabStatus">
+        id="tabStatsLink">
       <a href="#stats"
          aria-controls="stats"
          role="tab"
          data-toggle="tab"
          id="statsTabTrigger"
-         class="tab-subtext">
+         class="tab-subtext"
+         data-bind="click: activateStatsTab">
         <div class="visible-xs"
              data-toggle="collapse"
              data-target="#descriptionTab">
@@ -57,14 +57,14 @@
       </a>
     </li>
     <li role="presentation"
-        id="tabSkillsLink"
-        data-bind="click: activateSkillsTab, css: skillsTabStatus">
+        id="tabSkillsLink">
       <a href="#skills"
          aria-controls="skills"
          role="tab"
          data-toggle="tab"
          id="skillsTabTrigger"
-         class="tab-subtext">
+         class="tab-subtext"
+         data-bind="click: activateSkillsTab">
         <div class="visible-xs"
              data-toggle="collapse"
              data-target="#descriptionTab">
@@ -84,13 +84,14 @@
     </li>
     <li role="presentation"
         id="tabSpellsLink"
-        data-bind="click: activateSpellsTab, css: spellsTabStatus">
+        >
       <a href="#spells"
          aria-controls="spells"
          role="tab"
          data-toggle="tab"
          id="spellsTabTrigger"
-         class="tab-subtext">
+         class="tab-subtext"
+         data-bind="click: activateSpellsTab">
         <div class="visible-xs"
              data-toggle="collapse"
              data-target="#descriptionTab">
@@ -110,13 +111,14 @@
     </li>
     <li role="presentation"
         id="tabEquipmentLink"
-        data-bind="click: activateEquipmentTab, css: equipmentTabStatus">
+      >
       <a href="#items"
          aria-controls="items"
          role="tab"
          data-toggle="tab"
          id="itemsTabTrigger"
-         class="tab-subtext">
+         class="tab-subtext"
+         data-bind="click: activateSpellsTab">
         <div class="visible-xs"
              data-toggle="collapse"
              data-target="#descriptionTab">
@@ -137,17 +139,17 @@
     </li>
     <li role="presentation"
         id="tabInventoryLink"
-        data-bind="click: activateInventoryTab, css: inventoryTabStatus">
+        >
       <a href="#inventory"
          aria-controls="inventory"
          role="tab"
          data-toggle="tab"
          id="inventoryTabTrigger"
-         class="tab-subtext">
+         class="tab-subtext"
+         data-bind="click: activateInventoryTab">
         <div class="visible-xs"
              data-toggle="collapse"
              data-target="#descriptionTab">
-
           <img class="tab-icon"
                data-bind="attr: { src: icons.inventoryTab }" />
           <span class="text-center"
@@ -166,13 +168,14 @@
     </li>
     <li role="presentation"
         id="tabNotesLink"
-        data-bind="click: activateNotesTab, css: notesTabStatus">
+        >
       <a href="#notes"
          aria-controls="notes"
          role="tab"
          data-toggle="tab"
          id="notesTabTrigger"
-         class="tab-subtext">
+         class="tab-subtext"
+         data-bind="click: activateNotesTab">
         <div class="visible-xs"
              data-toggle="collapse"
              data-target="#descriptionTab">
@@ -195,13 +198,14 @@
     </li>
     <li role="presentation"
         id="tabProfileLink"
-        data-bind="click: activateProfileTab, css: profileTabStatus">
+        >
       <a href="#profile"
          aria-controls="profile"
          role="tab"
          data-toggle="tab"
          id="profileTabTrigger"
-         class="tab-subtext">
+         class="tab-subtext"
+         data-bind="click: activateProfileTab">
         <div class="visible-xs"
              data-toggle="collapse"
              data-target="#descriptionTab">
@@ -224,13 +228,14 @@
     </li>
     <li role="presentation"
         id="tabChatLink"
-        data-bind="click: activateChatTab, css: chatTabStatus">
+        >
       <a href="#chat-header"
          aria-controls="chat-tab"
          role="tab"
          data-toggle="tab"
          id="chatTabTrigger"
-         class="tab-subtext">
+         class="tab-subtext"
+         data-bind="click: activateChatTab">
         <div class="visible-xs"
              data-toggle="collapse"
              data-target="#descriptionTab">
@@ -252,13 +257,14 @@
     </li>
     <li role="presentation"
         id="tabExhibitLink"
-        data-bind="click: activateExhibitTab, css: exhibitTabStatus">
+        >
       <a href="#exhibit-header"
          aria-controls="exhibit-tab"
          role="tab"
          data-toggle="tab"
          id="exhibitTabTrigger"
-         class="tab-subtext">
+         class="tab-subtext"
+         data-bind="click: activateExhibitTab">
         <div class="visible-xs"
              data-toggle="collapse"
              data-target="#descriptionTab">
@@ -394,7 +400,7 @@
   <div role="tabpanel"
        class="tab-pane"
        id="inventory"
-       data-bind="css: inventoryTabStatus">
+       >
     <div class="row">
       <div class="col-sm-4 col-lg-3 col-padded">
         <treasure params="{tabId: 'inventory'}"></treasure>
@@ -409,8 +415,7 @@
 
   <div role="tabpanel"
        class="tab-pane"
-       id="notes"
-       data-bind="css: notesTabStatus">
+       id="notes">
     <div class="row">
       <div class="col-sm-12 col-padded">
         <div class="h3">
