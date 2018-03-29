@@ -1,31 +1,33 @@
-<div id="item-panel">
-<div class="h4">
+<div id="item-pane" class="ac-pane panel-body">
+<div class="h4 card-title">
   Inventory<br/>
   <small>Don't hoard too much stuff; it's no fun to be encumbered.</small>
 </div>
-    <table id="inventoryTable" style="border-width: 0px"
+    <table id="inventoryTable"
            class="table table-responsive table-ac-bordered table-hover">
       <thead>
-    <table class="table table-responsive table-ac-bordered table-hover">
-      <thead>
-        <tr>
+        <tr class="ac-table-header">
           <th id="inventoryTableItemHeader" class=""
             data-bind="click: function(){sortBy('itemName');}">
             Item
             <span data-bind="css: sortArrow('itemName')"></span></th>
-          <th id="inventoryTableQuantityHeader" class=""
+          <th id="inventoryTableQuantityHeader" class="ac-table-data-cell"
             data-bind="click: function(){sortBy('itemQty');}">
             Quantity
             <span data-bind="css: sortArrow('itemQty')"></span></th>
-          <th id="inventoryTableWeightHeader" class=""
+          <th id="inventoryTableWeightHeader" class="hidden-xs"
             data-bind="click: function(){sortBy('itemWeight');}">
             Weight
             <span data-bind="css: sortArrow('itemWeight')"></span></th>
-          <th id="inventoryTableCostHeader" class=""
+          <th id="inventoryTableCostHeader" class="hidden-xs"
             data-bind="click: function(){sortBy('itemCost');}">
             Cost
             <span data-bind="css: sortArrow('itemCost')"></span></th>
           <th class=" text-right">
+            <a href="#"
+               data-bind="{click: collapseAll}">
+                    <span class="fa fa-minus"></span>
+                  </a>
           </th>
         </tr>
       </thead>
@@ -34,17 +36,17 @@
         <tr class="clickable expandRow" data-toggle="collapse"
               data-bind="attr:{'data-target': `#item_list_${$data.__id}`}">
           <td><span data-bind="text: itemName"></span></td>
-          <td><span data-bind="text: itemQty"></span></td>
-          <td><span data-bind="text: itemWeightLabel"></span></td>
-          <td><span data-bind="text: costLabel"></span></td>
+          <td class="ac-table-data-cell"><span data-bind="text: itemQty"></span></td>
+          <td class="hidden-xs"><span data-bind="text: itemWeightLabel"></span></td>
+          <td class="hidden-xs"><span data-bind="text: costLabel"></span></td>
           <td class="text-right">
             <span data-toggle="collapse"
                   data-bind="attr:{'data-target': `#item_list_${$data.__id}`}"
                   class="rotate fa fa-chevron-left"></span>
           </td>
         </tr>
-        <tr>
-          <td colspan="6" style="padding: 0px; backgound-color: white !important; height: 100%">
+        <tr class="collapseRow">
+          <td colspan="6">
             <flip-card params="{
                   dataId: $data.__id,
                   collapsable: true,
@@ -61,7 +63,7 @@
                       <span data-bind="text: itemName" class="inventoryPreviewNameLabel"></span>&nbsp;
                     </div>
                   </div>
-                  <div class="col-sm-3">
+                  <div class="col-sm-5 col-md-4 col-lg-3">
                     <table class="table table-hover table-condensed table-ac-bordered">
                       <tbody>
                         <tr>
@@ -79,7 +81,7 @@
                       </tbody>
                     </table>
                   </div>
-                  <div class="col-xs-9">
+                  <div class="col-sm-7 col-md-8 col-lg-9">
                       <p style="text-align:justify"
                            data-bind="html: itemDescriptionHTML"></p>
                   </div>
@@ -94,35 +96,46 @@
                   toggle: toggleCallback,
                   remove: context.remove }">
                 </item-form>
-
               </div>
             </flip-card>
           </td>
         </tr>
       <!-- /ko -->
+      <tr class="collapseRow add-form">
+        <td colspan="8">
+          <div id="add-item" class="collapse">
+          <item-form params="{
+            data: null,
+            containerId: 'add-item',
+            showForm: $component.showAddForm,
+            add: $component.addItem,
+            toggle: $component.toggleAddForm }">
+          </item-form>
+        </div>
+        </td>
       </tbody>
       <tfoot>
         <tr>
           <td colspan="8">
-            <div style="padding: 10px" id="add-item" class="collapse">
-            <item-form params="{
-              data: null,
-              containerId: 'add-item',
-              showForm: $component.showAddForm,
-              add: $component.addItem,
-              toggle: $component.toggleAddForm }">
-            </item-form>
+            <div class="row">
+              <div class="col-xs-4 text-muted">
+                <small class="table-foot-content visible-xs"><span id="inventoryTableTotalWeightSpan" data-bind="text: totalItemWeight"></span></small>
+                <span class="table-foot-content hidden-xs">Weight: <span id="inventoryTableTotalWeightSpan" data-bind="text: totalItemWeight"></span></span></span>
+              </div>
+            <div class="col-xs-4">
+              <!-- ko ifnot: $component.showAddForm -->
+              <button type="button"
+                      class="btn btn-link btn-sm btn-block"
+                      id="weaponAddButton"
+                      data-toggle="collapse"
+                      data-target="#add-item"
+                      data-bind="click: toggleAddForm"><i class="fa fa-plus"></i> Add Item</button>
+              <!-- /ko -->
+            </div>
+              <div class="col-xs-4 text-muted">
+            <!-- this space for value -->
+            </div>
           </div>
-          <!-- ko ifnot: $component.showAddForm -->
-          <center>
-            <button type="button"
-                    class="btn btn-default btn-sm btn-block"
-                    id="weaponAddButton"
-                    data-toggle="collapse"
-                    data-target="#add-item"
-                    data-bind="click: toggleAddForm"><i class="fa fa-plus"></i> Add Item</button>
-            </center>
-            <!-- /ko -->
           </td>
         </tr>
       </tfoot>

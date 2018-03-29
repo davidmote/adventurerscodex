@@ -1,19 +1,16 @@
-<div id="treasure-coins" class="" style="min-width: 115px">
-  <div class="h4">
+<div id="coins-pane" class="ac-pane panel-body">
+  <div class="h4 card-title">
     Coins<br />
     <small>watch for pickpockets</small>
   </div>
-  <div class="panel-footer" style="min-width: 115px">
-      <small>Total:&nbsp;<span id="coinsWorthInGoldLabel" data-bind='text: treasure().worthInGold'></span>&nbsp;(gp)</small>
-  </div>
-  <div class="input-group" style="min-width: 115px">
+  <div class="input-group" >
     <span class="input-group-addon no-top-bottom-padding">
       <img data-bind="attr: { src: cpCoins }" width="30px" title="Copper Coins" alt="Copper Coins"/>
     </span>
     <input type="number" class="form-control coin-input" id="coinsCopperInput" min="0"
       data-bind='value: treasure().copper'>
   </div>
-  <div class="input-group" style="min-width: 115px">
+  <div class="input-group">
     <span class="input-group-addon no-top-bottom-padding">
       <img data-bind="attr: { src: spCoins }" width="30px" title="Silver Coins" alt="Silver Coins"/>
     </span>
@@ -21,7 +18,7 @@
       data-bind='value: treasure().silver'>
   </div>
 
-  <div class="input-group" style="min-width: 115px">
+  <div class="input-group" >
     <span class="input-group-addon no-top-bottom-padding">
       <img data-bind="attr: { src: epCoins }" width="30px" title="Electrum Coins" alt="Electrum Coins"/>
     </span>
@@ -29,7 +26,7 @@
       data-bind='value: treasure().electrum'>
   </div>
 
-  <div class="input-group" style="min-width: 115px">
+  <div class="input-group" >
     <span class="input-group-addon no-top-bottom-padding">
       <img data-bind="attr: { src: gpCoins }" width="30px" title="Gold Coins" alt="Gold Coins"/>
     </span>
@@ -37,15 +34,23 @@
       data-bind='value: treasure().gold'/>
   </div>
 
-  <div class="input-group" style="min-width: 115px">
+  <div class="input-group">
     <span class="input-group-addon no-top-bottom-padding">
       <img data-bind="attr: { src: ppCoins }" width="30px" title="Platinum Coins" alt="Platinum Coins"/>
     </span>
     <input type="number" class="form-control coin-input" id="coinsPlatinumInput" min="0"
       data-bind='value: treasure().platinum'/>
   </div>
-
+  <div class="table-foot-content">
+    <div class="pull-right text-muted">
+      <small>Total:&nbsp;<span id="coinsWorthInGoldLabel" data-bind='text: treasure().worthInGold'></span>&nbsp;(gp)</small>
+    </div>
+    <div class="pull-left text-muted">
+      <small>Weight:&nbsp;<span id="coinsTotalWeightLabel" data-bind="text: treasure().totalWeightLabel"></span></small>
+    </div>
+  <!-- <div class="panel-footer" style="min-width: 115px">
+  </div> -->
+<!--
   <div class="container-fluid panel-footer" style="min-width: 115px; whitespace: no-wrap">
-  <small>Weight:&nbsp;<span id="coinsTotalWeightLabel" data-bind="text: treasure().totalWeightLabel"></span></small>
-</div>
+</div> -->
 </div>

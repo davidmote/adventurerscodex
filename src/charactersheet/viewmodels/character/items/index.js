@@ -19,6 +19,22 @@ export function ItemsViewModel(params) {
     var self = this;
     self.tabId = params.tabId;
 
+    self.showAddForm = ko.observable(false);
+
+    self.toggleAddForm = () => {
+        if (self.showAddForm()) {
+            self.showAddForm(false);
+            $('#add-item').collapse('hide');
+        } else {
+            self.showAddForm(true);
+            $('#add-item').collapse('show');
+        }
+    };
+
+    self.collapseAll = () => {
+        $('#item-pane .collapse.in').collapse('hide');
+    };
+
     self.sorts = {
         'itemName asc': { field: 'itemName', direction: 'asc'},
         'itemName desc': { field: 'itemName', direction: 'desc'},
@@ -35,19 +51,6 @@ export function ItemsViewModel(params) {
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
     self.sort = ko.observable(self.sorts['itemName asc']);
     self.filter = ko.observable('');
-
-    self.showAddForm = ko.observable(false);
-
-    self.toggleAddForm = () => {
-        if (self.showAddForm()) {
-            self.showAddForm(false);
-            $('#add-item').collapse('hide');
-        } else {
-            self.showAddForm(true);
-            $('#add-item').collapse('show');
-        }
-    };
-
 
     self.totalItemWeight = ko.pureComputed(function() {
         var weightTotal = 0;

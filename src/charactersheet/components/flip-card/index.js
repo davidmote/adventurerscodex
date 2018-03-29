@@ -9,17 +9,16 @@ ko.bindingHandlers.collapseCard = {
         var value = valueAccessor();
         var hiddenCallback = ko.utils.unwrapObservable(value.hiddenCallback);
         var shownCallback = ko.utils.unwrapObservable(value.shownCallback);
-        const debounceShown = debounce(shownCallback, 50);
-        const debounceHidden = debounce(hiddenCallback, 50);
+
 
         if (shownCallback) {
              // Register callbacks.
-             $(element).on('show.bs.collapse', debounceShown);
-             $(element).on('shown.bs.collapse', debounceShown);
+             $(element).on('show.bs.collapse', shownCallback);
+             $(element).on('shown.bs.collapse', shownCallback);
         }
         if (hiddenCallback) {
              // Register callbacks.
-            $(element).on('hidden.bs.collapse', debounceHidden);
+            $(element).on('hidden.bs.collapse', hiddenCallback);
         }
     },
     update:  function(element, valueAccessor, allBindingsAccessor) {
@@ -89,10 +88,10 @@ export class FlipCardComponentViewModel {
 
     load = () => {
       const debounceHeight = debounce(this.setNewHeight, 50);
-      $(window).on('load', debounceHeight);
-      $(window).on('ready', debounceHeight);
-      $(document).on('ready', debounceHeight);
-      $(window).on('resize', debounceHeight);
+      $(window).on('load', this.setNewHeight);
+      $(window).on('ready', this.setNewHeight);
+      $(document).on('ready', this.setNewHeight);
+      $(window).on('resize', this.setNewHeight);
       if (this.tabId) {
           $(`.nav-tabs a[href="#${this.tabId}"]`).on('shown.bs.tab', this.setNewHeight);
       }
@@ -134,15 +133,15 @@ export class FlipCardComponentViewModel {
     setNewHeight = (initialSetHeight) => {
         let setHeight = 0;
         if (this.editMode()) {
-            setHeight = $(`#${this.elementId}_card > .back`).height();
+            setHeight = $(`#${this.elementId}_card > .back`).outerHeight();
         } else {
-            setHeight = $(`#${this.elementId}_card > .front`).height();
+            setHeight = $(`#${this.elementId}_card > .front`).outerHeight();
         }
 
         if (setHeight && setHeight > 1) {
-           // setTimeout(()=>{
-            this.elementMeasure(setHeight);
-          // }, 0);
+           // Add 25 to adjust for where in the dom the height has to be set to work with
+           // collapse
+            this.elementMeasure(setHeight+25);
           if (this.bubbleHeight) {
             setTimeout(this.bubbleHeight, 350);
           }

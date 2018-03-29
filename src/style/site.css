@@ -1180,22 +1180,24 @@ tr.expandRow[aria-expanded="true"]:hover {
 
 /* Animations */
 
-.collapsing, .collapse {
-    -moz-transition : all 0.35s ease;
-    -webkit-transition : all 0.35s ease;
-    -o-transition : all 0.35s ease;
-    transition : all 0.35s ease !important;
-}
-
 .collapsing {
 position: relative;
-height: 0px;
 overflow: hidden;
--webkit-transition: all .35s ease;
--moz-transition: all .35s ease;
--o-transition: all .35s ease;
-transition: all .35s ease;
+opacity: 0;
+-webkit-transition: height .35s ease opacity 0.3s linear;
+-moz-transition: height .35s ease opacity 0.3s linear;
+-o-transition: height .35s ease opacity 0.3s linear;
+transition : height 0.35s ease opacity 0.3s linear;
 }
+
+/* .collapsing {
+visibility: visible;
+
+transition: opacity 0.3s linear;
+-webkit-transition: opacity 0.3s linear;
+-moz-transition: opacity 0.3s linear;
+-o-transition: opacity 0.3s linear;
+} */
 
 
 .rotate {
@@ -1217,13 +1219,14 @@ transition: all .35s ease;
 
 /* entire container, keeps perspective */
 .card-flip-container {
+  position: relative;
   -webkit-perspective-origin: 0;
   perspective: 0px;
   padding-top: 0px;
-  -webkit-transition: all 0.6s ease;
-  -moz-transition: all 0.6s ease;
-  -o-transition: all 0.6s ease;
-  transition: all 0.6s ease;
+  -webkit-transition: all 0.6s ease height 0.35s ease;
+  -moz-transition: all 0.6s ease height 0.35s ease;
+  -o-transition: all 0.6s ease height 0.35s ease;
+  transition: all 0.6s ease height 0.35s ease;
   width: 100%;
 }
 
@@ -1632,12 +1635,8 @@ thead.ac-table-header tr  {
   padding: 10px;
 }
 
-.collapsing {
-visibility: visible;
-opacity: 0;
-transition:opacity 0.3s linear;
--webkit-transition:opacity 0.3s linear;
--moz-transition:opacity 0.3s linear;
--o-transition:opacity 0.3s linear;
 
+#coins-pane .input-group {
+  padding-top:5px;
+   padding-bottom:5px
 }

@@ -1,6 +1,7 @@
+<div class="row">
 <form data-bind="submit: $component.save">
-  <div class="row" style="padding: 10px; text-align: left" data-bind="with: currentEditItem">
-    <div class="form-group col-sm-6">
+  <div data-bind="with: currentEditItem">
+    <div class="form-group col-sm-12">
       <label for="itemName"
              class=" control-label">Name</label>
       <input type="text"
@@ -12,7 +13,7 @@
                  source: $component.itemsPrePopFilter,
                  onselect: $component.populateItem }'>
     </div>
-    <div class="form-group col-sm-6">
+    <div class="form-group col-sm-6 col-lg-3">
       <label for="itemWeight"
              class="control-label">Weight</label>
       <div class="input-group">
@@ -23,10 +24,10 @@
                max="5000"
                placeholder="Item Weight"
                data-bind='textInput: itemWeight'>
-        <span class="input-group-addon">lbs.</span>
+        <span class="input-group-addon  no-top-bottom-padding">lbs.</span>
       </div>
     </div>
-    <div class="form-group col-sm-6">
+    <div class="form-group col-sm-6 col-lg-3">
       <label for="itemQuantity"
              class="control-label">Quantity</label>
       <input type="number"
@@ -37,7 +38,7 @@
              placeholder="Item Quantity"
              data-bind='textInput: itemQty'>
     </div>
-    <div class="form-group col-sm-6">
+    <div class="form-group col-sm-12 col-lg-6">
       <label class="control-label">Cost</label>
       <div class="input-group">
         <input type="number"
@@ -79,8 +80,8 @@
             </i>
       <sm>
   </p>
-  <!-- ko ifnot: addForm -->
-  <div>
+  <div class="col-xs-12">
+    <!-- ko ifnot: addForm -->
     <div class="pull-left">
     <button class="btn btn-sm btn-danger"
             type="button"
@@ -93,22 +94,22 @@
       <button class="btn btn-sm btn-primary"
               type="submit">Save</button>
     </div>
+    <!-- /ko -->
+    <!-- ko if: addForm -->
+
+        <div class="pull-right">
+        <button type="button"
+                class="btn btn-default btn-sm"
+                id="proficiencyAddCancelButton"
+                data-bind="click: $component.cancel">Cancel</button>
+        <button type="submit"
+                class="btn btn-primary btn-sm"
+                id="proficiencyAddAddButton"
+              >Add Item</button>
+        </div>
+
+    <!-- /ko -->
   </div>
-  <!-- /ko -->
-  <!-- ko if: addForm -->
-  <div>
-    <center>
-      <div class="pull-right">
-      <button type="button"
-              class="btn btn-default btn-sm"
-              id="proficiencyAddCancelButton"
-              data-bind="click: $component.cancel">Cancel</button>
-      <button type="submit"
-              class="btn btn-primary btn-sm"
-              id="proficiencyAddAddButton"
-            >Add Item</button>
-            </div>
-    </center>
-  </div>
-  <!-- /ko -->
+
 </form>
+</div>

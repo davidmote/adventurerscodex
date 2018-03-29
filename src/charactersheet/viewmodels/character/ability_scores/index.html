@@ -42,7 +42,7 @@
                     collapsable: false,
                     elementId: 'ability_scores',
                     tabId: context.tabId,
-                    defaultHeight: 265,
+                    defaultHeight: 400,
                     context: {
                       data: context.abilityScores,
                     }
@@ -141,7 +141,7 @@
                     collapsable: false,
                     elementId: 'saving_throws',
                     tabId: context.tabId,
-                    defaultHeight: 265,
+                    defaultHeight: 400,
                     context: {
                       data: context.savingThrows,
                       findSaveByName: context.findSaveByName,
@@ -203,6 +203,7 @@
              data: context.data,
              containerId: elementId,
              showForm: editMode,
+             defaultHeight: 400,
              toggle: toggleCallback,
              remove: ()=>{} }">
            </saving-throw-form>
