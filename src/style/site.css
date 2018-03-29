@@ -1640,3 +1640,8 @@ thead.ac-table-header tr  {
   padding-top:5px;
    padding-bottom:5px
 }
+
+
+.select-proficiency .select2-dropdown {
+  width: 150px !important;
+}

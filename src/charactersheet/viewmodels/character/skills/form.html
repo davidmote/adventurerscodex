@@ -19,8 +19,8 @@
    <tbody data-bind='foreach: skills'>
     <tr>
         <td class="selectDropdown" >
-          <div class="selectit">
-          <select class="form-control" style="width: 50px"
+          <div data-bind="attr: {id: `skill_proficiency_select_${$data.__id}`}" class="selectit select-proficiency" style="position:relative">
+          <select class="form-control" style="width: 50px; position:relative"
           data-bind="value: proficiency,
           options: $component.proficiencyOptions,
           select2: {
@@ -28,7 +28,7 @@
             minimumResultsForSearch: Infinity,
             templateSelection: $component.formatProficiency,
             templateResult: $component.formatProficiencyOptions,
-            dropdownAutoWidth: true,
+            dropdownParent: $(`#skill_proficiency_select_${$data.__id}`)
            }"></select>
          </div>
         </td>
