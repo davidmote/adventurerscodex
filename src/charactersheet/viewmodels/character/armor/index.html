@@ -40,12 +40,16 @@
         <tr class="clickable expandRow" data-toggle="collapse"
               data-bind="css: {notCastable: !armorEquipped() }, attr:{'data-target': `#armor_list_${__id}`}">
             <td data-bind="click: $component.equipArmor">
+              <!-- ko if: armorEquipped() -->
+              <span class="glyphicon glyphicon-ok-sign"></span>
+              <!-- /ko -->
+                <!-- This does not propogate through notifications, so disable for now.
                 <input type='checkbox'
                        style=""
                        class='ac-checkbox sr-only'
                        data-bind="checked: armorEquipped, attr: {id: `armorEquipped_${__id}`}"></input>
                 <label data-bind="attr: {for: `armorEquipped_${__id}`}">
-              </label>
+              </label> -->
             </td>
             <td><span data-bind="text: armorName"></span>&nbsp;
               <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }">
