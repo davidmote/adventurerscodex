@@ -1,5 +1,12 @@
   <form data-bind="submit: $component.save">
     <div class="row" data-bind="with: currentEditItem">
+      <!-- ko ifnot: $component.data -->
+      <div class="col-xs-12">
+      <div class="h4">
+        New Spell
+      </div>
+    </div>
+      <!-- /ko -->
       <div class="form-group col-sm-4 col-md-3 col-lg-3">
         <label for="spellName"
                class="control-label">Name</label>

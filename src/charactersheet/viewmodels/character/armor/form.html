@@ -9,6 +9,11 @@
       <!-- /ko -->
     </div>
     <!-- /ko -->
+    <!-- ko ifnot: $component.data -->
+    <div class="h4" style="padding-top: 5px;">
+      New Armor
+    </div>
+    <!-- /ko -->
   </div>
   <form data-bind="submit: $component.save">
     <div data-bind="with: currentEditItem">

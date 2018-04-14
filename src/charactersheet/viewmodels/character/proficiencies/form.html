@@ -1,4 +1,9 @@
 <form data-bind="submit: $component.save">
+  <!-- ko ifnot: $component.data -->
+  <div class="h4" style="padding-top: 5px;">
+    New Proficiency
+  </div>
+  <!-- /ko -->
   <div data-bind="with: currentEditItem">
     <div class="form-group">
       <label for="name"

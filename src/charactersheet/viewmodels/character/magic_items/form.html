@@ -6,6 +6,13 @@
       <small data-bind="text: $component.data.magicItemRarity" id="magicItemsPreviewRarityInput"></small>
     </div>
     <!-- /ko -->
+    <!-- ko ifnot: $component.data -->
+    <div class="col-xs-12">
+      <div class="h4">
+        New Magic Item
+      </div>
+  </div>
+    <!-- /ko -->
   </div>
 <form data-bind="submit: $component.save">
   <div  data-bind="with: currentEditItem">
