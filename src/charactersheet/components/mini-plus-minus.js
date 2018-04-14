@@ -40,13 +40,13 @@ ko.components.register('mini-plus-minus', {
         <!-- ko if: !hideUp -->\
         <button type="button" style="padding: 0px; border-width: 0px" class="btn btn-link"\
           data-bind="click: decrease">\
-              <i class="glyphicon glyphicon-menu-up"> </i>\
+              <i style="padding: 5px" class="glyphicon glyphicon-menu-up"> </i>\
         </button>\
         <!-- /ko -->\
         <!-- ko if: !hideDown -->\
         <button type="button" style="padding: 0px;  border-width: 0px" class="btn btn-link"\
           data-bind="click: increase">\
-              <i class="glyphicon glyphicon-menu-down"> </i>\
+              <i style="padding: 5px" class="glyphicon glyphicon-menu-down"> </i>\
         </button>\
         <!-- /ko -->\
     </div>'

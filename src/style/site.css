@@ -1417,7 +1417,7 @@ transition: opacity 0.3s linear;
   fieldset { display: table-cell; }
 }
 
-#ArmorClassShield {
+/* #ArmorClassShield {
   background:url('../images/shield.svg') no-repeat;
    background-size: 100% 100%;
    text-align: center;
@@ -1426,7 +1426,19 @@ transition: opacity 0.3s linear;
    color: white;
    padding: 5px;
    padding-top: 3px;
-  }
+  } */
+
+  .defenseShield {
+    background:url('../images/shield.svg') no-repeat;
+     background-size: 100% 100%;
+     text-align: center;
+     vertical-align: middle;
+     height: 6ex;
+     color: white;
+     padding: 10px;
+     white-space: nowrap;
+     padding-top: 3px;
+    }
 
   #ArmorClassShield > * {
     font-size: 1.4em;

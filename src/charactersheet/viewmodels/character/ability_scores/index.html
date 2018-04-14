@@ -4,8 +4,8 @@
               collapsable: false,
               elementId: 'ability_and_saves',
               tabId: tabId,
-              editMode: showSaves,
               defaultHeight: 400,
+              toggleCallback: ()=>{showSaves(false)},
               context: {
                 abilityScores: abilityScores,
                 savingThrows: savingThrows,
@@ -15,199 +15,146 @@
                 tabId: tabId,
               }
             }">
-    <div class="front">
+    <div class="front" >
       <div class="h4 card-title">
-        Ability Scores<br />
-        <small>Click on your Ability Scores to add or edit them.</small>
+        Abilities &amp;<br /> Saving Throws
+        <small></small>
       </div>
-      <div style="margin-top:15px;" class="btn-group btn-group-justified"
-           role="group"
-           aria-label="Toggle Ability Score/Saving Throws">
-        <div class="btn-group"
-             role="group">
-          <button type="button"
-                  class="btn btn-info btn-sm"
-                  data-bind="click: context.toggleSaves(false), css: {active: !context.showSaves()}">Scores</button>
-        </div>
-
-        <div class="btn-group"
-             role="group">
-          <button type="button"
-                  class="btn btn-info btn-sm"
-                  data-bind="click: context.toggleSaves(true), css: {active: context.showSaves()}">Saves</button>
-        </div>
-      </div>
-      <flip-card params="{
-                    dataId: '1',
-                    collapsable: false,
-                    elementId: 'ability_scores',
-                    tabId: context.tabId,
-                    defaultHeight: 400,
-                    context: {
-                      data: context.abilityScores,
-                    }
-                  }">
-        <div class="front">
-
           <table class="table table-responsive table-ac-bordered table-hover ac-table-data-cell score-save-table"
                  id="abilityScoresTable">
             <thead class="ac-table-header">
               <tr>
-                <th style="width:20%">
+                <th style="width:15%">
                   Score
                 </th>
-                <th style="width: 60%">
+                <th style="width: 40%">
                   Ability
                 </th>
                 <th style="width: 20%">
                   Bonus
                 </th>
-              </tr>
-            </thead>
-            <tbody data-bind='with: context.data'>
-              <tr>
-                <td><span data-bind='text: str'></span></td>
-                <td>Strength</td>
-                <td><strong data-bind="text: strModifier"> </strong></td>
-              </tr>
-              <tr>
-                <td><span data-bind='text: dex'></span></td>
-                <td>Dexterity</td>
-                <td><strong data-bind="text: dexModifier"> </strong></td>
-              </tr>
-              <tr>
-                <td><span data-bind='text: con'></span></td>
-                <td>Constitution</td>
-                <td><strong data-bind="text: conModifier"> </strong></td>
-              </tr>
-              <tr>
-                <td><span data-bind='text: int'></span></td>
-                <td>Intelligence</td>
-                <td><strong data-bind="text: intModifier"> </strong></td>
-              </tr>
-              <tr>
-                <td><span data-bind='text: wis'></span></td>
-                <td>Wisdom</td>
-                <td><strong data-bind="text: wisModifier"> </strong></td>
-              </tr>
-              <tr>
-                <td><span data-bind='text: cha'></span></td>
-                <td>Charisma</td>
-                <td><strong data-bind="text: chaModifier"> </strong></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="back">
-          <div style="margin-top:15px">
-
-          <ability-score-form params="{
-            data: context.data,
-            containerId: elementId,
-            showForm: editMode,
-            toggle: toggleCallback,
-            remove: ()=>{} }">
-          </ability-score-form>
-        </div>
-        </div>
-      </flip-card>
-    </div>
-    <div class="back">
-      <div class="h4 card-title">
-        Saving Throws<br />
-        <small>Savings
-                Your Ability Score modifier
-                and Proficiency Bonus are included.</small>
-      </div>
-      <div style="margin-top:15px;" class="btn-group btn-group-justified"
-           role="group"
-           aria-label="Toggle Ability Score/Saving Throws">
-        <div class="btn-group"
-             role="group">
-          <button type="button"
-                  class="btn btn-info btn-sm"
-                  data-bind="click: context.toggleSaves(false), css: {active: !context.showSaves()}">Scores</button>
-        </div>
-
-        <div class="btn-group"
-             role="group">
-          <button type="button"
-                  class="btn btn-info btn-sm"
-                  data-bind="click: context.toggleSaves(true), css: {active: context.showSaves()}">Saves</button>
-        </div>
-      </div>
-      <flip-card params="{
-                    dataId: '1',
-                    collapsable: false,
-                    elementId: 'saving_throws',
-                    tabId: context.tabId,
-                    defaultHeight: 400,
-                    context: {
-                      data: context.savingThrows,
-                      findSaveByName: context.findSaveByName,
-                    }
-                  }">
-        <div class="front">
-          <table class="table table-responsive table-ac-bordered table-hover score-save-table"
-                 id="savingThrowTable">
-            <thead class="ac-table-header">
-              <tr>
-                <th style="width:20%">
-                  <span class="glyphicon glyphicon-ok"></span>
+                <th style="width: 15%">
+                  Save
                 </th>
-                <th style="width:60%">
-                  Ability
-                </th>
-                <th style="width:20%">
-                  Bonus
-                </th>
+                <!-- <th>
+                </th> -->
               </tr>
             </thead>
             <tbody>
-              <tr data-bind="with: context.findSaveByName('Strength')">
-                <td><span data-bind="css: proficiencyLabel"></span></td>
-                <td>Strength</td>
-                <td><strong data-bind="text: modifierLabel"> </strong></td>
+              <tr>
+                <!-- ko with: context.abilityScores -->
+                <td ><span data-bind='text: str'></span></td>
+                <td>Str</td>
+                <td><strong data-bind="text: strModifier"> </strong></td>
+                <!-- /ko -->
+                <!-- ko with: context.findSaveByName('Strength') -->
+                <td><span class="defenseShield" data-bind="text: modifierLabel"> </span></td>
+                <!-- <td><span data-bind="css: proficiencyLabel"></span></td> -->
+                <!-- /ko -->
               </tr>
-              <tr data-bind="with: context.findSaveByName('Dexterity')">
-                <td><span data-bind="css: proficiencyLabel"></span></td>
-                <td>Dexterity</td>
-                <td><strong data-bind="text: modifierLabel"> </strong></td>
+              <tr>
+                <!-- ko with: context.abilityScores -->
+                <td ><span data-bind='text: dex'></span></td>
+                <td>Dex</td>
+                <td><strong data-bind="text: dexModifier"> </strong></td>
+                <!-- /ko -->
+                <!-- ko with: context.findSaveByName('Dexterity') -->
+                <td><span class="defenseShield" data-bind="text: modifierLabel"> </span></td>
+                <!-- <td><span data-bind="css: proficiencyLabel"></span></td> -->
+                <!-- /ko -->
               </tr>
-              <tr data-bind="with: context.findSaveByName('Constitution')">
-                <td><span data-bind="css: proficiencyLabel"></span></td>
-                <td>Constitution</td>
-                <td><strong data-bind="text: modifierLabel"> </strong></td>
+              <tr>
+                <!-- ko with: context.abilityScores -->
+                <td ><span data-bind='text: con'></span></td>
+                <td>Con</td>
+                <td><strong data-bind="text: conModifier"> </strong></td>
+                <!-- /ko -->
+                <!-- ko with: context.findSaveByName('Constitution') -->
+                <td><span class="defenseShield" data-bind="text: modifierLabel"> </span></td>
+                <!-- <td><span data-bind="css: proficiencyLabel"></span></td> -->
+                <!-- /ko -->
               </tr>
-              <tr data-bind="with: context.findSaveByName('Intelligence')">
-                <td><span data-bind="css: proficiencyLabel"></span></td>
-                <td>Intelligence</td>
-                <td><strong data-bind="text: modifierLabel"> </strong></td>
+              <tr>
+                <!-- ko with: context.abilityScores -->
+                <td ><span data-bind='text: int'></span></td>
+                <td>Int</td>
+                <td><strong data-bind="text: intModifier"> </strong></td>
+                <!-- /ko -->
+                <!-- ko with: context.findSaveByName('Intelligence') -->
+                <td><span class="defenseShield"  data-bind="text: modifierLabel"> </span></td>
+                <!-- <td><span data-bind="css: proficiencyLabel"></span></td> -->
+                <!-- /ko -->
+
               </tr>
-              <tr data-bind="with: context.findSaveByName('Wisdom')">
-                <td><span data-bind="css: proficiencyLabel"></span></td>
-                <td>Wisdom</td>
-                <td><strong data-bind="text: modifierLabel"> </strong></td>
+              <tr>
+                <!-- ko with: context.abilityScores -->
+                <td ><span data-bind='text: wis'></span></td>
+                <td>Wis</td>
+                <td><strong data-bind="text: wisModifier"> </strong></td>
+                <!-- /ko -->
+                <!-- ko with: context.findSaveByName('Wisdom') -->
+                <td><span class="defenseShield" data-bind="text: modifierLabel"> </span></td>
+                <!-- <td><span data-bind="css: proficiencyLabel"></span></td> -->
+                <!-- /ko -->
+
               </tr>
-              <tr data-bind="with: context.findSaveByName('Charisma')">
-                <td><span data-bind="css: proficiencyLabel"></span></td>
-                <td>Charisma</td>
-                <td><strong data-bind="text: modifierLabel"> </strong></td>
+              <tr>
+                <!-- ko with: context.abilityScores -->
+                <td ><span data-bind='text: cha'></span></td>
+                <td>Cha</td>
+                <td><strong data-bind="text: chaModifier"> </strong></td>
+                <!-- /ko -->
+                <!-- ko with: context.findSaveByName('Charisma') -->
+                <td><span class="defenseShield" data-bind="text: modifierLabel"> </span></td>
+                <!-- <td><span data-bind="css: proficiencyLabel"></span></td> -->
+                <!-- /ko -->
               </tr>
             </tbody>
           </table>
         </div>
-        <div class="back">
-          <div style="margin-top:15px">
-          <saving-throw-form params="{
-             data: context.data,
-             containerId: elementId,
-             showForm: editMode,
-             defaultHeight: 400,
-             toggle: toggleCallback,
-             remove: ()=>{} }">
-           </saving-throw-form>
-         </div>
+        <div class="back" >
+            <div class="h4 card-title">
+              Abilities &amp;<br /> Saving Throws
+              <small></small>
+            </div>
+            <div style="margin-top:15px;" class="btn-group btn-group-justified"
+                 role="group"
+                 aria-label="Toggle Ability Score/Saving Throws">
+              <div class="btn-group"
+                   role="group">
+                <button type="button"
+                        class="btn btn-info btn-sm"
+                        data-bind="click: context.toggleSaves(false), css: {active: !context.showSaves()}">Scores</button>
+              </div>
+
+              <div class="btn-group"
+                   role="group">
+                <button type="button"
+                        class="btn btn-info btn-sm"
+                        data-bind="click: context.toggleSaves(true), css: {active: context.showSaves()}">Saves</button>
+              </div>
+            </div>
+                        <div data-bind="visible: !context.showSaves()">
+                          <ability-score-form params="{
+                            data: context.abilityScores,
+                            containerId: elementId,
+                            showForm: editMode,
+                            toggle: ()=> {toggleCallback()},
+                            remove: ()=>{} }">
+                          </ability-score-form>
+                        </div>
+                        <div data-bind="visible: context.showSaves()">
+                          <saving-throw-form params="{
+                             data: context.savingThrows,
+                             containerId: elementId,
+                             showForm: editMode,
+                             toggle: ()=> {context.toggleSaves(); toggleCallback()},
+                             remove: ()=>{} }">
+                           </saving-throw-form>
+                         </div>
+                        </div>
+
+                      </flip-card>
         </div>
       </flip-card>
     </div>

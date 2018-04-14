@@ -60,6 +60,10 @@ export class FlipCardComponentViewModel {
         this.context = params.context;
         // Whether or not this 'back' is displayed.
 
+        if (params.toggleCallback) {
+          this.toggleCallback = params.toggleCallback;
+        }
+
         this.editMode = ko.observable(false);
         this.showEditModeButton = ko.observable(true);
 
@@ -126,6 +130,9 @@ export class FlipCardComponentViewModel {
         toggleTo = false;
       }
       this.editMode(toggleTo);
+      if (this.toggleCallback) {
+        this.toggleCallback(this.editMode());
+      }
       this.setNewHeight();
     }
 

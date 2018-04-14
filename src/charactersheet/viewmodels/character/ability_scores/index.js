@@ -102,6 +102,7 @@ export function AbilityScoresViewModel(params) {
         self.savingThrows().forEach(function(e, i, _) {
             e.save();
         });
+        self.showSaves(false);
     };
 
     self.updateSaveValues = function() {
