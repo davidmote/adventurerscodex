@@ -133,6 +133,14 @@ export function StatsViewModel(params) {
                     newDamage = currentDamage - remainingTempHP;
                 }
             }
+            else if (self.health().hitpoints() == 0) {
+                // Hit Points were already at 0, so death saves are necessary
+                newDamage = maxHitPoints;
+                self.deathSaveSuccessList().forEach(function(save, idx, _) {
+                    save.deathSaveSuccess(false);
+                });
+                self.deathSavesVisible();
+            }
             else {
                 newDamage = currentDamage + currentValue;
             }
