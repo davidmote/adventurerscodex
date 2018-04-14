@@ -1657,3 +1657,12 @@ thead.ac-table-header tr  {
 .select-proficiency .select2-dropdown {
   width: 150px !important;
 }
+
+
+.healthBtn {
+  width: 35px;
+  height: 28px;
+  padding: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+}

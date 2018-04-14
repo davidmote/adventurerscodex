@@ -21,6 +21,10 @@ export function StatsViewModel(params) {
     self.tabId = params.tabId;
     self.health = ko.observable(new Health());
 
+    self.healInput = ko.observable(null);
+    self.tempInput = ko.observable(null);
+    self.dmgInput = ko.observable(null);
+
     self.hitDiceList = ko.observableArray([]);
     self.hitDiceType = ko.observable(new HitDiceType());
     self.deathSaveSuccessList = ko.observableArray([]);
@@ -79,30 +83,95 @@ export function StatsViewModel(params) {
         }
     }));
 
+
+    self.handleHeal = function() {
+        if (self.healInput()) {
+            self.damageHandler(0-parseInt(self.healInput()));
+        }
+        self.healInput(null);
+    };
+
+    self.handleTemp = function() {
+        if (self.tempInput()) {
+            self.health().tempHitpoints(self.tempInput());
+        }
+        self.tempInput(null);
+    };
+
+    self.handleDmg = function() {
+        if (self.dmgInput()) {
+            self.damageHandler(self.dmgInput());
+        }
+        self.dmgInput(null);
+    };
+
     self.damageHandler = ko.computed({
         read: function() {
             return self.health().damage();},
         write: function(value) {
-            if (self.health().tempHitpoints()) {
-                // Find the damage delta, then apply to temp hit points first.
-                var damageChange = value - self.health().damage();
-                if (damageChange > 0) {
-                    var remainingTempHP = self.health().tempHitpoints() - damageChange;
-                    if (remainingTempHP >= 0 ) {
-                        // New damage value did not eliminate temporary hit points
-                        // reduce temporary hit points, and do not apply to damage.
-                        self.health().tempHitpoints(remainingTempHP);
-                        value = self.health().damage();
-                    } else { // remainingTempHP is negative.
-                        self.health().tempHitpoints(0);
-                        value = self.health().damage() + remainingTempHP;
-                    }
+            const currentValue = parseInt(value);
+            const currentDamage = parseInt(self.health().damage());
+            const currentTempHP = parseInt(self.health().tempHitpoints());
+            const maxHitPoints = parseInt(self.health().maxHitpoints());
+            let newDamage;
+            if (value < 0) {
+                newDamage = currentDamage + currentValue;
+                if (newDamage < 0) {
+                    newDamage = 0;
                 }
             }
-            self.health().damage(value);
+            else if (currentTempHP) {
+                // Find the damage delta, then apply to temp hit points first.
+                let remainingTempHP = currentTempHP - currentValue;
+                if (remainingTempHP >= 0 ) {
+                    // New damage value did not eliminate temporary hit points
+                    // reduce temporary hit points, and do not apply to damage.
+                    self.health().tempHitpoints(remainingTempHP);
+                    newDamage = currentDamage;
+                } else { // remainingTempHP is negative.
+                    self.health().tempHitpoints(0);
+                    newDamage = currentDamage - remainingTempHP;
+                }
+            }
+            else {
+                newDamage = currentDamage + currentValue;
+            }
+            if (newDamage > maxHitPoints) {
+                newDamage = maxHitPoints;
+            }
+            self.health().damage(newDamage);
+
         },
         owner: self
     });
+
+    //
+    // self.oldDamageHandler = ko.computed({
+    //     read: function() {
+    //         return self.health().damage();},
+    //     write: function(value) {
+    //         console.log('dmg is', value);
+    //         if (self.health().tempHitpoints()) {
+    //             // Find the damage delta, then apply to temp hit points first.
+    //             var damageChange = value - self.health().damage();
+    //             if (damageChange > 0) {
+    //                 var remainingTempHP = self.health().tempHitpoints() - damageChange;
+    //                 if (remainingTempHP >= 0 ) {
+    //                     // New damage value did not eliminate temporary hit points
+    //                     // reduce temporary hit points, and do not apply to damage.
+    //                     self.health().tempHitpoints(remainingTempHP);
+    //                     value = self.health().damage();
+    //                 } else { // remainingTempHP is negative.
+    //                     self.health().tempHitpoints(0);
+    //                     value = self.health().damage() + remainingTempHP;
+    //                 }
+    //             }
+    //         }
+    //         self.health().damage(value);
+    //     },
+    //     owner: self
+    // });
+
 
     self.load = function() {
         Notifications.global.save.add(self.save);

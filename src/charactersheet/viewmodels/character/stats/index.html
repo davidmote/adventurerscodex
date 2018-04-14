@@ -13,7 +13,7 @@
     <div class="front">
       <div class="h4 card-title">
         Health <br />
-        <small>Click on the health wheel to change max hit points or temporary hit points.</small>
+        <small>Click on the edit icon to change max hit points, hit die, or manage damage directly.</small>
       </div>
       <flip-card params="{
                 dataId: '1',
@@ -32,9 +32,7 @@
                data-bind="with: context.data">
             <div class="col-sm-6 col-md-12 col-lg-6">
               <h4>Hit Points</h4>
-              <div class="clickable"
-                   id="health-chart"
-                   data-bind="click: $component.context.outerToggleCallback">
+              <div id="health-chart">
                 <div class="hp-circle"
                      data-bind="circleProgress: hpChart()"> </div>
                 <!-- ko if: health().tempHitpointsRemaining() -->
@@ -42,17 +40,77 @@
                      data-bind="circleProgress: tempHpChart()"> </div>
                 <!-- /ko -->
               </div>
-              <div id="health-buttons">
-                <mini-plus-minus params="value: damageHandler,
-                          max: health().totalHitpoints, hideUp: true">
-                </mini-plus-minus>
-                <mini-plus-minus params="value: damageHandler,
-                          max: health().totalHitpoints, hideDown: true">
-                </mini-plus-minus>
-              </div>
+
 
             </div>
             <div class="col-sm-6 col-md-12 col-lg-6">
+              <div id="health-buttons">
+                <h4>Damage &amp; Healing</h4>
+                <div class="row">
+                  <div class="col col-xs-6 col-md-12 col-lg-6">
+                    <form data-bind="submit:  handleDmg">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <input type="number"
+                                 class="form-control ac-number-input"
+                                 data-bind="value: dmgInput"
+                                 min="0"
+                                 >
+                          <div style="height: 30px; padding: 0px"
+                               class="input-group-addon">
+                            <button class="healthBtn btn btn-xs btn-danger"
+                                    type="submit"
+                                    value="submit"><i class="fa fa-gavel"></i></button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="col col-xs-6 col-md-12 col-lg-6">
+                    <form data-bind="submit: handleHeal">
+                       <div class="form-group">
+                        <div class="input-group">
+                          <input type="number"
+                                 class="form-control ac-number-input"
+                                 data-bind="value: healInput"
+                                 min="0"
+                                 >
+                          <div style="height: 30px; padding: 0px"
+                               class="input-group-addon">
+                            <button class="healthBtn btn btn-xs btn-success"
+                                    type="submit"
+                                    value="submit"><i class="fa fa-heart"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="col col-xs-6 col-xs-offset-6 col-md-12 col-md-offset-0 col-lg-6 col-lg-offset-6">
+                    <form data-bind="submit: handleTemp">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <input type="number"
+                                 class="form-control ac-number-input"
+                                 data-bind="value: tempInput"
+                                 min="0"
+                                 >
+                          <div style="height: 30px; padding: 0px"
+                               class="input-group-addon">
+                            <button style="
+                                      background-color: rgb(113, 212, 232);
+                                      border-color: rgb(113, 212, 232)"
+                                    class="healthBtn btn btn-xs btn-info"
+                                    type="submit"
+                                    value="submit"><i class="fa fa-shield"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
               <h4>Hit Die</h4>
               <div class="form-control hit-dice-list">
                 <!-- ko foreach: hitDiceList -->
@@ -117,7 +175,7 @@
       <div id="health-panel-form">
         <div class="h4 card-title">
           Health <br />
-          <small class="h5">Click on the health wheel to change max hit points or temporary hit points.</small>
+          <small>Click on the edit icon to change max hit points, hit die, or manage damage directly.</small>
         </div>
         <health-form params="{
           data: context.data.health,
