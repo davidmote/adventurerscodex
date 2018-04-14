@@ -1,0 +1,44 @@
+<form data-bind="submit: $component.save" class="form-horizontal">
+  <h4>New Saving Throw</h4>
+  <div data-bind="with: currentEditItem" class="panel-body">
+    <div class="form-group">
+      <label for="type"
+             class="control-label col-xs-4">Name</label>
+      <div class=" col-xs-8">
+      <input type="text"
+             class="form-control"
+             placeholder="Honor"
+             data-bind="textInput: name">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="name"
+             class="control-label col-xs-4">Proficiency</label>
+       <div class="col-xs-8">
+         <input type='checkbox'
+                class='ac-checkbox sr-only'
+                data-bind="checked: proficiency, attr: {id: 'savingThrow_new'}"></input>
+         <label data-bind="attr: {for: 'savingThrow_new'}">
+       </div>
+    </div>
+    <div class="form-group">
+      <label for="description"
+             class="control-label col-xs-4">Modifier</label>
+      <div class="col-xs-8">
+        <input type="number" class="form-control col-xs-7" data-bind="value: modifier" />
+      </div>
+    </div>
+  </div>
+  <div>
+      <div class="pull-right">
+      <button type="button"
+              class="btn btn-default btn-sm"
+              id="savingThrowAddCancelButton"
+              data-bind="click: $component.cancel">Cancel</button>
+      <button type="submit"
+              class="btn btn-primary btn-sm"
+              id="savingThrowAddAddButton"
+            >Add Saving Throw</button>
+      </div>
+  </div>
+</form>

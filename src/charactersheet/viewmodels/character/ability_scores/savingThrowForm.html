@@ -88,7 +88,51 @@
             <input type="number" class="form-control ac-number-input" data-bind="value: modifier" />
           </td>
         </tr>
+        <!-- ko foreach: nonStandardSavingThrows() -->
+        <tr>
+          <td>
+            <input type='checkbox'
+                   class='ac-checkbox sr-only'
+                   data-bind="checked: proficiency, attr: {id: `savingThrow_${name}`}"></input>
+            <label data-bind="attr: {for: `savingThrow_${name}`}"
+                   class=''>
+          </td>
+          <td><span data-bind="text: name"></span> <button class="btn btn-sm btn-link btn-danger" data-bind="click: ()=>{$component.remove($data)}"><i class="fa fa-trash-o fa-color-hover"></i></button></td>
+          <td>
+            <input type="number" class="form-control ac-number-input" data-bind="value: modifier" />
+          </td>
+        </tr>
+        <!-- /ko -->
+        <tr class="collapseRow">
+          <td colspan="3">
+            <div id="add-save" class="collapse add-card">
+            <add-save-form params="{
+                  data: null,
+                  containerId: 'add-save',
+                  showForm: showAddForm,
+                  add: add,
+                  toggle: toggleAddForm,
+                  resize: resizeCallback,
+                }"></add-save-form>
+              </div>
+          </td>
+        </tr>
       </tbody>
+      <tfoot>
+        <tr >
+          <td colspan="3">
+          <!-- ko ifnot: $component.showAddForm -->
+        <button type="button"
+                class="btn btn-link btn-block btn-sm"
+                id="saveAddButton"
+                data-toggle="collapse"
+                data-target="#add-save"
+                data-bind="click: toggleAddForm"><i class="fa fa-plus"></i> Add Saving Throw</button>
+          <!-- /ko -->
+        </td>
+        </tr>
+      </tfoot>
+
     </table>
     <button type="submit" style="visibility:hidden" value="submit"></button>
 </form>

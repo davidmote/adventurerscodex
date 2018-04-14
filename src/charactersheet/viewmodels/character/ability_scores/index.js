@@ -8,12 +8,15 @@ import {
     CharacterManager,
     Notifications
 } from 'charactersheet/utilities';
+
+import { filter, find, includes } from 'lodash';
+
 import { AbilityScoreFormComponentViewModel } from './scoreForm';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { SavingThrowFormComponentViewModel } from './savingThrowForm';
 import { SavingThrows } from 'charactersheet/models/character';
+import { SortService } from 'charactersheet/services/common';
 
-import { find } from 'lodash';
 
 import ko from 'knockout';
 import template from './index.html';
@@ -52,6 +55,25 @@ export function AbilityScoresViewModel(params) {
     self.findSaveByName = (name) => {
         const savingThrow = find(self.savingThrows(), (savingthrow)=>{return savingthrow.name() === name;});
         return savingThrow;
+    };
+
+    self.nonStandardSavingThrows = () => {
+        const nonstandard = filter(self.savingThrows(), (savingThrow) => {
+            return !includes(['Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma'], savingThrow.name());
+        });
+        return SortService.sortAndFilter(nonstandard, { field: 'name', direction: 'asc'}, null);
+    };
+
+    self.addSave = (savingThrow) => {
+        savingThrow.characterId(CharacterManager.activeCharacter().key());
+        savingThrow.save();
+        self.savingThrows.push(savingThrow);
+    };
+
+
+    self.removeSave = function(savingThrow) {
+        self.savingThrows.remove(savingThrow);
+        savingThrow.delete();
     };
 
     self.load = function() {

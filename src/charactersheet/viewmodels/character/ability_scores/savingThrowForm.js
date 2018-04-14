@@ -1,8 +1,9 @@
 import ko from 'knockout';
 import {debounce} from 'lodash';
-import {find} from 'lodash';
+import { filter, find, includes } from 'lodash';
 
 import {AbilityScores, getModifier, getStrModifier} from 'charactersheet/models/character/ability_scores';
+import { AddSavingThrowFormComponentViewModel } from './addSavingThrowForm';
 
 import {CharacterManager, Notifications} from 'charactersheet/utilities';
 import {DataRepository} from 'charactersheet/utilities';
@@ -10,6 +11,7 @@ import {FormComponentViewModel} from 'charactersheet/utilities';
 import {PersistenceService} from 'charactersheet/services/common/persistence_service';
 import {Proficiency} from 'charactersheet/models/character';
 import { SavingThrows } from 'charactersheet/models/character';
+import { SortService } from 'charactersheet/services/common';
 
 import template from './savingThrowForm.html';
 
@@ -18,9 +20,24 @@ export class SavingThrowFormComponentViewModel {
       this.data = params.data;
       this.showForm = params.showForm;
       this.toggle = params.toggle;
+      this.resizeCallback = params.resizeCallback;
+      this.addCallback = params.add;
+      this.removeCallback = params.remove;
       this.bypassUpdate = ko.observable(false);
       this.currentEditItem = ko.observableArray([]);
+      this.showAddForm = ko.observable(false);
     }
+
+    toggleAddForm = () => {
+        if (this.showAddForm()) {
+            $('#add-save').collapse('hide');
+            this.showAddForm(false);
+        } else {
+            this.showAddForm(true);
+            $('#add-save').collapse('show');
+        }
+    };
+
 
     load = () => {
       this.buildSaves();
@@ -82,20 +99,25 @@ export class SavingThrowFormComponentViewModel {
         this.currentEditItem(this.generateBlank());
     }
 
-    // cancel = (data, event) => {
-    //     this.bypassUpdate(true);
-    //     this.toggle();
-    //     this.shouldShowDisclaimer(false);
-    //     this.currentEditItem(this.generateBlank());
-    // }
+    nonStandardSavingThrows = () => {
+        const nonstandard = filter(this.currentEditItem(), (savingThrow) => {
+            return !includes(['Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma'], savingThrow.name());
+        });
+        return SortService.sortAndFilter(nonstandard, { field: 'name', direction: 'asc'}, null);
+    };
 
-    // remove = () => {
-    //     $(`#${this.containerId}`).collapse('hide');
-    //     setTimeout(() => {
-    //         this.removeCallback(this.data);
-    //         this.notify();
-    //     }, 650);
-    // }
+    add = (newSave) => {
+      this.addCallback(newSave);
+      this.currentEditItem([...this.currentEditItem(), newSave])
+    }
+    remove = (saveToRemove) => {
+      const savingThrow = find(this.data(), (savingthrow)=>{
+          return savingthrow.name() === saveToRemove.name();
+        });
+          this.removeCallback(savingThrow);
+          this.currentEditItem.remove(saveToRemove)
+          this.notify();
+    }
 
 }
 

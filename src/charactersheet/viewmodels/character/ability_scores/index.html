@@ -13,6 +13,9 @@
                 showSaves: showSaves,
                 findSaveByName: findSaveByName,
                 tabId: tabId,
+                addSave: addSave,
+                removeSave: removeSave,
+                nonStandardSavingThrows: nonStandardSavingThrows,
               }
             }">
     <div class="front" >
@@ -109,6 +112,14 @@
                 <!-- <td><span data-bind="css: proficiencyLabel"></span></td> -->
                 <!-- /ko -->
               </tr>
+              <!-- ko foreach: context.nonStandardSavingThrows() -->
+              <tr>
+                <td ></td>
+                <td><span data-bind="text: name"></span></td>
+                <td></td>
+                <td><span class="defenseShield" data-bind="text: modifierLabel"> </span></td>
+              </tr>
+              <!-- /ko -->
             </tbody>
           </table>
         </div>
@@ -149,7 +160,9 @@
                              containerId: elementId,
                              showForm: editMode,
                              toggle: ()=> {context.toggleSaves(); toggleCallback()},
-                             remove: ()=>{} }">
+                             resizeCallback: resizeCallback,
+                             add: context.addSave,
+                             remove: context.removeSave }">
                            </saving-throw-form>
                          </div>
                         </div>
