@@ -166,7 +166,7 @@ function _NodeService(config) {
             for (const item of items) {
                 const json = $(item).find('json');
                 const dispatchRouteExists = Notifications.xmpp.routes[route] || false;
-                if (route && dispatchRouteExists) {
+                if (json.length && route && dispatchRouteExists) {
                     // Dispatch a notification to the proper XMMP Route (i.e. pcard)
                     Notifications.xmpp.routes[route].dispatch(
                         JSONPayload.getContents(json)

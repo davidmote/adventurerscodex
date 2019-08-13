@@ -73,7 +73,7 @@ function _pCardService(configuration) {
 
         // Publish the card to the current node.
         if (self.currentPartyNode) {
-            nodeService.publishItem(card.entries, attrs, 'pcard', null, null);
+            nodeService.publishItem(card.exportValues(), attrs, 'pcard', null, null);
         }
     };
 
@@ -123,12 +123,17 @@ function _pCardService(configuration) {
         if (chat.currentPartyNode == null) {
             return;
         }
-        var newPCard = pCard.fromEntries(inputPCard);
-        var publisherJid = newPCard.get('publisherJid')[0];
-        var pCardInParty = chat.isJidInParty(publisherJid);
+        if (!inputPCard) {
+            return;
+        }
+
+        const newPCard = new pCard();
+        newPCard.importValues(inputPCard);
+
+        var pCardInParty = chat.isJidInParty(newPCard.publisherJid);
 
         if (pCardInParty) {
-            self.pCards[publisherJid] = newPCard;
+            self.pCards[newPCard.publisherJid] = newPCard;
         }
 
         self._dispatchPlayerChangedNotification();
